@@ -192,14 +192,35 @@ body {
     overflow: visible;
 }
 
-.sidebar-title {
-    padding: 14px 12px 10px 12px;
+/* Sidebar header: title (left) + upload icon & project dropdown (right) */
+.project-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #eaeef2;
+    background: #fff;
+}
+
+.project-header-title {
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.02em;
     color: #1f2328;
-    border-bottom: 1px solid #eaeef2;
-    background: #fff;
+    white-space: nowrap;
+}
+
+.project-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.project-header-right .mantine-Select-root {
+    min-width: 0;
 }
 
 .sidebar-export {
@@ -212,22 +233,84 @@ body {
     box-shadow: 0 -8px 18px rgba(31, 35, 40, 0.08);
 }
 
-.sidebar-import {
-    position: sticky;
-    top: 0;
-    z-index: 6;
-    padding: 12px 12px 12px 12px;
-    border-bottom: 1px solid #d8dee4;
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: 0 8px 18px rgba(31, 35, 40, 0.08);
+/* Import guide modal */
+.import-modal-title {
+    font-size: 17px;
+    font-weight: 700;
 }
 
-.sidebar-import-label {
-    font-size: 13px;
+.import-tree {
+    font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+    font-size: 12px;
+    background: #f6f8fa;
+    border: 1px solid #e2e7ec;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.import-tree-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 24px;
+    white-space: nowrap;
+    border-radius: 4px;
+    padding: 0 4px;
+}
+
+.import-tree-highlight {
+    background: #eef2ff;
+}
+
+.import-tree-branch {
+    color: #b0b8c1;
+    white-space: pre;
+}
+
+.import-tree-icon {
+    flex: 0 0 auto;
+    color: #57606a;
+}
+
+.import-tree-highlight .import-tree-icon {
+    color: #4c6ef5;
+}
+
+.import-tree-label {
+    color: #24292f;
+}
+
+.import-tree-highlight .import-tree-label {
     font-weight: 700;
-    letter-spacing: 0.02em;
     color: #1f2328;
-    margin-bottom: 8px;
+}
+
+.import-tree-note {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 11px;
+    color: #8b949e;
+    margin-left: 6px;
+}
+
+.import-tree-ellipsis .import-tree-label {
+    color: #8b949e;
+    font-style: italic;
+}
+
+.import-dropzone-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.import-dropzone-row .acd-dropzone {
+    flex: 1 1 auto;
+}
+
+.import-view-xml-btn {
+    flex: 0 0 auto;
+    align-self: stretch;
+    height: auto;
 }
 
 .acd-dropzone {
@@ -269,6 +352,38 @@ body {
     font-size: 12.5px;
     color: #8c959f;
     line-height: 1.5;
+}
+
+/* Empty-state prompt shown in the tree when no project is loaded */
+.upload-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    padding: 48px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: #57606a;
+}
+
+.upload-prompt-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #57606a;
+}
+
+.upload-prompt-icon {
+    color: #8b949e;
+    transition: color 0.15s;
+}
+
+.upload-prompt:hover .upload-prompt-text,
+.upload-prompt:hover .upload-prompt-icon {
+    color: #4c6ef5;
 }
 
 .sidebar-search-block {

@@ -77,6 +77,14 @@ def _run(args: list[str]) -> subprocess.CompletedProcess:
     return proc
 
 
+def _read_hash(hash_file: Path) -> str | None:
+    """Return the stored ACD content hash, or None if absent/unreadable."""
+    try:
+        return hash_file.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+
+
 def import_acd(acd_bytes: bytes, filename: str) -> str:
     """Convert uploaded ACD bytes into cache/{project}/exploded; return project.
 

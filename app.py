@@ -426,42 +426,35 @@ def navbar():
                 [
                     html.Div(
                         [
-                            html.Div("Import .ACD", className="sidebar-import-label"),
-                            dcc.Upload(
-                                id="acd-upload",
-                                accept=".acd,.ACD",
-                                max_size=-1,
-                                children=html.Div(
-                                    [
-                                        DashIconify(icon="tabler:upload", width=18),
-                                        html.Span("Drop an .ACD here or click to browse"),
-                                    ],
-                                    className="acd-dropzone-inner",
-                                ),
-                                className="acd-dropzone",
-                            ),
-                            dmc.Select(
-                                id="project-switcher",
-                                placeholder="No project",
-                                data=[],
-                                value=None,
-                                leftSection=DashIconify(icon="tabler:folder"),
-                                comboboxProps={"withinPortal": False},
-                                size="sm",
-                                allowDeselect=False,
-                                mt=8,
-                            ),
-                            dcc.Loading(
-                                html.Div(id="import-status", className="import-status"),
-                                type="dot",
+                            html.Div("Project Files", className="project-header-title"),
+                            html.Div(
+                                [
+                                    dmc.Tooltip(
+                                        dmc.ActionIcon(
+                                            DashIconify(icon="tabler:upload", width=18),
+                                            id="open-import-modal",
+                                            n_clicks=0,
+                                            variant="default",
+                                            size="lg",
+                                        ),
+                                        label="Import an .ACD project",
+                                        withArrow=True,
+                                    ),
+                                    dmc.Select(
+                                        id="project-switcher",
+                                        placeholder="No project",
+                                        data=[],
+                                        value=None,
+                                        leftSection=DashIconify(icon="tabler:folder"),
+                                        comboboxProps={"withinPortal": False},
+                                        size="sm",
+                                        allowDeselect=False,
+                                    ),
+                                ],
+                                className="project-header-right",
                             ),
                         ],
-                        className="sidebar-import",
-                    ),
-                    html.Div(
-                        "Project Files",
-                        className="sidebar-title",
-                        style={"padding": "14px 12px 12px 12px", "marginBottom": "12px"},
+                        className="project-header",
                     ),
                     html.Div(
                         [
@@ -597,23 +590,41 @@ def xml_block():
     )
 
 
+def no_file_open_state():
+    """Empty-state content when a project is loaded but no file is open."""
+    return dmc.Stack(
+        [
+            DashIconify(icon="tabler:file-text", width=56, color="#c0c7cf"),
+            dmc.Text("No file open", fw=600, c="dimmed"),
+            dmc.Text(
+                "Pick a file from the tree, or use search to open one.",
+                size="sm",
+                c="dimmed",
+            ),
+        ],
+        align="center",
+        gap=6,
+    )
+
+
 def empty_state():
     return html.Div(
-        dmc.Stack(
-            [
-                DashIconify(icon="tabler:file-text", width=56, color="#c0c7cf"),
-                dmc.Text("No file open", fw=600, c="dimmed"),
-                dmc.Text(
-                    "Pick a file from the tree, or use search to open one.",
-                    size="sm",
-                    c="dimmed",
-                ),
-            ],
-            align="center",
-            gap=6,
-        ),
+        no_file_open_state(),
         id="empty-state",
         className="empty-state",
+    )
+
+
+def upload_prompt():
+    """Clickable placeholder shown when no project tree is available."""
+    return html.Button(
+        [
+            html.Div("Upload a .ACD", className="upload-prompt-text"),
+            DashIconify(icon="tabler:upload", width=56, className="upload-prompt-icon"),
+        ],
+        id="empty-upload-prompt",
+        n_clicks=0,
+        className="upload-prompt",
     )
 
 
@@ -668,6 +679,123 @@ def fault_range_row(label: str, key: str, min_default: int, max_default: int):
     )
 
 
+def _tree_line(label: str, depth: int, icon: str | None = None, *,
+               highlight=False, dim=False, note=None):
+    """One row in the cache file-structure diagram."""
+    children = [
+        html.Span(
+            "\u2502   " * max(depth - 1, 0) + ("\u251c\u2500 " if depth else ""),
+            className="import-tree-branch",
+        )
+    ]
+    if icon:
+        children.append(DashIconify(icon=icon, width=15, className="import-tree-icon"))
+    children.append(html.Span(label, className="import-tree-label"))
+    if note:
+        children.append(html.Span(note, className="import-tree-note"))
+    cls = "import-tree-row"
+    if highlight:
+        cls += " import-tree-highlight"
+    if dim:
+        cls += " import-tree-ellipsis"
+    return html.Div(children, className=cls)
+
+
+def cache_diagram_rows():
+    """Rows for the cache diagram, always using the 'your-project' placeholder."""
+    name = "your-project"
+    return [
+        _tree_line("cache", 0, "tabler:folder", note="application cache"),
+        _tree_line("... (other projects)", 1, dim=True),
+        _tree_line(name, 1, "tabler:folder-filled", highlight=True,
+                   note="\u2190 your project (named after the .acd)"),
+        _tree_line(f"{name}.acd", 2, "tabler:file", note="copy of your upload"),
+        _tree_line(f"{name}.xml", 2, "tabler:file", note="converted XML"),
+        _tree_line("exploded", 2, "tabler:folder", note="browsable XML tree"),
+    ]
+
+
+def cache_diagram():
+    """Visual file tree showing where an imported project lands in the cache."""
+    return html.Div(
+        cache_diagram_rows(),
+        id="import-cache-diagram",
+        className="import-tree",
+    )
+
+
+def import_modal():
+    """Guided modal explaining ACD requirements and hosting an upload dropzone."""
+    return dmc.Modal(
+        id="import-modal",
+        title=html.Span("Import a Studio 5000 project", className="import-modal-title"),
+        centered=True,
+        size="lg",
+        children=[
+            dmc.Stack(
+                [
+                    dmc.Text(
+                        "This viewer works from Studio 5000 / Logix Designer "
+                        "\u002Eacd project files. When you upload one, the app "
+                        "converts it to L5X, explodes it into an XML tree, and "
+                        "stores everything in a per-project folder under cache/ "
+                        "next to the application.",
+                        size="sm",
+                        c="dimmed",
+                    ),
+                    dmc.Text("Where your project is placed", fw=700, size="sm"),
+                    cache_diagram(),
+                    dmc.Alert(
+                        "Cleaning up: projects are never deleted automatically. "
+                        "To remove one, delete its folder under cache/ by hand "
+                        "(e.g. cache/KrakenTipInspection/). This is done manually.",
+                        title="Manual cleanup",
+                        color="gray",
+                        variant="light",
+                        icon=DashIconify(icon="tabler:trash"),
+                    ),
+                    dmc.Divider(my=4),
+                    dmc.Text("Upload an .ACD file", fw=700, size="sm"),
+                    html.Div(
+                        [
+                            dcc.Upload(
+                                id="acd-upload",
+                                accept=".acd,.ACD",
+                                max_size=-1,
+                                children=html.Div(
+                                    [
+                                        DashIconify(icon="tabler:upload", width=22),
+                                        html.Span(
+                                            "Drop an .ACD here or click to browse"
+                                        ),
+                                    ],
+                                    className="acd-dropzone-inner",
+                                ),
+                                className="acd-dropzone",
+                            ),
+                            dmc.Button(
+                                "Process ACD and View XML",
+                                id="import-view-xml",
+                                n_clicks=0,
+                                leftSection=DashIconify(icon="tabler:code"),
+                                color="blue",
+                                className="import-view-xml-btn",
+                            ),
+                        ],
+                        className="import-dropzone-row",
+                    ),
+                    dcc.Loading(
+                        html.Div(id="import-status", className="import-status"),
+                        type="dot",
+                    ),
+                ],
+                gap="sm",
+            ),
+        ],
+        opened=False,
+    )
+
+
 app.layout = dmc.MantineProvider(
     forceColorScheme="light",
     theme=THEME,
@@ -679,6 +807,7 @@ app.layout = dmc.MantineProvider(
             dcc.Store(id="active-tab", storage_type="local", data=None),
             dcc.Store(id="recent-searches", storage_type="local", data=[]),
             dcc.Store(id="content-search-rels", data=[]),
+            dcc.Store(id="pending-upload", storage_type="memory", data=None),
             dcc.Store(id="file-cache", storage_type="memory", data={}),
             dcc.Download(id="download-sd-tables"),
             dmc.Modal(
@@ -733,6 +862,7 @@ app.layout = dmc.MantineProvider(
                 ],
                 opened=False,
             ),
+            import_modal(),
             header(),
             navbar(),
             main_panel(),
@@ -753,6 +883,36 @@ app.layout = dmc.MantineProvider(
 # Projects (import + switcher)
 # ---------------------------------------------------------------------------
 TREE_RESET = ["RSLogix5000Content"]
+
+
+@app.callback(
+    Output("import-modal", "opened"),
+    Input("open-import-modal", "n_clicks"),
+    prevent_initial_call=True,
+)
+def open_import_modal(_icon):
+    """Open the import guide from the toolbar icon.
+
+    The modal is closed by `handle_import` once a successful import finishes;
+    until then it stays open so the user can watch the conversion progress.
+    """
+    if real_click(dash.callback_context):
+        return True
+    return dash.no_update
+
+
+@app.callback(
+    Output("import-modal", "opened", allow_duplicate=True),
+    Input("empty-upload-prompt", "n_clicks"),
+    prevent_initial_call=True,
+)
+def open_import_modal_from_prompt(_prompt):
+    """Open the import guide from the empty-state prompt (rendered only when
+    no project is loaded), kept separate so the toolbar icon's callback never
+    references this sometimes-absent component."""
+    if real_click(dash.callback_context):
+        return True
+    return dash.no_update
 
 
 @app.callback(
@@ -784,41 +944,76 @@ def switch_project(value, active):
 
 
 @app.callback(
+    Output("pending-upload", "data"),
+    Output("import-status", "children", allow_duplicate=True),
+    Input("acd-upload", "contents"),
+    State("acd-upload", "filename"),
+    prevent_initial_call=True,
+)
+def stage_upload(contents, filename):
+    """Hold the chosen .ACD without processing; conversion waits for 'View XML'."""
+    if not contents:
+        return dash.no_update, dash.no_update
+    staged = {"contents": contents, "filename": filename}
+    ready = f"Ready to import {filename}. Click \u201cView XML\u201d to process."
+    return staged, ready
+
+
+@app.callback(
     Output("active-project", "data", allow_duplicate=True),
     Output("import-status", "children"),
     Output("expanded", "data", allow_duplicate=True),
     Output("open-tabs", "data", allow_duplicate=True),
     Output("active-tab", "data", allow_duplicate=True),
     Output("file-cache", "data", allow_duplicate=True),
-    Input("acd-upload", "contents"),
-    State("acd-upload", "filename"),
+    Output("import-modal", "opened", allow_duplicate=True),
+    Output("pending-upload", "data", allow_duplicate=True),
+    Input("import-view-xml", "n_clicks"),
+    State("pending-upload", "data"),
     background=True,
     running=[
         (Output("acd-upload", "disabled"), True, False),
         (Output("project-switcher", "disabled"), True, False),
+        (Output("import-view-xml", "disabled"), True, False),
     ],
     prevent_initial_call=True,
 )
-def handle_import(contents, filename):
-    """Decode the upload, run the ACD pipeline, then activate the new project."""
-    if not contents:
-        return (dash.no_update,) * 6
+def handle_import(_clicks, pending):
+    """On 'View XML', run the ACD pipeline for the staged upload, then activate it."""
+    no_change = (dash.no_update,) * 8
+    if not real_click(dash.callback_context):
+        return no_change
 
-    no_change = (dash.no_update, dash.no_update, dash.no_update, dash.no_update)
+    contents = (pending or {}).get("contents")
+    filename = (pending or {}).get("filename")
+    if not contents:
+        # Nothing staged: prompt the user, leave the modal open.
+        return (
+            dash.no_update,
+            "Select an .ACD file to import first.",
+            dash.no_update, dash.no_update, dash.no_update, dash.no_update,
+            dash.no_update, dash.no_update,
+        )
+
+    # Keep the modal open for status/error feedback on failure.
+    fail = lambda msg: (
+        dash.no_update, msg, dash.no_update, dash.no_update,
+        dash.no_update, dash.no_update, dash.no_update, dash.no_update,
+    )
     try:
         _header, b64 = contents.split(",", 1)
         acd_bytes = base64.b64decode(b64)
     except (ValueError, base64.binascii.Error):
-        return (dash.no_update, "Could not read the uploaded file.", *no_change)
+        return fail("Could not read the uploaded file.")
 
     try:
         project = import_acd(acd_bytes, filename)
         get_content_index(exploded_root(project), project)  # prebuild markup
     except PipelineError as exc:
-        return (dash.no_update, str(exc), *no_change)
+        return fail(str(exc))
 
     status = f"Imported {project}."
-    return project, status, TREE_RESET, [], None, {}
+    return project, status, TREE_RESET, [], None, {}, False, None
 
 
 # ---------------------------------------------------------------------------
@@ -1122,15 +1317,14 @@ def open_from_tree(_clicks, open_tabs):
     Input("active-project", "data"),
 )
 def render_tree(expanded, active, project):
-    if not project:
-        return html.Div(
-            "No project loaded. Import an .ACD to get started.",
-            className="tree-empty",
-        )
+    # No project, or its cache/exploded tree is gone (e.g. cache cleared by
+    # hand while the project name lingered in local storage): show a plain note.
+    if not project or not exploded_root(project).is_dir():
+        return html.Div("No project loaded.", className="tree-empty")
     try:
         return build_tree_nodes("", set(expanded or []), active, exploded_root(project))
-    except (ValueError, OSError) as exc:
-        return html.Div(f"Error: {exc}", className="status-error")
+    except (ValueError, OSError):
+        return html.Div("No project loaded.", className="tree-empty")
 
 
 # ---------------------------------------------------------------------------
@@ -1170,41 +1364,45 @@ def render_tabs(open_tabs, active):
         )
         for rel in open_tabs
     ] or [dmc.MenuItem("No open files", disabled=True)]
-    controls = dmc.Group(
-        [
-            dmc.Menu(
+    row_children = [dmc.TabsList(tabs)]
+    if open_tabs:
+        row_children.append(
+            dmc.Group(
                 [
-                    dmc.MenuTarget(
-                        dmc.ActionIcon(
-                            DashIconify(icon="tabler:chevron-down"),
-                            id="open-files-menu-btn",
-                            variant="default",
-                            size="sm",
-                            disabled=not open_tabs,
-                        )
+                    dmc.Menu(
+                        [
+                            dmc.MenuTarget(
+                                dmc.ActionIcon(
+                                    DashIconify(icon="tabler:chevron-down"),
+                                    id="open-files-menu-btn",
+                                    variant="default",
+                                    size="sm",
+                                )
+                            ),
+                            dmc.MenuDropdown(
+                                open_file_items, className="open-files-menu"
+                            ),
+                        ],
+                        position="bottom-end",
+                        withinPortal=True,
                     ),
-                    dmc.MenuDropdown(open_file_items, className="open-files-menu"),
+                    dmc.Tooltip(
+                        dmc.ActionIcon(
+                            DashIconify(icon="tabler:trash"),
+                            id="clear-open-files",
+                            n_clicks=0,
+                            variant="default",
+                            color="red",
+                            size="sm",
+                        ),
+                        label="Clear open files",
+                    ),
                 ],
-                position="bottom-end",
-                withinPortal=True,
-            ),
-            dmc.Tooltip(
-                dmc.ActionIcon(
-                    DashIconify(icon="tabler:trash"),
-                    id="clear-open-files",
-                    n_clicks=0,
-                    variant="default",
-                    color="red",
-                    size="sm",
-                    disabled=not open_tabs,
-                ),
-                label="Clear open files",
-            ),
-        ],
-        gap=4,
-        className="file-tab-controls",
-    )
-    return [html.Div([dmc.TabsList(tabs), controls], className="file-tabs-row")], active
+                gap=4,
+                className="file-tab-controls",
+            )
+        )
+    return [html.Div(row_children, className="file-tabs-row")], active
 
 
 @app.callback(
@@ -1308,6 +1506,17 @@ def toggle_empty(rel):
     if rel:
         return {"display": "flex"}, {"display": "none"}
     return {"display": "none"}, {"display": "flex"}
+
+
+@app.callback(
+    Output("empty-state", "children"),
+    Input("active-project", "data"),
+)
+def render_empty_state(project):
+    """Prompt to upload when no project is loaded; otherwise the 'no file' note."""
+    if not project or not exploded_root(project).is_dir():
+        return upload_prompt()
+    return no_file_open_state()
 
 
 def _params_dataframe(rel: str, row_func, root: Path, columns=PARAM_FIELDS) -> pd.DataFrame | None:
@@ -1547,19 +1756,30 @@ def export_sd_tables(
     if not real_click(dash.callback_context) or not project:
         return dash.no_update
 
+    # Always read from the currently selected project's exploded tree under
+    # cache/{project}/exploded. If that location is gone (e.g. cache cleared by
+    # hand while the name lingers in local storage), there is nothing to export.
     root = exploded_root(project)
+    if not root.is_dir():
+        return dash.no_update
+
     ranges = {
         "Notifications": (_coerce_code(notif_min, 0), _coerce_code(notif_max, 199)),
         "Warnings": (_coerce_code(warn_min, 200), _coerce_code(warn_max, 399)),
         "Faults": (_coerce_code(faults_min, 500), _coerce_code(faults_max, 99999)),
     }
 
+    # Missing Settings/Recipes tag files are normal for some projects, so fall
+    # back to empty sheets instead of silently aborting the whole download.
     settings = _params_dataframe(SETTINGS_REL, setting_rows, root)
+    if settings is None:
+        settings = pd.DataFrame(columns=PARAM_FIELDS)
     recipes = _params_dataframe(RECIPE_REL, recipe_rows, root)
-    fault_frames = _faults_dataframes(ranges, root)
-
-    if any(x is None for x in (settings, recipes, fault_frames)):
-        return dash.no_update
+    if recipes is None:
+        recipes = pd.DataFrame(columns=PARAM_FIELDS)
+    fault_frames = _faults_dataframes(ranges, root) or {
+        category: pd.DataFrame(columns=FAULT_FIELDS) for category in FAULT_CATEGORIES
+    }
 
     tables = {
         "Settings": settings,
@@ -1576,7 +1796,7 @@ def export_sd_tables(
             _style_sd_sheet(writer.sheets[sheet_name])
         _allow_sd_workbook_edits(writer.book)
 
-    return dcc.send_bytes(buffer.getvalue(), "sd_tables.xlsx")
+    return dcc.send_bytes(buffer.getvalue(), f"{project}_sd_tables.xlsx")
 
 
 if __name__ == "__main__":
