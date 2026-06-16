@@ -12,6 +12,7 @@ ACD->L5X conversion uses the Rockwell Logix Designer SDK, so this only works on
 a host with Studio 5000 / the Logix Designer SDK installed.
 """
 
+import hashlib
 import re
 import subprocess
 from pathlib import Path
@@ -81,8 +82,11 @@ def import_acd(acd_bytes: bytes, filename: str) -> str:
 
     Steps: copy ACD -> `acd2l5x` -> `explode`. The explode is retried with
     `--unsafe-skip-dependency-check` if it fails with a dependency error.
+
+    The ACD->L5X conversion (Logix Designer SDK) is the slow step, so if an
+    identical ACD (same content hash) was already exploded under this project,
+    the whole pipeline is skipped and the cached tree is reused.
     """
-    exe = l5xgit_exe()
     project = _safe_project_name(filename)
 
     proj_dir = CACHE_DIR / project
@@ -90,7 +94,13 @@ def import_acd(acd_bytes: bytes, filename: str) -> str:
     acd_file = proj_dir / f"{project}.acd"
     l5x_file = proj_dir / f"{project}.l5x"
     exploded_dir = proj_dir / "exploded"
+    hash_file = proj_dir / ".acdhash"
 
+    digest = hashlib.sha256(acd_bytes).hexdigest()
+    if (exploded_dir / "RSLogix5000Content").is_dir() and _read_hash(hash_file) == digest:
+        return project  # identical ACD already imported; skip the SDK conversion
+
+    exe = l5xgit_exe()
     acd_file.write_bytes(acd_bytes)
 
     conv = _run([str(exe), "acd2l5x", "-a", str(acd_file), "-l", str(l5x_file)])
@@ -127,5 +137,10 @@ def import_acd(acd_bytes: bytes, filename: str) -> str:
         raise PipelineError(
             f"Explode finished but no RSLogix5000Content tree at {exploded_dir}."
         )
+
+    try:
+        hash_file.write_text(digest, encoding="utf-8")
+    except OSError:
+        pass  # cache-skip optimization only; failure just means we reconvert next time
 
     return project

@@ -1,7 +1,17 @@
 # exclude custom bin and obj dirs
 bin/
 obj/
+
+# Cursor IDE working directory
+.cursor/
+
+# Build artifacts (bin/obj output tree)
+artifacts/
+
+# Large/intermediate Logix exports at repo root.
+# (e2e_tests/fixtures/*.L5X are intentionally tracked.)
 /*.l5x
+/*.L5X
 
 
 ###############################################################################################
