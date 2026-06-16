@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Logic" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[S88 State Calculator]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Pausing]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(System.Pause_IP)[MOV(9,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Paused]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(System.Paused)XIO(AlarmActive)[MOV(10,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Held]]></Comment>
+      <Text><![CDATA[[XIC(WaitingForUser) [MUL(iWaitForUserHeldDelay,1000,tmrWaitUser.PRE) ,TON(tmrWaitUser,?,?) ] ,XIC(WaitingForProcess) [MUL(iWaitForProcHeldDelay,1000,tmrWaitProc.PRE) ,TON(tmrWaitProc,?,?) ] ,XIO(bitS88_State_Set) [XIC(System.Alarm) ,XIC(WaitingForUser) XIC(tmrWaitUser.DN) ,XIC(WaitingForProcess) XIC(tmrWaitProc.DN) ] [MOV(12,intState) ,OTL(bitS88_State_Set) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Aborting]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(seqAbort_On)[MOV(3,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Stopping]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(System.Stopping)[MOV(1,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Running]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(seqControl_On)[MOV(8,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Stopped]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(System.Stopped)[MOV(2,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Resetting
+]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)XIC(System.Resetting)[MOV(5,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Idle]]></Comment>
+      <Text><![CDATA[XIO(bitS88_State_Set)[MOV(6,intState) ,OTL(bitS88_State_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTU(bitS88_State_Set);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Mode Calculator
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Manual
+]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIC(System.Manual)[MOV(3,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Maintenance - Homing]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIC(seqHome_On)[MOV(4,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Maintenance - Calibration]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIC(seqCal_On)[MOV(5,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Maintenance - Verify]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIC(seqVerify_On)[MOV(6,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Maintenance
+]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIO(seqAbort_On)XIC(seqControl_On)XIO(seqMain_On)[MOV(7,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Semi-Automatic
+]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)XIC(System.Stepping)[MOV(2,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Automatic
+]]></Comment>
+      <Text><![CDATA[XIO(bitMode_Set)[XIO(seqAbort_On) ,LIM(2,intMode,3) ][MOV(1,intMode) ,OTL(bitMode_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTU(bitMode_Set);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Status Calculator]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[E-Stopped]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(EStopped)[MOV(1,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Faulted]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)[XIC(AlarmActive) ,XIC(System.Alarm) ][MOV(6,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(WaitingForUser)[MOV(30,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(WaitingForProcess)[MOV(31,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Warning]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(System.Warn)[MOV(11,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Homing]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(seqHome_On)[MOV(3,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Not Homed]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIO(System.Homed)[MOV(2,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(seqCal_On)[MOV(9,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(NotCalibrated)[MOV(13,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(seqVerify_On)[MOV(10,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(NotVerified)[MOV(12,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Not Initialized]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIO(Initialized)XIO(seqControl_On)[MOV(4,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step Mode]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(seqControl_On)XIC(System.Stepping)[MOV(5,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part Processing]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIC(seqMain_On)[MOV(8,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Idle]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)XIO(seqControl_On)XIC(Initialized)[MOV(0,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Blank
+]]></Comment>
+      <Text><![CDATA[XIO(bitStatus_Set)[MOV(-1,intStatus) ,OTL(bitStatus_Set) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTU(bitStatus_Set);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[****************************************
+*             Light stack code            *
+****************************************]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Flash Timers
+]]></Comment>
+      <Text><![CDATA[[XIO(tmrFlashOn.DN) TON(tmrFlashOff,?,?) ,XIC(tmrFlashOff.DN) TON(tmrFlashOn,?,?) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[On entering manual mode turn on the amber stacklight]]></Comment>
+      <Text><![CDATA[EQU(intMode,3)ONS(bitManualONS)OTL(Amber_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Bypass setting all outputs if in Manual Mode and keyswitch off]]></Comment>
+      <Text><![CDATA[XIO(Key_switch_Input)EQU(intMode,3)JMP(manualbypass);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Solid Red
+Not Manual Mode AND
+Faulted OR Estopped Status AND
+KeySwitch Off]]></Comment>
+      <Text><![CDATA[NEQ(intMode,3)[EQU(intStatus,1) ,EQU(intStatus,6) ]XIO(Key_switch_Input)OTE(bitRedOn);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Flashing Red
+Keyswitch On]]></Comment>
+      <Text><![CDATA[XIC(Key_switch_Input)OTE(bitRedFlash);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Red Light On Output]]></Comment>
+      <Text><![CDATA[[XIC(bitRedOn) ,XIC(bitRedFlash) XIC(tmrFlashOn.TT) ]OTL(Red_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Red Light Off Output]]></Comment>
+      <Text><![CDATA[[XIO(bitRedOn) XIO(bitRedFlash) ,XIC(bitRedFlash) XIC(tmrFlashOff.TT) ]OTU(Red_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Bypass setting Green and Amber outputs if in Manual Mode]]></Comment>
+      <Text><![CDATA[EQU(intMode,3)JMP(manualbypass);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Solid Amber
+Paused State OR
+Not Homed OR Not Initialized OR Warning OR Verify Required OR Calibration Required Status OR 
+Wait for User Amber Light Enabled AND Waiting for User Status ANDTimer Expired OR
+Wait for ProcessAmber Light Enabled AND Waiting for Process Status AND Timer Expired]]></Comment>
+      <Text><![CDATA[[EQU(intState,10) ,EQU(intStatus,2) ,EQU(intStatus,4) ,EQU(intStatus,11) ,EQU(intStatus,12) ,EQU(intStatus,13) ,XIC(bWaitUserYellowLightEnabled) EQU(intStatus,30) XIC(tmrWaitUser.DN) ,XIC(bWaitProcYellowLightEnabled) EQU(intStatus,31) XIC(tmrWaitProc.DN) ]OTE(bitAmberOn);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Amber Light On Output]]></Comment>
+      <Text><![CDATA[XIC(bitAmberOn)OTL(Amber_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Amber Light Off Output]]></Comment>
+      <Text><![CDATA[XIO(bitAmberOn)OTU(Amber_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Solid Green
+Auto Mode AND Not ESTOPPED AND Not FAULTED AND
+Stopping OR Aborting OR Starting OR Running OR Pausing OR Holding OR Resuming OR Completing State OR 
+(Held State AND (Waiting for Oper or Process Status) )]]></Comment>
+      <Text><![CDATA[EQU(intMode,1)[EQU(intState,1) ,EQU(intState,3) ,EQU(intState,7) ,EQU(intState,8) ,EQU(intState,9) ,EQU(intState,11) ,EQU(intState,13) ,EQU(intState,15) ,EQU(intState,12) [EQU(intStatus,30) ,EQU(intStatus,31) ] ]NEQ(intStatus,1)NEQ(intStatus,6)OTE(bitGreenOn);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Flash Green
+Not Auto Mode AND not ESTOPPED AND Not FAULTED AND
+Stopping OR Aborting OR Starting OR Running OR Pausing OR Holding OR Resuming OR Completing State OR 
+(Held State AND (Waiting for Oper or Process Status) )]]></Comment>
+      <Text><![CDATA[NEQ(intMode,1)[EQU(intState,1) ,EQU(intState,3) ,EQU(intState,7) ,EQU(intState,8) ,EQU(intState,9) ,EQU(intState,11) ,EQU(intState,13) ,EQU(intState,15) ,EQU(intState,12) [EQU(intStatus,30) ,EQU(intStatus,31) ] ]NEQ(intStatus,1)NEQ(intStatus,6)OTE(bitGreenFlash);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Green Light On Output]]></Comment>
+      <Text><![CDATA[[XIC(bitGreenOn) ,XIC(bitGreenFlash) XIC(tmrFlashOn.TT) ]OTL(Green_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Green Light Off Output]]></Comment>
+      <Text><![CDATA[[XIO(bitGreenOn) XIO(bitGreenFlash) ,XIC(bitGreenFlash) XIC(tmrFlashOff.TT) ]OTU(Green_Light);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(manualbypass)NOP();]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

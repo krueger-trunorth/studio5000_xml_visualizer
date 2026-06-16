@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="I_LeftLeftDoor_Locked" TagType="Alias" Radix="Decimal" AliasFor="Local:1:I.Data.16" ExternalAccess="Read/Write" />

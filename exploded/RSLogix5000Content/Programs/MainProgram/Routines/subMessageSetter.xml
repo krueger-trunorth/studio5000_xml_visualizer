@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subMessageSetter" Type="RLL">
+  <Description><![CDATA[Send Messages to HMI]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Not Homed]]></Comment>
+      <Text><![CDATA[XIO(System.Homed)XIO(seqHoming.On)XIO(seqAbort.On)COP(String_Not_Homed,String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Aborting]]></Comment>
+      <Text><![CDATA[XIC(seqAbort.On)COP(seqAbort.Status,String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Homing]]></Comment>
+      <Text><![CDATA[XIO(System.Homed)XIC(seqHoming.On)XIO(seqAbort.On)COP(Message_Homing[seqHoming.Step],String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Not Intialized]]></Comment>
+      <Text><![CDATA[EQU(System.Status,3)COP(String_Abort,String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Idle]]></Comment>
+      <Text><![CDATA[[EQU(System.Status,10) ,XIC(System.Homed) XIO(seqAbort.On) [XIO(vbVisionPro.Responses.bStartupComplete) ,XIO(seqCal_Camera.On) XIO(Bit_Camera_Cal_Perm) ] ][XIC(vbVisionPro.Responses.bStartupComplete) XIC(Bit_Camera_Cal_Perm) XIC(HMI.To_HMI.Start_PB_Visibility) COP(String_Idle,String_Status,1) ,XIC(vbVisionPro.Responses.bStartupComplete) XIC(Bit_Camera_Cal_Perm) XIO(HMI.To_HMI.Start_PB_Visibility) XIC(seqAbort.Complete) COP(String_Load_Recipe,String_Status,1) ,XIC(vbVisionPro.Responses.bStartupComplete) XIC(Bit_Camera_Cal_Perm) [XIO(HMI.To_HMI.Start_PB_Visibility) XIO(seqAbort.Complete) ,XIO(seqControl.Complete) ] COP(String_Abort,String_Status,1) ,XIO(vbVisionPro.Responses.bStartupComplete) COP(String_Startup,String_Status,1) ,XIC(vbVisionPro.Responses.bStartupComplete) XIO(Bit_Camera_Cal_Perm) COP(String_Cal,String_Status,1) ,OTU(HMI.To_HMI.Show_MSG_2) ,OTU(HMI.To_HMI.Show_MSG_3) ,OTU(HMI.To_HMI.Show_MSG_4) ,OTU(HMI.To_HMI.Show_MSG_5) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Proceed]]></Comment>
+      <Text><![CDATA[XIC(System.Homed)XIO(seqControl.On)XIC(System.Paused)XIO(System.Manual)COP(Message_Proceed,String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Running
+If spool empty stopping when robot is looking for discrete then display meesage to operatorr]]></Comment>
+      <Text><![CDATA[XIC(System.Homed)XIC(seqControl.On)XIO(SeqClearConveyor.On)[[XIO(Bit_Spool_Empty) ,XIO(Sig_Discrete_NeededBy_Robot) ] XIO(seqOpHitch.On) COP(seqRobot.Status,String_Status,1) ,XIC(Sig_Discrete_NeededBy_Robot) XIC(Bit_Spool_Empty) COP(string_Load_Spool,String_Status,1) ,XIC(seqOpHitch.On) COP(str_Maint,String_Status,1) ,XIC(seqCal_Camera.On) COP(seqCal_Camera.Status,String_Status,1) ,XIC(seqVer_Camera.On) COP(seqVer_Camera.Status,String_Status,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Clear Conveyor
+]]></Comment>
+      <Text><![CDATA[XIC(System.Homed)XIC(seqControl.On)XIC(SeqClearConveyor.On)COP(SeqClearConveyor.Status,String_Status,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(seqControl.On) ,XIC(seqManualPunch.On) ][XIC(bitLoadRecipe) ,XIC(bitLoadSettings) ,XIO(Bit_Update_Tray_Locations_Done) ][XIO(bitLoadSettingsComplete) COP(Message_Control[5],String_Status,1) ,XIC(bitLoadSettingsComplete) [XIO(bitLoadRecipeComplete) COP(Message_Control[6],String_Status,1) ,XIC(bitLoadRecipeComplete) XIO(Bit_Update_Tray_Locations_Done) COP(Message_Control[7],String_Status,1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Manual Sequence]]></Comment>
+      <Text><![CDATA[XIC(System.Manual)[XIC(seqManualPunch.On) XIO(bitLoadRecipe) XIO(bitLoadSettings) COP(seqManualPunch.Status,String_Status,1) ,XIC(seqManualHitch.On) COP(seqManualHitch.Status,String_Status,1) ,XIO(seqManualPunch.On) XIO(seqManualHitch.On) COP(Message_Blank,String_Status,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Signoff_Failed_Message)[COP(Message_Signoff,String_Status,1) ,[TON(Machine_Timers[35],?,?) ,XIO(System.Paused) XIC(Machine_Timers[35].DN) OTU(Bit_Signoff_Failed_Message) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(bitAllLocationsLoaded)[COP(K_Str_Blank.DATA[0],String_Status.DATA[0],82) ,DTOS(Servo_Loc_LoadUp,strTemp) ,CONCAT(String_LoadLocs,strTemp,String_Status) ,CONCAT(String_Status,k_str_slash,String_Status) ,DTOS(total_locations,strTemp) ,CONCAT(String_Status,strTemp,String_Status) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[UPPER(String_Status,String_Status) ,COP(String_Status,System.Message,1) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

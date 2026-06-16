@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="test_clear_ppc_times_array" TagType="Base" DataType="DINT" Dimensions="50" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="DINT" Dimensions="50" Radix="Decimal">
+      <Element Index="[0]" Value="0" />
+      <Element Index="[1]" Value="0" />
+      <Element Index="[2]" Value="0" />
+      <Element Index="[3]" Value="0" />
+      <Element Index="[4]" Value="0" />
+      <Element Index="[5]" Value="0" />
+      <Element Index="[6]" Value="0" />
+      <Element Index="[7]" Value="0" />
+      <Element Index="[8]" Value="0" />
+      <Element Index="[9]" Value="0" />
+      <Element Index="[10]" Value="0" />
+      <Element Index="[11]" Value="0" />
+      <Element Index="[12]" Value="0" />
+      <Element Index="[13]" Value="0" />
+      <Element Index="[14]" Value="0" />
+      <Element Index="[15]" Value="0" />
+      <Element Index="[16]" Value="0" />
+      <Element Index="[17]" Value="0" />
+      <Element Index="[18]" Value="0" />
+      <Element Index="[19]" Value="0" />
+      <Element Index="[20]" Value="0" />
+      <Element Index="[21]" Value="0" />
+      <Element Index="[22]" Value="0" />
+      <Element Index="[23]" Value="0" />
+      <Element Index="[24]" Value="0" />
+      <Element Index="[25]" Value="0" />
+      <Element Index="[26]" Value="0" />
+      <Element Index="[27]" Value="0" />
+      <Element Index="[28]" Value="0" />
+      <Element Index="[29]" Value="0" />
+      <Element Index="[30]" Value="0" />
+      <Element Index="[31]" Value="0" />
+      <Element Index="[32]" Value="0" />
+      <Element Index="[33]" Value="0" />
+      <Element Index="[34]" Value="0" />
+      <Element Index="[35]" Value="0" />
+      <Element Index="[36]" Value="0" />
+      <Element Index="[37]" Value="0" />
+      <Element Index="[38]" Value="0" />
+      <Element Index="[39]" Value="0" />
+      <Element Index="[40]" Value="0" />
+      <Element Index="[41]" Value="0" />
+      <Element Index="[42]" Value="0" />
+      <Element Index="[43]" Value="0" />
+      <Element Index="[44]" Value="0" />
+      <Element Index="[45]" Value="0" />
+      <Element Index="[46]" Value="0" />
+      <Element Index="[47]" Value="0" />
+      <Element Index="[48]" Value="0" />
+      <Element Index="[49]" Value="0" />
+    </Array>
+  </Data>
+</Tag>

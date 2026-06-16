@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Sequence1" Family="NoFamily" Class="User">
+  <Description><![CDATA[Sequence]]></Description>
+  <Members>
+    <Member Name="ZZZZZZZZZZSequence0" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Perm" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Permissive]]></Description>
+    </Member>
+    <Member Name="On" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Enabled]]></Description>
+    </Member>
+    <Member Name="Reset" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Reset Sequence]]></Description>
+    </Member>
+    <Member Name="StepMode" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Step Mode Enabled]]></Description>
+    </Member>
+    <Member Name="StepNext" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Next Step]]></Description>
+    </Member>
+    <Member Name="Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[Sequence Complete]]></Description>
+    </Member>
+    <Member Name="Fault" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSequence0" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[Fault]]></Description>
+    </Member>
+    <Member Name="Step" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Step]]></Description>
+    </Member>
+    <Member Name="Fault_Code" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Fault Error Code]]></Description>
+    </Member>
+    <Member Name="PermLostStep" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Step where Permissive was lost]]></Description>
+    </Member>
+    <Member Name="State" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[State]]></Description>
+    </Member>
+    <Member Name="Status" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current Status]]></Description>
+    </Member>
+  </Members>
+</DataType>

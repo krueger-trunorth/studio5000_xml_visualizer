@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Loc_Abort" TagType="Base" DataType="DINT" Radix="Decimal" Constant="true" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[2]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="DINT" Radix="Decimal" Value="2" />
+  </Data>
+</Tag>

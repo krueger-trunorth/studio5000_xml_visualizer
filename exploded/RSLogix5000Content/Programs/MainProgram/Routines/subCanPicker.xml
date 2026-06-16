@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subCanPicker" Type="RLL">
+  <Description><![CDATA[Picks cans]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from left front tray]]></Comment>
+      <Text><![CDATA[LIM(95,Just_Picked_Can,109)[SUB(Just_Picked_Can,95,Temp_Pick) ,MOV(0,Tray_Status.LeftCan_Front[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from left rear tray]]></Comment>
+      <Text><![CDATA[LIM(80,Just_Picked_Can,94)[SUB(Just_Picked_Can,80,Temp_Pick) ,MOV(0,Tray_Status.LeftCan_Rear[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from right front tray]]></Comment>
+      <Text><![CDATA[LIM(125,Just_Picked_Can,139)[SUB(Just_Picked_Can,125,Temp_Pick) ,MOV(0,Tray_Status.RightCan_Front[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from right rear tray]]></Comment>
+      <Text><![CDATA[LIM(110,Just_Picked_Can,124)[SUB(Just_Picked_Can,110,Temp_Pick) ,MOV(0,Tray_Status.RightCan_Rear[Temp_Pick]) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

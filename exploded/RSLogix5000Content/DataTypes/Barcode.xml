@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Barcode" Family="NoFamily" Class="User">
+  <Members>
+    <Member Name="ZZZZZZZZZZBarcode0" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZBarcode0" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Read Done]]></Description>
+    </Member>
+    <Member Name="Faulted" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZBarcode0" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Error]]></Description>
+    </Member>
+    <Member Name="Initialize" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZBarcode0" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Read Start]]></Description>
+    </Member>
+    <Member Name="Read_Trigger" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZBarcode0" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Read Request]]></Description>
+    </Member>
+    <Member Name="Returned_String" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Received String]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZBarcode6" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Reset_Faults" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZBarcode6" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Clear Faults]]></Description>
+    </Member>
+  </Members>
+</DataType>

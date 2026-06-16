@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="rInsTrayXSpacing_SL" TagType="Base" DataType="REAL" Radix="Float" Constant="true" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[4.06399994e+001]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="REAL" Radix="Float" Value="40.64" />
+  </Data>
+</Tag>

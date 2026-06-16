@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="PIA_Exception" Family="NoFamily" Class="User">
+  <Description><![CDATA[Reject Code]]></Description>
+  <Members>
+    <Member Name="Qty" DataType="DINT" Dimension="25" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Qty of specified reject/exceptions
+(Element to element match with reject)]]></Description>
+    </Member>
+    <Member Name="Reject" DataType="STRING" Dimension="25" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Reject Codes
+(Element to element match with qty)]]></Description>
+    </Member>
+  </Members>
+</DataType>

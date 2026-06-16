@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subPMCanTrayFind" Type="RLL">
+  <Description><![CDATA[finds lowest empty number in tray]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Finds if a empty spot is in a tray and what is the lowest index available]]></Comment>
+      <Text><![CDATA[SBR(Scratch_Array3)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,Scratch_Index3);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[0],0)MOV(1,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[1],0)MOV(2,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[2],0)MOV(3,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[3],0)MOV(4,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[4],0)MOV(5,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[5],0)MOV(6,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[6],0)MOV(7,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[7],0)MOV(8,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[8],0)MOV(9,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[9],0)MOV(10,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[10],0)MOV(11,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[11],0)MOV(12,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[12],0)MOV(13,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[13],0)MOV(14,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Scratch_Array3[14],0)MOV(15,Scratch_Index3)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(end)RET(Scratch_Index3);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

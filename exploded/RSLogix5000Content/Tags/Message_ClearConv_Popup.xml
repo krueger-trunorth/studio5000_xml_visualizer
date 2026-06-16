@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Message_ClearConv_Popup" TagType="Base" DataType="STRING" Dimensions="7" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[30,'Clear Anodes, Cathodes or Both$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[6,'Anodes$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[8,'Cathodes$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[4,'Both$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[6,'Cancel$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[8,'Purge: 1$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[10,'Purge: All$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="STRING" Dimensions="7">
+      <Element Index="[0]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="30" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Clear Anodes, Cathodes or Both']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[1]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="6" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Anodes']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[2]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="8" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Cathodes']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[3]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="4" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Both']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[4]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="6" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Cancel']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[5]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="8" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Purge: 1']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[6]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="10" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Purge: All']]></DataValueMember>
+        </Structure>
+      </Element>
+    </Array>
+  </Data>
+</Tag>

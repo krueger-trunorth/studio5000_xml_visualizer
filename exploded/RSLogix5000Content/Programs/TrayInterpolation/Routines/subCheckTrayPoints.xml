@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subCheckTrayPoints" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[OTU(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[39].Coordinate.X,LastTraysPoint[1].Coordinate.X) ,NEQ(s800.LocationConfig[39].Coordinate.Y,LastTraysPoint[1].Coordinate.Y) ,NEQ(s800.LocationConfig[39].Coordinate.Z,LastTraysPoint[1].Coordinate.Z) ,NEQ(s800.LocationConfig[39].Coordinate.Roll,LastTraysPoint[1].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[40].Coordinate.X,LastTraysPoint[2].Coordinate.X) ,NEQ(s800.LocationConfig[40].Coordinate.Y,LastTraysPoint[2].Coordinate.Y) ,NEQ(s800.LocationConfig[40].Coordinate.Z,LastTraysPoint[2].Coordinate.Z) ,NEQ(s800.LocationConfig[40].Coordinate.Roll,LastTraysPoint[2].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[41].Coordinate.X,LastTraysPoint[3].Coordinate.X) ,NEQ(s800.LocationConfig[41].Coordinate.Y,LastTraysPoint[3].Coordinate.Y) ,NEQ(s800.LocationConfig[41].Coordinate.Z,LastTraysPoint[3].Coordinate.Z) ,NEQ(s800.LocationConfig[41].Coordinate.Roll,LastTraysPoint[3].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[42].Coordinate.X,LastTraysPoint[4].Coordinate.X) ,NEQ(s800.LocationConfig[42].Coordinate.Y,LastTraysPoint[4].Coordinate.Y) ,NEQ(s800.LocationConfig[42].Coordinate.Z,LastTraysPoint[4].Coordinate.Z) ,NEQ(s800.LocationConfig[42].Coordinate.Roll,LastTraysPoint[4].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[43].Coordinate.X,LastTraysPoint[5].Coordinate.X) ,NEQ(s800.LocationConfig[43].Coordinate.Y,LastTraysPoint[5].Coordinate.Y) ,NEQ(s800.LocationConfig[43].Coordinate.Z,LastTraysPoint[5].Coordinate.Z) ,NEQ(s800.LocationConfig[43].Coordinate.Roll,LastTraysPoint[5].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[44].Coordinate.X,LastTraysPoint[6].Coordinate.X) ,NEQ(s800.LocationConfig[44].Coordinate.Y,LastTraysPoint[6].Coordinate.Y) ,NEQ(s800.LocationConfig[44].Coordinate.Z,LastTraysPoint[6].Coordinate.Z) ,NEQ(s800.LocationConfig[44].Coordinate.Roll,LastTraysPoint[6].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[45].Coordinate.X,LastTraysPoint[7].Coordinate.X) ,NEQ(s800.LocationConfig[45].Coordinate.Y,LastTraysPoint[7].Coordinate.Y) ,NEQ(s800.LocationConfig[45].Coordinate.Z,LastTraysPoint[7].Coordinate.Z) ,NEQ(s800.LocationConfig[45].Coordinate.Roll,LastTraysPoint[7].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[46].Coordinate.X,LastTraysPoint[8].Coordinate.X) ,NEQ(s800.LocationConfig[46].Coordinate.Y,LastTraysPoint[8].Coordinate.Y) ,NEQ(s800.LocationConfig[46].Coordinate.Z,LastTraysPoint[8].Coordinate.Z) ,NEQ(s800.LocationConfig[46].Coordinate.Roll,LastTraysPoint[8].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[47].Coordinate.X,LastTraysPoint[1].Coordinate.X) ,NEQ(s800.LocationConfig[47].Coordinate.Y,LastTraysPoint[1].Coordinate.Y) ,NEQ(s800.LocationConfig[47].Coordinate.Z,LastTraysPoint[1].Coordinate.Z) ,NEQ(s800.LocationConfig[47].Coordinate.Roll,LastTraysPoint[1].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[48].Coordinate.X,LastTraysPoint[2].Coordinate.X) ,NEQ(s800.LocationConfig[48].Coordinate.Y,LastTraysPoint[2].Coordinate.Y) ,NEQ(s800.LocationConfig[48].Coordinate.Z,LastTraysPoint[2].Coordinate.Z) ,NEQ(s800.LocationConfig[48].Coordinate.Roll,LastTraysPoint[2].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[49].Coordinate.X,LastTraysPoint[3].Coordinate.X) ,NEQ(s800.LocationConfig[49].Coordinate.Y,LastTraysPoint[3].Coordinate.Y) ,NEQ(s800.LocationConfig[49].Coordinate.Z,LastTraysPoint[3].Coordinate.Z) ,NEQ(s800.LocationConfig[49].Coordinate.Roll,LastTraysPoint[3].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[50].Coordinate.X,LastTraysPoint[4].Coordinate.X) ,NEQ(s800.LocationConfig[50].Coordinate.Y,LastTraysPoint[4].Coordinate.Y) ,NEQ(s800.LocationConfig[50].Coordinate.Z,LastTraysPoint[4].Coordinate.Z) ,NEQ(s800.LocationConfig[50].Coordinate.Roll,LastTraysPoint[4].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[51].Coordinate.X,LastTraysPoint[5].Coordinate.X) ,NEQ(s800.LocationConfig[51].Coordinate.Y,LastTraysPoint[5].Coordinate.Y) ,NEQ(s800.LocationConfig[51].Coordinate.Z,LastTraysPoint[5].Coordinate.Z) ,NEQ(s800.LocationConfig[51].Coordinate.Roll,LastTraysPoint[5].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[52].Coordinate.X,LastTraysPoint[6].Coordinate.X) ,NEQ(s800.LocationConfig[52].Coordinate.Y,LastTraysPoint[6].Coordinate.Y) ,NEQ(s800.LocationConfig[52].Coordinate.Z,LastTraysPoint[6].Coordinate.Z) ,NEQ(s800.LocationConfig[52].Coordinate.Roll,LastTraysPoint[6].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[53].Coordinate.X,LastTraysPoint[7].Coordinate.X) ,NEQ(s800.LocationConfig[53].Coordinate.Y,LastTraysPoint[7].Coordinate.Y) ,NEQ(s800.LocationConfig[53].Coordinate.Z,LastTraysPoint[7].Coordinate.Z) ,NEQ(s800.LocationConfig[53].Coordinate.Roll,LastTraysPoint[7].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Bit_Part_Type_LL)[NEQ(s800.LocationConfig[54].Coordinate.X,LastTraysPoint[8].Coordinate.X) ,NEQ(s800.LocationConfig[54].Coordinate.Y,LastTraysPoint[8].Coordinate.Y) ,NEQ(s800.LocationConfig[54].Coordinate.Z,LastTraysPoint[8].Coordinate.Z) ,NEQ(s800.LocationConfig[54].Coordinate.Roll,LastTraysPoint[8].Coordinate.Roll) ]OTL(NeedToRecalc);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

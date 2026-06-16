@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="I4" CatalogNumber="1769-IQ16/A" Vendor="1" ProductType="7" ProductCode="67" Major="1" Minor="1" ParentModule="Local" ParentModPortId="1" Inhibited="false" MajorFault="true">
+  <EKey State="CompatibleModule" />
+  <Ports>
+    <Port Id="1" Address="8" Type="Compact" Upstream="true" />
+  </Ports>
+  <Communications CommMethod="536870913">
+    <ConfigData ConfigSize="4">
+      <Data Format="L5K"><![CDATA[[8,102,1]]]></Data>
+    </ConfigData>
+    <Connections>
+      <Connection Name="Input" RPI="20000" Type="Input" EventID="0" ProgrammaticallySendEventTrigger="false" Unicast="false">
+        <InputTag ExternalAccess="Read/Write">
+          <Comments>
+            <Comment Operand=".DATA.0"><![CDATA[Die Type (1 = SL, 0 = LL)]]></Comment>
+            <Comment Operand=".DATA.1"><![CDATA[Left Right Door Closed]]></Comment>
+            <Comment Operand=".DATA.2"><![CDATA[Left Right Door Locked]]></Comment>
+            <Comment Operand=".DATA.3"><![CDATA[Anode LNL Gripper Opened]]></Comment>
+            <Comment Operand=".DATA.4"><![CDATA[Anode LNL Gripper Closed]]></Comment>
+            <Comment Operand=".DATA.5"><![CDATA[Cathode LNL Gripper Opened]]></Comment>
+            <Comment Operand=".DATA.6"><![CDATA[Cathode LNL Gripper Closed]]></Comment>
+            <Comment Operand=".DATA.7"><![CDATA[Cathode Tote Part Sensor]]></Comment>
+            <Comment Operand=".DATA.8"><![CDATA[Anode Tote Part Sensor]]></Comment>
+            <Comment Operand=".DATA.9"><![CDATA[From Anode   Conveyor: Ready for Part to be Placed]]></Comment>
+            <Comment Operand=".DATA.10"><![CDATA[From Anode   Conveyor: Part On Deck]]></Comment>
+            <Comment Operand=".DATA.11"><![CDATA[From Cathode Conveyor: Ready for Part to be Placed]]></Comment>
+            <Comment Operand=".DATA.12"><![CDATA[From Cathode Conveyor: Part On Deck]]></Comment>
+            <Comment Operand=".DATA.13"><![CDATA[Spare]]></Comment>
+            <Comment Operand=".DATA.14"><![CDATA[Spare]]></Comment>
+            <Comment Operand=".DATA.15"><![CDATA[Spare]]></Comment>
+          </Comments>
+          <Data Format="Decorated">
+            <Structure DataType="AB:1769_DI16:I:0">
+              <DataValueMember Name="Fault" DataType="DINT" Radix="Binary" Value="2#0000_0000_0000_0000_0000_0000_0000_0000" />
+              <DataValueMember Name="Data" DataType="INT" Radix="Binary" Value="2#0000_0000_0100_1001" />
+            </Structure>
+          </Data>
+        </InputTag>
+      </Connection>
+    </Connections>
+  </Communications>
+  <ExtendedProperties>
+    <public>
+      <ConfigID>250</ConfigID>
+    </public>
+  </ExtendedProperties>
+</Module>

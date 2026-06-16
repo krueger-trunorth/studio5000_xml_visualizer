@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="HMI" Family="NoFamily" Class="User">
+  <Description><![CDATA[Variables from HMI grouping]]></Description>
+  <Members>
+    <Member Name="From_HMI" DataType="HMI_to_PLC" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[HMI pushbutton grouping]]></Description>
+    </Member>
+    <Member Name="To_HMI" DataType="HMI_from_PLC" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Variables to HMI grouping]]></Description>
+    </Member>
+    <Member Name="Machine_Settings" DataType="HMI_Settings" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[HMI settings grouping]]></Description>
+    </Member>
+    <Member Name="Recipe" DataType="Recipe" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="SystemSettings" DataType="Settings" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

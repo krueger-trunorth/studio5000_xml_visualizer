@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Detect_Stop" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[0]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+  </Data>
+</Tag>

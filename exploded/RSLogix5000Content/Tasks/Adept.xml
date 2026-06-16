@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Task Name="Adept" Type="PERIODIC" Rate="7" Priority="10" Watchdog="500" DisableUpdateOutputs="false" InhibitTask="false">
+  <Description><![CDATA[Adept Robot Updater]]></Description>
+  <ScheduledPrograms>
+    <ScheduledProgram Name="s800_Robot" />
+  </ScheduledPrograms>
+</Task>

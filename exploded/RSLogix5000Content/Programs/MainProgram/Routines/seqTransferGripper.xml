@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqTransferGripper" Type="RLL">
+  <Description><![CDATA[Transfer Gripper Sequence]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqTransferGripper.Reset)[CLR(seqTransferGripper.Step) ,OTU(seqTransferGripper.On) ,OTU(seqTransferGripper.Fault) ,CLR(seqTransferGripper.Fault_Code) ,OTU(seqTransferGripper.Complete) ,OTU(seqTransferGripper.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[[XIC(System.Running) ,XIC(System.Manual) XIO(System.Auto) ]XIC(Permissive_Alarm_OK_TransferGripper)XIC(System.Homed)XIO(seqTransferGripper.Fault)XIO(System.Pause_IP)XIC(seqTransferGripper.On)XIO(System.Paused)OTE(seqTransferGripper.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(seqTransferGripper.StepMode)OTU(seqTransferGripper.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0:
+Retract Gripper Axis
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,0)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(bitLoadSettingsComplete)XIC(bitLoadRecipeComplete)[[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(srvTransferGripperLinearAxis.Locations[0],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].9) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(10,seqTransferGripper.Step) ,OTU(Sig_Can_Insert_Done) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 10:
+Rotary Move to Initial Location]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,10)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.RotaryTransferGripper_Speed_Empty.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[1],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].0) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) [MOV(20,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 20:
+Rotary Move to Stack Pickup Location]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,20)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.RotaryTransferGripper_Speed_Empty.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[2],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].1) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) [MOV(30,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 30:
+Main Decision Branch Step]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,30)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][XIC(System.Stopping) XIO(Bit_WIP_InMachine) XIO(seqRobot.On) [MOV(0,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ,OTU(seqTransferGripper.On) ,OTL(seqTransferGripper.Complete) ] ,XIC(Sig_StackReadyfor_Pickup) [MOV(40,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 40:
+Open Gripper
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,40)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actGripper.ACT.Extend_Req) ,XIC(actGripper.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actGripper.ACT.Extend_Complete) [MOV(50,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 50:
+Extend Linear Gripper Axis
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,50)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Xfer_Linear_Stack_Platform_Extend_Loc.Value,srvTransferGripperLinearAxis.Locations[1]) ,MOV(srvTransferGripperLinearAxis.Locations[1],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].4) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(60,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 60:
+Close Gripper
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,60)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actGripper.ACT.Retract_Req) ,XIC(actGripper.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actGripper.ACT.Retract_Complete) [MOV(65,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 65:
+Blow off stack vacuum
+start dropping stack fixture]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,65)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[OTL(actStackFixtureVac.ACT.Retract_Req) ,OTL(actStackPressure.ACT.Retract_Req) ] ,XIC(actStackPressure.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actStackFixtureVac.ACT.Retract_Complete) XIC(actStackPressure.ACT.Retract_Complete) [MOV(70,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 70:
+Shut off Stack Pressure and Vacuum, signal robot to depart]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,70)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actStackFixtureVac.ACT.Abort) ,XIO(I_Stack_Pressure_OK) [MOV(80,seqTransferGripper.Step) ,OTU(Sig_StackReadyfor_Pickup) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 80:
+Wait for robot to depart, then retract gripper linear axis]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,80)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_Departed_fromStack)[[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(srvTransferGripperLinearAxis.Locations[0],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].5) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(90,seqTransferGripper.Step) ,OTU(Sig_Robot_Departed_fromStack) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 90:
+Move to Insulator Insert Location
+
+JEO - Added extend (raising) of insulator platform so it can run in parallel. - 11/10/14
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,90)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.RotaryTransferGripper_Speed_Full.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[3],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ,OTL(actInsulator.ACT.Extend_Req) ] ,ONS(Machine_Oneshots[3].2) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,[XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) ,XIC(actInsulator.ACT.Fault) ] OTL(seqTransferGripper.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) XIC(actInsulator.ACT.Extend_Complete) [MOV(110,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Tell robot that insulator station is ready for lifting of the insulator if the insulator cycler has been raised.  Needed greater than operator because this logic can beat the robot logic that sets the handshake bit.
+
+JEO -  Created - 11/10/14]]></Comment>
+      <Text><![CDATA[GEQ(seqTransferGripper.Step,90)XIC(actInsulator.ACT.Extend_Complete)OTU(Sig_Robot_AtInsulator_Handoff);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 100:
+Is robot ready at insulator handoff?  If so raise boot]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,100)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_AtInsulator_Handoff)[OTL(actInsulator.ACT.Extend_Req) ,XIC(actInsulator.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actInsulator.ACT.Extend_Complete) [MOV(110,seqTransferGripper.Step) ,OTU(Sig_Robot_AtInsulator_Handoff) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 110:
+Is robot in place with boot?]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,110)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_Ready_toPlaceInsulator)[[OTL(actInsulatorVac.ACT.Extend_Req) ,XIC(Bit_Part_Type_LL) OTL(actInsulatorVacBck.ACT.Extend_Req) ] ,XIC(actInsulatorVac.ACT.Extend_Complete) [XIC(actInsulatorVacBck.ACT.Extend_Complete) ,XIO(Bit_Part_Type_LL) ] [[EQU(Machine_Run_Recipe.Unfold_from_End_Dist.Value,0) ,EQU(Machine_Run_Recipe.Unfold_Length.Value,0) ] MOV(120,seqTransferGripper.Step) ,NEQ(Machine_Run_Recipe.Unfold_from_End_Dist.Value,0) NEQ(Machine_Run_Recipe.Unfold_Length.Value,0) MOV(122,seqTransferGripper.Step) ,OTU(Sig_Robot_Ready_toPlaceInsulator) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 120:
+Is robot in stretch position? If so extend gripper linear axis]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,120)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_Stretch_Done)[[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Xfer_Linear_Stack_Platform_Insulator_Loc.Value,srvTransferGripperLinearAxis.Locations[2]) ,MOV(srvTransferGripperLinearAxis.Locations[2],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].6) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(130,seqTransferGripper.Step) ,OTU(Sig_Robot_Stretch_Done) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 122: custom recipe moving
+move final distance up to unfold]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,122)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_Stretch_Done)[[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,CPT(Real_Moveto_Loc,Machine_Run_Recipe.Xfer_Linear_Stack_Platform_Insulator_Loc.Value-Machine_Run_Recipe.Unfold_from_End_Dist.Value) ,MOV(Real_Moveto_Loc,srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].26) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(124,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 124: custom recipe moving
+back up and go to 120]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,124)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_Stretch_Done)[[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,CPT(Real_Moveto_Loc2,Real_Moveto_Loc-Machine_Run_Recipe.Unfold_Length.Value) ,MOV(Real_Moveto_Loc2,srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].27) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(120,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 130:
+Handoff to Transfer Gripper from insulator cylinder with a purge]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,130)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Robot_DepartedfromStretch)[[OTL(actInsulatorVac.ACT.Retract_Req) ,XIC(Bit_Part_Type_LL) OTL(actInsulatorVacBck.ACT.Retract_Req) ] ,XIC(actInsulatorVac.ACT.Retract_Complete) [XIC(actInsulatorVacBck.ACT.Retract_Complete) ,XIO(Bit_Part_Type_LL) ] [MOV(140,seqTransferGripper.Step) ,OTU(Sig_Robot_DepartedfromStretch) ,OTL(actInsulatorVac.ACT.Abort) ,OTL(actInsulatorVacBck.ACT.Abort) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 140:
+Lower Insulator Cylinder]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,140)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actInsulator.ACT.Retract_Req) ,XIC(actInsulator.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actInsulator.ACT.Retract_Complete) [MOV(150,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 150:
+Retract gripper linear axis]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,150)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(srvTransferGripperLinearAxis.Locations[0],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].7) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(160,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 160:
+Move to Can Handoff Location]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,160)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.RotaryTransferGripper_Speed_Full.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[4],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].3) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) [MOV(165,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 165:
+Check gripper to make sure the stack did not fall out of gripper]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,165)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][XIO(I_Gripper_Closed) [OTL(seqTransferGripper.Fault) ,OTL(bitGripperClosedSensorOff) ] ,XIC(I_Gripper_Closed) MOV(170,seqTransferGripper.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 170:
+Extend linear axis Gripper when ready for insertion into can]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,170)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Can_Readyfor_Stack)[[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Xfer_Linear_Stack_Insert_Loc.Value,srvTransferGripperLinearAxis.Locations[3]) ,MOV(srvTransferGripperLinearAxis.Locations[3],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].8) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(180,seqTransferGripper.Step) ,OTU(Sig_Can_Readyfor_Stack) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 180:
+Open Gripper]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,180)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ]XIC(Sig_Can_Insert_Done)[OTL(actGripper.ACT.Extend_Req) ,XIC(actGripper.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actGripper.ACT.Extend_Complete) [MOV(190,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 190: is 2nd insert required? if no, return to initial step
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,190)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][GRT(Machine_Run_Recipe.Xfer_Linear_Stack_Retract_Dist.Value,0) [MOV(200,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ,EQU(Machine_Run_Recipe.Xfer_Linear_Stack_Retract_Dist.Value,0) [MOV(0,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 200: retract 2nd insert distance
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,200)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,NEG(Machine_Run_Recipe.Xfer_Linear_Stack_Retract_Dist.Value,Calc_Move_Back) ,MOV(Calc_Move_Back,srvTransferGripperLinearAxis.Command.Move_Rel_Position) ] ,ONS(Machine_Oneshots[3].24) OTL(srvTransferGripperLinearAxis.Command.Move_Rel_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Rel_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveRelComplete) [MOV(210,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 210: close gripper
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,210)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actGripper.ACT.Retract_Req) ,XIC(actGripper.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actGripper.ACT.Retract_Complete) [MOV(220,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 220: extend linear gripper axis
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,220)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][[MOV(Settings.LinearTransferGripper_Speed_Full.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Xfer_Linear_Stack_Insert_Loc.Value,srvTransferGripperLinearAxis.Locations[3]) ,MOV(srvTransferGripperLinearAxis.Locations[3],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].25) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqTransferGripper.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(230,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 230: open gripper and return to beginning]]></Comment>
+      <Text><![CDATA[EQU(seqTransferGripper.Step,230)XIC(seqTransferGripper.Perm)[XIC(System.Auto) ,XIC(seqTransferGripper.StepNext) ][OTL(actGripper.ACT.Extend_Req) ,XIC(actGripper.ACT.Fault) OTL(seqTransferGripper.Fault) ,XIC(actGripper.ACT.Extend_Complete) [MOV(0,seqTransferGripper.Step) ,OTU(seqTransferGripper.StepNext) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

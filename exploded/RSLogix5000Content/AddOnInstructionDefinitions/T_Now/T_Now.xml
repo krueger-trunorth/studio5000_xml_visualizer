@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AddOnInstructionDefinition Name="T_Now" Revision="1.0" RevisionExtension="Example" Vendor="Rockwell Automation" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2008-04-04T14:39:38.945Z" CreatedBy="NA\dereed" EditedDate="2008-07-02T16:36:29.989Z" EditedBy="NA\dereed" SoftwareRevision="v16.03">
+  <Description><![CDATA[Current DateTime]]></Description>
+  <RevisionNote><![CDATA[Release for V17 CD as Date/Time Examples]]></RevisionNote>
+  <AdditionalHelpText><![CDATA[Returns the current local Date and Time from the controller clock as a DateTime In/Out Parameter
+
+This instuction depends on the (external) DateTime data type:
+   Yr : DINT    year
+   Mo : DINT    month
+   Da : DINT    day
+   Hr : DINT    hour
+   Min : DINT    minute
+   Sec : DINT    second
+   uSec : DINT    microsecond]]></AdditionalHelpText>
+  <Parameters>
+    <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Input - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Output - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_Out" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Returned current date/time from controller clock]]></Description>
+    </Parameter>
+  </Parameters>
+  <LocalTags>
+    <LocalTag Name="Wrk_DT" DataType="DINT" Dimensions="7" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Date / Time from GSV instruction (requires array)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="7" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+          <Element Index="[2]" Value="0" />
+          <Element Index="[3]" Value="0" />
+          <Element Index="[4]" Value="0" />
+          <Element Index="[5]" Value="0" />
+          <Element Index="[6]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+  </LocalTags>
+  <Routines />
+</AddOnInstructionDefinition>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="vbRobotLoc" TagType="Base" DataType="ORT_RobotLoc" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Robot Connection]]></Description>
+  <Data Format="L5K"><![CDATA[[0,[-1,-1,-1,-1,-1,-1,-1,-1,0,0],[-1,-1,-1,-1,-1,-1,-1,-1,0,0]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_RobotLoc">
+      <DataValueMember Name="bitExit" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitHeartbeat" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitSaveAll" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitLoadAll" DataType="BOOL" Value="0" />
+      <ArrayMember Name="intRbtLoadLoc" DataType="DINT" Dimensions="10" Radix="Decimal">
+        <Element Index="[0]" Value="-1" />
+        <Element Index="[1]" Value="-1" />
+        <Element Index="[2]" Value="-1" />
+        <Element Index="[3]" Value="-1" />
+        <Element Index="[4]" Value="-1" />
+        <Element Index="[5]" Value="-1" />
+        <Element Index="[6]" Value="-1" />
+        <Element Index="[7]" Value="-1" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="intRbtMismatch" DataType="DINT" Dimensions="10" Radix="Decimal">
+        <Element Index="[0]" Value="-1" />
+        <Element Index="[1]" Value="-1" />
+        <Element Index="[2]" Value="-1" />
+        <Element Index="[3]" Value="-1" />
+        <Element Index="[4]" Value="-1" />
+        <Element Index="[5]" Value="-1" />
+        <Element Index="[6]" Value="-1" />
+        <Element Index="[7]" Value="-1" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+      </ArrayMember>
+    </Structure>
+  </Data>
+</Tag>

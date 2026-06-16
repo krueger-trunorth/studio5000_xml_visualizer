@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_Vision_Camera" Family="NoFamily" Class="User">
+  <Members>
+    <Member Name="Requests" DataType="ORT_Vision_Camera_Requests" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The camera requests from the PLC to the vision system]]></Description>
+    </Member>
+    <Member Name="Responses" DataType="ORT_Vision_Camera_Responses" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Responses to camera requests. Sent from the vision system to the PLC]]></Description>
+    </Member>
+    <Member Name="Results" DataType="ORT_Vision_Camera_Results" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Inspection results from the vision system to the PLC]]></Description>
+    </Member>
+    <Member Name="SavePaths" DataType="ORT_Vision_Camera_Save_Paths" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Image Saving Paths]]></Description>
+    </Member>
+    <Member Name="LiveSettings" DataType="ORT_Vision_Camera_Live_Settings" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Live view settings from the PLC to the vision system]]></Description>
+    </Member>
+  </Members>
+</DataType>

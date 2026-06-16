@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_Exec" Type="RLL">
+  <Description><![CDATA[Robot Manager]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqRobot.Reset)[CLR(seqRobot.Step) ,OTU(seqRobot.On) ,OTU(seqRobot.Fault) ,CLR(seqRobot.Fault_Code) ,OTU(seqRobot.Complete) ,OTU(seqRobot.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[[XIC(System.Running) ,XIC(System.Manual) XIO(System.Auto) ]XIC(Permissive_Alarm_OK_Robot)XIO(seqRobot.Fault)XIO(System.Pause_IP)XIC(seqRobot.On)XIO(System.Paused)OTE(seqRobot.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(seqRobot.StepMode)OTU(seqRobot.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0:
+Load Recipe
+
+JEO - Added auto select of recipe based on die sensor. - 08/07/14]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,0)XIC(seqRobot.Perm)CONCAT(Message_Robot[0],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIC(bitLoadSettingsComplete)[ONS(onsBits[0].7) [OTL(bitLoadRecipe) ,XIC(I_Die_Type) COP(Settings.SL_Recipe_Name.Value,HMI.Recipe.TempRecipeName,1) ,XIO(I_Die_Type) COP(Settings.LL_Recipe_Name.Value,HMI.Recipe.TempRecipeName,1) ] ,XIO(bitLoadRecipe) XIC(bitLoadRecipeComplete) [MOV(5,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 2:
+Close Stack wings]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,2)XIC(seqRobot.Perm)CONCAT(Message_Robot[2],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actStackWings.ACT.Retract_Req) ,XIC(actStackWings.ACT.Fault) OTL(seqRobot.Fault) ,XIC(actStackWings.ACT.Retract_Complete) [MOV(5,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 5:
+Turn on Stack Pressure
+Initialize Battery Layers In Progress]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,5)XIC(seqRobot.Perm)CONCAT(Message_Robot[3],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actStackPressure.ACT.Extend_Req) ,ONS(Machine_Oneshots[4].3) OTL(Bit_Clear_WIP) ,XIC(actStackPressure.ACT.Extend_Complete) XIO(Bit_Clear_WIP) [[XIC(Bit_PMDiscreteStartup_Req) MOV(300,seqRobot.Step) ,XIO(Bit_PMDiscreteStartup_Req) MOV(9,seqRobot.Step) ] ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 9:
+Robot Decision Step
+stop, load, or run
+
+JEO - Turned off cycle time monitoring if stopping since stack is complete at this point. - 11/10/14]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,9)XIC(seqRobot.Perm)CONCAT(Message_Robot[4],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Bit_Clear_WIP)[XIC(System.Stopping) XIO(Bit_WIP_InMachine) [CLR(seqRobot.Step) ,OTU(bCycle_TIme) ,OTL(actStackWings.ACT.Extend_Req) ,OTU(seqRobot.On) ,OTL(seqRobot.Complete) ,OTU(seqRobot.StepNext) ,OTU(bitStackingDiscretes) ] ,[XIO(Bit_Parts_Present_in_Trays) ,XIC(Bit_Cant_Finish_Battery_Without_Parts) ] [XIO(Bit_WIP_InMachine) ,XIO(System.Stopping) ,GEQ(intCurrent_Queued_Stack_Layer,1) ] XIO(HMI.To_HMI.Notification) [MOV(15,seqRobot.Step) ,OTU(bCycle_TIme) ] ,[XIC(Bit_Parts_Present_in_Trays) XIO(System.Stopping) ,XIC(Bit_WIP_InMachine) ] XIO(Bit_Cant_Finish_Battery_Without_Parts) MOV(10,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 10:
+Main decision 'jump to job' step
+0=start can
+stack layer>recipe layers=ready for insulator
+step 100=bot anode
+step 200 = stack
+step 300 = discrete
+step 400 = cathode
+step 500 = top anode
+step 600 = insulator
+step 700 = can place new
+step 750 = can pick completed
+step 800 = reject 
+If first layer is a discrete then do not place a can
+
+JEO - Updated to include the two additional queue layers we are adding.  - 05/14/15]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,10)XIC(seqRobot.Perm)CONCAT(Message_Robot[5],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ADD(Machine_Run_Recipe.Number_of_Layers.Value,1,Calc_InsulatorDecide) ,EQU(StackData.Current_Stack_Layer,1) [GEQ(intCurrent_Queued_Stack_Layer,5) [CPS(StackDataQueue[4],StackData.Layer[4],1) ,CPS(Blank_Layer,StackDataQueue[4],1) ] ,GEQ(intCurrent_Queued_Stack_Layer,4) [CPS(StackDataQueue[3],StackData.Layer[3],1) ,CPS(Blank_Layer,StackDataQueue[3],1) ] ,GEQ(intCurrent_Queued_Stack_Layer,3) [CPS(StackDataQueue[2],StackData.Layer[2],1) ,CPS(Blank_Layer,StackDataQueue[2],1) ] ,GEQ(intCurrent_Queued_Stack_Layer,2) [CPS(StackDataQueue[1],StackData.Layer[1],1) ,CPS(Blank_Layer,StackDataQueue[1],1) ,MOV(intCurrent_Queued_Stack_Layer,StackData.Current_Stack_Layer) ,MOV(1,intCurrent_Queued_Stack_Layer) ] ] ,OTU(seqRobot.StepNext) ,JSR(subStackStepDecide,1,StackData.Current_Stack_Layer,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 15:
+Flag user to reload parts, cans or insulators were empty from the trays
+(or no cathodes or anodes in 1 up mode)]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,15)XIC(seqRobot.Perm)CONCAT(Message_Robot[6],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTE(Bit_Allow_TraceData_Changing) ,COP(Message_Robot_Popup[0],HMI.To_HMI.Msgbox_Prompt,1) ,COP(Message_Robot_Popup[1],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Robot_Popup[2],HMI.To_HMI.Msgbox_Button_2,1) ,COP(K_Str_Blank,String_ManualLoad,1) ,[XIC(Bit_NeedCan) CONCAT(Message_Robot_Popup[3],String_Can,String_ManualLoad) ,XIC(Bit_NeedInsulator) CONCAT(Message_Robot_Popup[3],String_Insulator,String_ManualLoad) ,XIC(Bit_NeedTAnode) CONCAT(Message_Robot_Popup[3],String_TAnode,String_ManualLoad) ,XIC(Bit_NeedBAnode) CONCAT(Message_Robot_Popup[3],String_BAnode,String_ManualLoad) ,XIC(Bit_NeedCathode) CONCAT(Message_Robot_Popup[3],String_Cathode,String_ManualLoad) ,XIO(Bit_NeedCan) XIO(Bit_NeedInsulator) XIO(Bit_NeedTAnode) XIO(Bit_NeedBAnode) XIO(Bit_NeedCathode) COP(Message_Robot_Popup[3],String_ManualLoad,1) ] ,COP(String_ManualLoad,HMI.To_HMI.Msgbox_Button_3,1) ,OTL(HMI.To_HMI.Show_MSG_3) ,XIC(HMI.From_HMI.Msgbox_Button_1) [MOV(9,seqRobot.Step) ,OTL(Bit_LoadIn_TrayParts) ,OTU(Bit_Cant_Finish_Battery_Without_Parts) ,OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.To_HMI.Show_MSG_3) ,OTU(Bit_NeedCan) OTU(Bit_NeedInsulator) OTU(Bit_NeedTAnode) OTU(Bit_NeedBAnode) OTU(Bit_NeedCathode) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [MOV(9,seqRobot.Step) ,OTL(Bit_Clear_Tray_Parts) ,OTL(Bit_Clear_WIP) ,OTL(HMI.From_HMI.Abort_PB) ,OTU(Bit_Cant_Finish_Battery_Without_Parts) ,OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.To_HMI.Show_MSG_3) ,OTU(Bit_NeedCan) OTU(Bit_NeedInsulator) OTU(Bit_NeedTAnode) OTU(Bit_NeedBAnode) OTU(Bit_NeedCathode) ] ,XIC(HMI.From_HMI.Msgbox_Button_3) [MOV(9,seqRobot.Step) ,OTU(HMI.From_HMI.Msgbox_Button_3) ,OTU(Bit_Cant_Finish_Battery_Without_Parts) ,OTU(HMI.To_HMI.Show_MSG_3) ,OTU(Bit_NeedCan) OTU(Bit_NeedInsulator) OTU(Bit_NeedTAnode) OTU(Bit_NeedBAnode) OTU(Bit_NeedCathode) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 20: begin work on second battery while 1st battery is being processed (if enabled kl 040413)
+if 1st layer is not a bottom anode or discrete do not do anything, just wait for can sequence to finish
+
+JEO - Added logic for the two additional layers.
+Added logic to stop working on queued stack if signoff is complete.
+Removed requirements for layer 1 to be a bottom anode and layer 2 to be a discrete.
+Added look ahead to see if there is raw material available otherwise wait for signoff.  We don't want to end up stuck waiting for material from upstream processes in case those machines have been stopped.   - 05/14/15]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,20)XIC(seqRobot.Perm)CONCAT(Message_Robot[7],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIC(Bit_Working_On_Queue_Battery)[JSR(subStackStepDecide,1,intCurrent_Queued_Stack_Layer,Step) ,[XIO(Sig_CanInsert_Ready_with_Can) ,XIO(HMI.To_HMI.PIABypass) ] XIO(Pia.Machine.Signoff_Complete) GRT(Settings.EnableBatteryQueue.Value,0.5) LES(intCurrent_Queued_Stack_Layer,5) [XIC(Bit_Processing_Anode) XIC(Bit_ConvAnode_Available) ,XIC(Bit_Processing_Cathode) XIC(Bit_ConvCathode_Available) ,XIC(Bit_Processing_Discrete) XIC(Bit_Discrete_AtPunch) ] MOV(Step,seqRobot.Step) ,[XIC(Pia.Machine.Signoff_Complete) ,XIC(HMI.To_HMI.PIABypass) ] NEQ(Step,seqRobot.Step) [MOV(25,seqRobot.Step) ,OTU(Bit_Working_On_Queue_Battery) ] ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 25: completed 1st layer of queue battery, return to can insertion pickup]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,25)XIC(seqRobot.Perm)CONCAT(Message_Robot[8],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIC(Sig_CanInsert_Ready_with_Can)[ONS(Machine_Oneshots[5].8) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(755,seqRobot.Step) ,OTU(Bit_Working_On_Queue_Battery) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

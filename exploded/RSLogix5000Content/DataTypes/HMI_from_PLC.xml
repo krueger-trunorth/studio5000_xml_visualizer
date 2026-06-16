@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="HMI_from_PLC" Family="NoFamily" Class="User">
+  <Description><![CDATA[Machine cal ratio display]]></Description>
+  <Members>
+    <Member Name="Msgbox_Prompt" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Prompt for message box]]></Description>
+    </Member>
+    <Member Name="Msgbox_Button_1" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message to go in button message (keep short)]]></Description>
+    </Member>
+    <Member Name="Msgbox_Button_2" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message to go in button message (keep short)]]></Description>
+    </Member>
+    <Member Name="Msgbox_Button_3" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message to go in button message (keep short)]]></Description>
+    </Member>
+    <Member Name="Msgbox_Button_4" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message to go in button message (keep short)]]></Description>
+    </Member>
+    <Member Name="Msgbox_Button_5" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message to go in button message (keep short)]]></Description>
+    </Member>
+    <Member Name="Barcode_Read" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Last Barcode Read]]></Description>
+    </Member>
+    <Member Name="Image_Display_Path" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Login/logout permitted]]></Description>
+    </Member>
+    <Member Name="ActiveRecipe" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Username" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZHMI_from_P10" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Show_MSG_2" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show Msgbox Popup w/2 Buttons]]></Description>
+    </Member>
+    <Member Name="Show_MSG_3" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show Msgbox Popup w/3 Buttons]]></Description>
+    </Member>
+    <Member Name="Show_MSG_4" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show Msgbox Popup w/4 Buttons]]></Description>
+    </Member>
+    <Member Name="Show_MSG_5" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show Msgbox Popup w/5 Buttons]]></Description>
+    </Member>
+    <Member Name="Notification" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show Message Box]]></Description>
+    </Member>
+    <Member Name="LoadSpoolVisible" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[Visible]]></Description>
+    </Member>
+    <Member Name="Allow_Manual_Can_Entry" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[Visible]]></Description>
+    </Member>
+    <Member Name="TraceDataEntryAllowed" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P10" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[Visible]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZHMI_from_P19" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Start_PB_Visibility" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Visible]]></Description>
+    </Member>
+    <Member Name="LoadRecipe" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="1" ExternalAccess="Read/Write" />
+    <Member Name="LoadSettings" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="2" ExternalAccess="Read/Write" />
+    <Member Name="ChangeCalImage" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Tells display to change the calibration image]]></Description>
+    </Member>
+    <Member Name="ChangeMainImage" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Tells the display to change the main image]]></Description>
+    </Member>
+    <Member Name="LogoutPerm" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[Login/logout permitted]]></Description>
+    </Member>
+    <Member Name="PM_Demand_Discrete_Visible" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="6" ExternalAccess="Read/Write" />
+    <Member Name="PM_Demand_Can_Visible" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P19" BitNumber="7" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZHMI_from_P28" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="ManualPBEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P28" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="Manual_Hitch_Number" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of times to manually hitch webline]]></Description>
+    </Member>
+    <Member Name="CalDisplayIndex" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Tells Calibration Display to show image]]></Description>
+    </Member>
+    <Member Name="MainDisplayIndex" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Tells Main Display to load image]]></Description>
+    </Member>
+    <Member Name="AccessLevel" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Manual_Punch_Number" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of times to manually punch webline]]></Description>
+    </Member>
+    <Member Name="PMCanDueIn" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[when PM due]]></Description>
+    </Member>
+    <Member Name="PMDiscreteDueIn" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[when PM due]]></Description>
+    </Member>
+    <Member Name="AutoPMDiscrete_Completed" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="AutoPMDiscrete_ToDo" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="AutoPMCan_Completed" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="AutoPMCan_ToDo" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="DemandPMDiscrete_Completed" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="DemandPMDiscrete_ToDo" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="DemandPMCan_Completed" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="DemandPMCan_ToDo" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_Discrete_Demand_QTY" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_Can_Demand_QTY" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Good_Parts" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Bad_Parts" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="X_Measure" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Measurement]]></Description>
+    </Member>
+    <Member Name="Y_Measure" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Measurement]]></Description>
+    </Member>
+    <Member Name="R_Measure" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Measurement]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZHMI_from_P52" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="HomeEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Home PB Enable]]></Description>
+    </Member>
+    <Member Name="StopEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Stop PB Enable]]></Description>
+    </Member>
+    <Member Name="ProceedEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Proceed PB Enable]]></Description>
+    </Member>
+    <Member Name="PauseEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pause PB Enable]]></Description>
+    </Member>
+    <Member Name="VerifyEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="4" ExternalAccess="Read/Write" />
+    <Member Name="ResetDieEnable" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="5" ExternalAccess="Read/Write" />
+    <Member Name="SaveSettings" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P52" BitNumber="6" ExternalAccess="Read/Write" />
+    <Member Name="Mach1_State" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Mach1_Mode" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZHMI_from_P62" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="PIABypass" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P62" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="TopTaskBar_StatusText" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="TopTaskBar_StatusColor" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZHMI_from_P66" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="LoadServoLoc" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P66" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="SaveServoLoc" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZHMI_from_P66" BitNumber="1" ExternalAccess="Read/Write" />
+    <Member Name="ServoNumber" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ServoLocNumber" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="SaveServoData" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ServoLocXMLFile" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

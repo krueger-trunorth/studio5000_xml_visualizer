@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Logic" Type="RLL">
+  <Description><![CDATA[Multiply 64-bit (LINT) by 32-bit (DINT), with 64-bit (LINT) result]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[============================================================
+L_MUL : 64-bit X 32-bit Multiply (64-bit result)
+============================================================
+Revision 1.0-00 Release:  2009-Jul-31
+Initial Release
+============================================================
+Multiplies a LINT (signed 64-bit) integer by a DINT (signed 32-bit) integer
+and returns a LINT (signed 64-bit) product.
+
+This instruction breaks the LINT input into five DINTs
+(13, 13, 13, 13 and 12 bits) to do the math in order to
+avoid generating a Controller MINOR FAULT on overflow.
+The controller must take time to log the minor faults, and many users
+do not want to see Minor Faults on normal math operations.
+See the RSLogix 5000 Help Topic "Arithmetic Status Flags" for more information.)
+===================================================
+CONVERT LINT INPUT TO DINTs
+===================================================
+This COPy takes the input LINT and breaks it into a pair of DINTs so we can do math on it.
+Logix V17 has a LINT data type, but math instructions (and AOI Input
+and Output Parameters) and bitwise (BTD) instructions don't support LINT.]]></Comment>
+      <Text><![CDATA[COP(Inp_A,Wrk_InpA[0],2);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[===================================================
+TRACK SIGNS
+===================================================
+If the LINT input is negative, track that, and negate it.
+If the DINT input is negative, track that, and negate it.
+We'll do the multiplication with the unsigned values, then
+figure out the sign of the product.]]></Comment>
+      <Text><![CDATA[[XIC(Wrk_InpA[1].31) [NOT(Wrk_InpA[0],Wrk_InpA[0]) NOT(Wrk_InpA[1],Wrk_InpA[1]) ,EQU(Wrk_InpA[0],16#7FFF_FFFF) MOV(16#8000_0000,Wrk_InpA[0]) OTE(Wrk_InpALoOvflw) ,XIO(Wrk_InpALoOvflw) ADD(Wrk_InpA[0],1,Wrk_InpA[0]) ,EQU(Wrk_InpA[0],0) [EQU(Wrk_InpA[1],16#7FFF_FFFF) MOV(16#8000_0000,Wrk_InpA[1]) OTE(Wrk_InpAHiOvflw) ,XIO(Wrk_InpAHiOvflw) ADD(Wrk_InpA[1],1,Wrk_InpA[1]) ] ,OTE(Wrk_A_Sign) ] ,ABS(Inp_B,Wrk_InpB) XIC(Inp_B.31) OTE(Wrk_B_Sign) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[===================================================
+SPREAD 64 BITS ACROSS FIVE DINTs
+===================================================
+If we multiply 16 bits by 16 bits to get 32, the math may overflow,
+ setting the S:V status bit and THROWING A MINOR FAULT.
+ (We want to do unsigned multiplicaiton, but DINTs are signed...)
+
+So we multiply 13 bits by 13 bits to get 26 and then build the partial sums.
+
+Doing the 13x13 -> 26 bit MULs and 26+26 -> 27 bit ADDs ensures
+we never have an Overflow that throws a Minor Fault.
+The BTDs split the 64 bits of Input A among the fjve DINTs used in the math.]]></Comment>
+      <Text><![CDATA[FLL(0,Wrk_A[0],5)[BTD(Wrk_InpA[0],0,Wrk_A[0],0,13) BTD(Wrk_InpA[0],13,Wrk_A[1],0,13) BTD(Wrk_InpA[0],26,Wrk_A[2],0,6) ,BTD(Wrk_InpA[1],0,Wrk_A[2],6,7) BTD(Wrk_InpA[1],7,Wrk_A[3],0,13) BTD(Wrk_InpA[1],20,Wrk_A[4],0,12) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[We need to do the same with our 32-bit input, because we will be
+doing "elementary school place value multiplication" in 13-bit groups.]]></Comment>
+      <Text><![CDATA[FLL(0,Wrk_B[0],3)BTD(Wrk_InpB,0,Wrk_B[0],0,13)BTD(Wrk_InpB,13,Wrk_B[1],0,13)BTD(Wrk_InpB,26,Wrk_B[2],0,6);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[MUL(Wrk_A[0],Wrk_B[0],Wrk_CX) MUL(Wrk_A[1],Wrk_B[0],Wrk_DX) MUL(Wrk_A[2],Wrk_B[0],Wrk_EX) MUL(Wrk_A[3],Wrk_B[0],Wrk_FX) MUL(Wrk_A[4],Wrk_B[0],Wrk_GX) ,MUL(Wrk_A[0],Wrk_B[1],Wrk_CY) MUL(Wrk_A[1],Wrk_B[1],Wrk_DY) MUL(Wrk_A[2],Wrk_B[1],Wrk_EY) MUL(Wrk_A[3],Wrk_B[1],Wrk_FY) ,MUL(Wrk_A[0],Wrk_B[2],Wrk_CZ) MUL(Wrk_A[1],Wrk_B[2],Wrk_DZ) MUL(Wrk_A[2],Wrk_B[2],Wrk_EZ) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CLR(Wrk_EXCX)CLR(Wrk_GXEX)CLR(Wrk_FYDY)CLR(Wrk_EZCZ)CLR(Wrk_DY00)CLR(Wrk_CZ00);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[BTD(Wrk_EX,0,Wrk_EXCX,13,13)BTD(Wrk_CX,13,Wrk_EXCX,0,13)BTD(Wrk_GX,0,Wrk_GXEX,13,13)BTD(Wrk_EX,13,Wrk_GXEX,0,13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[BTD(Wrk_FY,0,Wrk_FYDY,13,13)BTD(Wrk_DY,13,Wrk_FYDY,0,13)BTD(Wrk_EZ,0,Wrk_EZCZ,13,13)BTD(Wrk_CZ,13,Wrk_EZCZ,0,13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[BTD(Wrk_DY,0,Wrk_DY00,13,13)BTD(Wrk_CZ,0,Wrk_CZ00,13,13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(Wrk_DX,Wrk_EXCX,Wrk_Sum[0])ADD(Wrk_Sum[0],Wrk_CY,Wrk_Sum[0])ADD(Wrk_Sum[0],Wrk_DY00,Wrk_Sum[0])ADD(Wrk_Sum[0],Wrk_CZ00,Wrk_Sum[0])BTD(Wrk_Sum[0],26,Wrk_Carry,0,6);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[ADD(Wrk_Carry,Wrk_FX,Wrk_Sum[1]) ADD(Wrk_Sum[1],Wrk_GXEX,Wrk_Sum[1]) ADD(Wrk_Sum[1],Wrk_EY,Wrk_Sum[1]) ,ADD(Wrk_Sum[1],Wrk_FYDY,Wrk_Sum[1]) ADD(Wrk_Sum[1],Wrk_DZ,Wrk_Sum[1]) ADD(Wrk_Sum[1],Wrk_EZCZ,Wrk_Sum[1]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTU(Wrk_Out[1].31)BTD(Wrk_Sum[1],0,Wrk_Out[1],7,24)BTD(Wrk_Sum[0],19,Wrk_Out[1],0,7)BTD(Wrk_Sum[0],0,Wrk_Out[0],13,19)BTD(Wrk_CX,0,Wrk_Out[0],0,13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[===================================================
+DETERMINE SIGN OF FINAL PRODUCT
+===================================================
+If only one of the Inputs is negative, negate the product.]]></Comment>
+      <Text><![CDATA[[XIC(Wrk_A_Sign) XIO(Wrk_B_Sign) ,XIO(Wrk_A_Sign) XIC(Wrk_B_Sign) ][NOT(Wrk_Out[0],Wrk_Out[0]) NOT(Wrk_Out[1],Wrk_Out[1]) ,EQU(Wrk_Out[0],16#7FFF_FFFF) MOV(16#8000_0000,Wrk_Out[0]) OTE(Wrk_OutLoOvflw) ,XIO(Wrk_OutLoOvflw) ADD(Wrk_Out[0],1,Wrk_Out[0]) ,EQU(Wrk_Out[0],0) [EQU(Wrk_Out[1],16#7FFF_FFFF) MOV(16#8000_0000,Wrk_Out[1]) OTE(Wrk_OutHiOvflw) ,XIO(Wrk_OutHiOvflw) ADD(Wrk_Out[1],1,Wrk_Out[1]) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[COP(Wrk_Out[0],Out,1);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Motion_System" TagType="Base" DataType="MOTION_GROUP" ExternalAccess="Read/Write">
+  <Data Format="MotionGroup">
+    <MotionGroupParameters CoarseUpdatePeriod="2000" PhaseShift="0" GeneralFaultType="Non Major Fault" AutoTagUpdate="Enabled" Alternate1UpdateMultiplier="4" Alternate2UpdateMultiplier="8" />
+  </Data>
+</Tag>

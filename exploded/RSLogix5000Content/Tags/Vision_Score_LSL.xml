@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Vision_Score_LSL" TagType="Base" DataType="REAL" Radix="Float" Constant="true" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[6.00000000e-001]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="REAL" Radix="Float" Value="0.6" />
+  </Data>
+</Tag>

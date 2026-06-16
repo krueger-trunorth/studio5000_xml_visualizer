@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_Vision_Display_Info" Family="NoFamily" Class="User">
+  <Description><![CDATA[Information about the HMI Display]]></Description>
+  <Members>
+    <Member Name="Inspection" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The inspection to show in this display]]></Description>
+    </Member>
+    <Member Name="ScreenXPosition" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The screen x position in pixels to show this display]]></Description>
+    </Member>
+    <Member Name="ScreenYPosition" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The screen y position in pixels to show this display]]></Description>
+    </Member>
+    <Member Name="Width" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The width of the display in pixels]]></Description>
+    </Member>
+    <Member Name="Height" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The height of the display in pixels]]></Description>
+    </Member>
+  </Members>
+</DataType>

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AddOnInstructionDefinition Name="L_MUL" Revision="1.0" RevisionExtension="00 Release" Vendor="Rockwell Automation" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2009-06-22T13:44:13.375Z" CreatedBy="Not Available" EditedDate="2009-07-31T14:41:20.770Z" EditedBy="Not Available" SoftwareRevision="v16.03">
+  <Description><![CDATA[Multiply (64-bit X 32-bit)]]></Description>
+  <RevisionNote><![CDATA[Initial Release]]></RevisionNote>
+  <AdditionalHelpText><![CDATA[This instruction implements an elementary-school multiply-and-add-partial-products
+(place notation) method of multiplying a 64-bit integer (LINT) by a 32-bit integer (DINT).
+The resulting product is a 64-bit integer (LINT).]]></AdditionalHelpText>
+  <Parameters>
+    <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Input - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Output - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="Inp_A" TagType="Base" DataType="LINT" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Input A (64-bit LINT)]]></Description>
+    </Parameter>
+    <Parameter Name="Inp_B" TagType="Base" DataType="DINT" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Input B (32-bit DINT)]]></Description>
+    </Parameter>
+    <Parameter Name="Out" TagType="Base" DataType="LINT" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Output (64-bit LINT) = Input A * Input B]]></Description>
+    </Parameter>
+  </Parameters>
+  <LocalTags>
+    <LocalTag Name="Wrk_Out" DataType="DINT" Dimensions="2" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Output as two 32-bit DINTs]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="2" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_InpB" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Absolute value of Input B (32-bit)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_InpA" DataType="DINT" Dimensions="2" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Input A as two 32-bit DINTs]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="2" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_OutHiOvflw" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Output high-order 32 bits overflow on Negate]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_OutLoOvflw" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Output low-order 32 bits overflow on Negate]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_B_Sign" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Record of Sign of 32-bit input]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_A_Sign" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Record of Sign of 64-bit input]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_CX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product C * X]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product D * X]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_EX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product E * X]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_FX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product F * X]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_GX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product G * X]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_CY" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial Product C * Y]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DY" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product D * Y]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_EY" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product E * Y]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_FY" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product F * Y]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_CZ" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial Product C * Z]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DZ" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product D * Z]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_EZ" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Partial product E * Z]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_FYDY" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on Hi bits of DY, Lo bits of FY]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_EZCZ" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on Hi bits of CZ, Lo bits of EZ]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_GXEX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on Hi bits of EX, Lo bits of GX]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_EXCX" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on Hi bits of CX, Lo bits of EX]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DY00" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on shifted Lo bits of DY]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_CZ00" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Adder based on shifted Lo bits of CZ]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_A" DataType="DINT" Dimensions="5" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Input A (64-bit) in 13-bit groups]]></Description>
+      <Comments>
+        <Comment Operand="[0]"><![CDATA["C" = Bits 0 - 12 of Inp_A (LINT)]]></Comment>
+        <Comment Operand="[1]"><![CDATA["D" = Bits 13 - 25 of Inp_A (LINT)]]></Comment>
+        <Comment Operand="[2]"><![CDATA["D" = Bits 26 - 38 of Inp_A (LINT)]]></Comment>
+        <Comment Operand="[3]"><![CDATA["F" = Bits 39 - 51 of Inp_A (LINT)]]></Comment>
+        <Comment Operand="[4]"><![CDATA["G" = Bits 52 - 63 of Inp_A (LINT)]]></Comment>
+      </Comments>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="5" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+          <Element Index="[2]" Value="0" />
+          <Element Index="[3]" Value="0" />
+          <Element Index="[4]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_B" DataType="DINT" Dimensions="3" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Input B (32-bit) in 13-bit grorups]]></Description>
+      <Comments>
+        <Comment Operand="[0]"><![CDATA["X" = Bits 0 - 12 of Inp_B (DINT)]]></Comment>
+        <Comment Operand="[1]"><![CDATA["Y" = Bits 13 - 25 of Inp_B (DINT)]]></Comment>
+        <Comment Operand="[2]"><![CDATA["Z" = Bits 26 - 31 of Inp_B (DINT)]]></Comment>
+      </Comments>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="3" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+          <Element Index="[2]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_Carry" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Carry from ADDs of bits 13 - 38 (DX, EXCX, CY, DY00, CZ00)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_Sum" DataType="DINT" Dimensions="2" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Sums of partial products]]></Description>
+      <Comments>
+        <Comment Operand="[0]"><![CDATA[DX + EXCX + CY + DY00 + CZ00]]></Comment>
+        <Comment Operand="[1]"><![CDATA[Carry from Sum[0] + FX + GXEX + EY + FYDY + DZ + EZCZ]]></Comment>
+      </Comments>
+      <DefaultData Format="L5K"><![CDATA[[0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Array DataType="DINT" Dimensions="2" Radix="Decimal">
+          <Element Index="[0]" Value="0" />
+          <Element Index="[1]" Value="0" />
+        </Array>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_InpAHiOvflw" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Input A high-order 32 bits overflow on Negate]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_InpALoOvflw" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Input A low-order 32 bits overflow on Negate]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+  </LocalTags>
+  <Routines />
+</AddOnInstructionDefinition>

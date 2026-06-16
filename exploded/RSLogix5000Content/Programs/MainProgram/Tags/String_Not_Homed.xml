@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="String_Not_Homed" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Constant]]></Description>
+  <Data Format="L5K"><![CDATA[[16,'System Not Homed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]></Data>
+  <Data Format="String" Length="16"><![CDATA['System Not Homed']]></Data>
+</Tag>

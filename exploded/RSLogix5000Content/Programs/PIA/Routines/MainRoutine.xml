@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="MainRoutine" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4
+]]></Comment>
+      <Text><![CDATA[JSR(sub00_Init,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub00_Main,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub00_Main_Seq,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub01_Login,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub02_Logout,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub03_Setup,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub04_MatlArrived,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub05_PreProcCheck,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub06_StartAssy,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub07_Rejects,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub08_CloseAssy,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub09_SignOff,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub10_StartOfBld,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[v1.0.4]]></Comment>
+      <Text><![CDATA[JSR(sub99_End,0);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

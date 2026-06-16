@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Const_Discrete" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Constant]]></Description>
+  <Data Format="L5K"><![CDATA[[1,'D$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]></Data>
+  <Data Format="String" Length="1"><![CDATA['D']]></Data>
+</Tag>

@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="rtTrayTracker" Type="RLL">
+  <Description><![CDATA[Keep track of WIP and Trays]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Commands]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Load All Parts into the machine, called from code
+
+JEO - Added code that cleared out cathode time stamps. - 08/05/14
+]]></Comment>
+      <Text><![CDATA[XIC(Bit_LoadIn_TrayParts)[XIC(I_Left_Can_Drawer_Closed) [XIC(I_Left_Can_RTray_Installed) [COP(Full_Tray[0],Tray_Status.LeftCan_Rear[0],15) ,COP(K_Str_Blank,Cathode_DT_Left_Rear_Tray[0],1) COP(Cathode_DT_Left_Rear_Tray[0],Cathode_DT_Left_Rear_Tray[1],14) ] ,XIC(I_Left_Can_FTray_Installed) [COP(Full_Tray[0],Tray_Status.LeftCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Left_Front_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ] ] ,XIC(I_Right_Can_Drawer_Closed) [XIC(I_Right_Can_RTray_Installed) [COP(Full_Tray[0],Tray_Status.RightCan_Rear[0],15) ,COP(K_Str_Blank,Cathode_DT_Right_Rear_Tray[0],1) COP(Cathode_DT_Right_Rear_Tray[0],Cathode_DT_Right_Rear_Tray[1],14) ] ,XIC(I_Right_Can_FTray_Installed) [COP(Full_Tray[0],Tray_Status.RightCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Right_Front_Tray[0],1) COP(Cathode_DT_Right_Front_Tray[0],Cathode_DT_Right_Front_Tray[1],14) ] ] ,XIC(I_Left_Insul_Drawer_Closed) [XIC(I_Left_Insul_RTray_Installed) COP(Full_Tray[0],Tray_Status.LeftInsulator_Rear[0],15) ,XIC(I_Left_Insul_FTray_Installed) COP(Full_Tray[0],Tray_Status.LeftInsulator_Front[0],15) ] ,XIC(I_Right_Insul_Drawer_Closed) [XIC(I_Right_Insul_RTray_Installed) COP(Full_Tray[0],Tray_Status.RightInsulator_Rear[0],15) ,XIC(I_Right_Insul_FTray_Installed) COP(Full_Tray[0],Tray_Status.RightInsulator_Front[0],15) ] ,MOV(1,Tray_Status.PM_TAnode) ,MOV(1,Tray_Status.PM_BAnode) ,MOV(1,Tray_Status.PM_Cathode) ,OTU(Bit_LoadIn_TrayParts) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Empty All Parts into the machine, called from code]]></Comment>
+      <Text><![CDATA[XIC(Bit_Clear_Tray_Parts)[COP(Blank_Tray[0],Tray_Status.LeftCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftCan_Front[0],15) ,COP(Blank_Tray[0],Tray_Status.RightCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightCan_Front[0],15) ,COP(Blank_Tray[0],Tray_Status.LeftInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftInsulator_Front[0],15) ,COP(Blank_Tray[0],Tray_Status.RightInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightInsulator_Front[0],15) ,MOV(0,Tray_Status.PM_TAnode) MOV(0,Tray_Status.PM_BAnode) MOV(0,Tray_Status.PM_Cathode) ,COP(K_Str_Blank,Cathode_DT_Right_Rear_Tray[0],1) COP(Cathode_DT_Right_Rear_Tray[0],Cathode_DT_Right_Rear_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Left_Rear_Tray[0],1) COP(Cathode_DT_Left_Rear_Tray[0],Cathode_DT_Left_Rear_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Right_Front_Tray[0],1) COP(Cathode_DT_Right_Front_Tray[0],Cathode_DT_Right_Front_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Left_Front_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ,OTU(Bit_Clear_Tray_Parts) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Can_Drawer_Empty)[COP(Blank_Tray[0],Tray_Status.LeftCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Left_Front_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Left_Rear_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ,OTU(HMI.From_HMI.Left_Can_Drawer_Empty) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Can_Drawer_Fill)[COP(Blank_Tray[0],Tray_Status.LeftCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Left_Front_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Left_Rear_Tray[0],1) COP(Cathode_DT_Left_Front_Tray[0],Cathode_DT_Left_Front_Tray[1],14) ,XIC(I_Left_Can_Drawer_Closed) [XIC(I_Left_Can_RTray_Installed) COP(Full_Tray[0],Tray_Status.LeftCan_Rear[0],15) ,XIC(I_Left_Can_FTray_Installed) COP(Full_Tray[0],Tray_Status.LeftCan_Front[0],15) ] ,OTU(HMI.From_HMI.Left_Can_Drawer_Fill) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Can_Drawer_Empty)[COP(Blank_Tray[0],Tray_Status.RightCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Right_Front_Tray[0],1) COP(Cathode_DT_Right_Front_Tray[0],Cathode_DT_Right_Front_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Right_Rear_Tray[0],1) COP(Cathode_DT_Right_Rear_Tray[0],Cathode_DT_Right_Rear_Tray[1],14) ,OTU(HMI.From_HMI.Right_Can_Drawer_Empty) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Can_Drawer_Fill)[COP(Blank_Tray[0],Tray_Status.RightCan_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightCan_Front[0],15) ,COP(K_Str_Blank,Cathode_DT_Right_Front_Tray[0],1) COP(Cathode_DT_Right_Front_Tray[0],Cathode_DT_Right_Front_Tray[1],14) ,COP(K_Str_Blank,Cathode_DT_Right_Rear_Tray[0],1) COP(Cathode_DT_Right_Rear_Tray[0],Cathode_DT_Right_Rear_Tray[1],14) ,XIC(I_Right_Can_Drawer_Closed) [XIC(I_Right_Can_RTray_Installed) COP(Full_Tray[0],Tray_Status.RightCan_Rear[0],15) ,XIC(I_Right_Can_FTray_Installed) COP(Full_Tray[0],Tray_Status.RightCan_Front[0],15) ] ,OTU(HMI.From_HMI.Right_Can_Drawer_Fill) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Insulator_Drawer_Empty)[COP(Blank_Tray[0],Tray_Status.LeftInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftInsulator_Front[0],15) ,OTU(HMI.From_HMI.Left_Insulator_Drawer_Empty) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Insulator_Drawer_Fill)[COP(Blank_Tray[0],Tray_Status.LeftInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.LeftInsulator_Front[0],15) ,XIC(I_Left_Insul_Drawer_Closed) [XIC(I_Left_Insul_RTray_Installed) COP(Full_Tray[0],Tray_Status.LeftInsulator_Rear[0],15) ,XIC(I_Left_Insul_FTray_Installed) COP(Full_Tray[0],Tray_Status.LeftInsulator_Front[0],15) ] ,OTU(HMI.From_HMI.Left_Insulator_Drawer_Fill) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Insulator_Drawer_Empty)[COP(Blank_Tray[0],Tray_Status.RightInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightInsulator_Front[0],15) ,OTU(HMI.From_HMI.Right_Insulator_Drawer_Empty) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Insulator_Drawer_Fill)[COP(Blank_Tray[0],Tray_Status.RightInsulator_Rear[0],15) COP(Blank_Tray[0],Tray_Status.RightInsulator_Front[0],15) ,XIC(I_Right_Insul_Drawer_Closed) [XIC(I_Right_Insul_RTray_Installed) COP(Full_Tray[0],Tray_Status.RightInsulator_Rear[0],15) ,XIC(I_Right_Insul_FTray_Installed) COP(Full_Tray[0],Tray_Status.RightInsulator_Front[0],15) ] ,OTU(HMI.From_HMI.Right_Insulator_Drawer_Fill) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI.From_HMI.PM_Can_Drawer_Empty)[COP(Blank_Tray[0],Tray_Status.PM_Tray_Can[0],15) COP(Blank_Tray[0],Tray_Status.PM_Tray_Discrete[0],10) ,OTL(actPMVac.ACT.Abort) ,OTU(HMI.From_HMI.PM_Can_Drawer_Empty) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Clear_WIP)[CPS(StackData.HMI_Insulator_Data_QueueR,Blank_StackData.HMI_Insulator_Data_QueueR,1) ,CPS(StackData.HMI_Insulator_Data_QueueL,Blank_StackData.HMI_Insulator_Data_QueueL,1) ,CPS(StackData.HMI_Discrete_Data_Queue,Blank_StackData.HMI_Discrete_Data_Queue,1) ,CPS(StackData.Anode_Data_from_RFID,Blank_StackData.Anode_Data_from_RFID,1) ,CPS(StackData.Cathode_Data_from_RFID,Blank_StackData.Cathode_Data_from_RFID,1) ,CPS(Blank_StackData,StackData,1) ,OTL(resetcertchecking) OTU(AllCertsOK) ,OTU(Bit_Clear_WIP) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Statuses]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Is anything in the Can/Insulator Trays and what Index is lowest?]]></Comment>
+      <Text><![CDATA[[JSR(subTrayFind,5,Tray_Status.LeftInsulator_Rear,I_Left_Insul_RTray_Installed,I_Left_Insul_Drawer_Closed,I_Left_Insul_Drawer_Locked,StackData.HMI_Insulator_Data_QueueL,Bit_LeftRear_Insulator_Avail,Index_LeftRear_Insulator_Avail) ,JSR(subTrayFind,5,Tray_Status.LeftInsulator_Front,I_Left_Insul_FTray_Installed,I_Left_Insul_Drawer_Closed,I_Left_Insul_Drawer_Locked,StackData.HMI_Insulator_Data_QueueL,Bit_LeftFront_Insulator_Avail,Index_LeftFront_Insulator_Avail) ,JSR(subTrayFind,5,Tray_Status.RightInsulator_Rear,I_Right_Insul_RTray_Installed,I_Right_Insul_Drawer_Closed,I_Right_Insul_Drawer_Locked,StackData.HMI_Insulator_Data_QueueR,Bit_RightRear_Insulator_Avail,Index_RightRear_Insulator_Avail) ,JSR(subTrayFind,5,Tray_Status.RightInsulator_Front,I_Right_Insul_FTray_Installed,I_Right_Insul_Drawer_Closed,I_Right_Insul_Drawer_Locked,StackData.HMI_Insulator_Data_QueueR,Bit_RightFront_Insulator_Avail,Index_RightFront_Insulator_Avail) ,JSR(subTrayFind,5,Tray_Status.LeftCan_Rear,I_Left_Can_RTray_Installed,I_Left_Can_Drawer_Closed,I_Left_Can_Drawer_Locked,Dummy_String,Bit_LeftRear_Can_Avail,Index_LeftRear_Can_Avail) ,JSR(subTrayFind,5,Tray_Status.LeftCan_Front,I_Left_Can_FTray_Installed,I_Left_Can_Drawer_Closed,I_Left_Can_Drawer_Locked,Dummy_String,Bit_LeftFront_Can_Avail,Index_LeftFront_Can_Avail) ,JSR(subTrayFind,5,Tray_Status.RightCan_Rear,I_Right_Can_RTray_Installed,I_Right_Can_Drawer_Closed,I_Right_Can_Drawer_Locked,Dummy_String,Bit_RightRear_Can_Avail,Index_RightRear_Can_Avail) ,JSR(subTrayFind,5,Tray_Status.RightCan_Front,I_Right_Can_FTray_Installed,I_Right_Can_Drawer_Closed,I_Right_Can_Drawer_Locked,Dummy_String,Bit_RightFront_Can_Avail,Index_RightFront_Can_Avail) ,[XIC(Bit_LeftRear_Insulator_Avail) ,XIC(Bit_LeftFront_Insulator_Avail) ,XIC(Bit_RightRear_Insulator_Avail) ,XIC(Bit_RightFront_Insulator_Avail) ] [XIC(Bit_LeftRear_Can_Avail) ,XIC(Bit_LeftFront_Can_Avail) ,XIC(Bit_RightRear_Can_Avail) ,XIC(Bit_RightFront_Can_Avail) ] OTE(Bit_Parts_Present_in_Trays) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determines if a can is safe to place inside a tray
+system waits if not safe]]></Comment>
+      <Text><![CDATA[[LIM(80,Place_Can_At_Index,94) XIC(I_Left_Can_RTray_Installed) XIC(I_Left_Can_Drawer_Closed) XIC(I_Left_Can_Drawer_Locked) CMP(Tray_Status.LeftCan_Rear[Place_Can_At_Index-80]=0) CPT(Reason_Drawer_Error_Index,Place_Can_At_Index-79) COP(str_LeftRear_CanTray,Reason_Tray_Error,1) ,LIM(95,Place_Can_At_Index,109) XIC(I_Left_Can_FTray_Installed) XIC(I_Left_Can_Drawer_Closed) XIC(I_Left_Can_Drawer_Locked) CMP(Tray_Status.LeftCan_Front[Place_Can_At_Index-95]=0) CPT(Reason_Drawer_Error_Index,Place_Can_At_Index-94) COP(str_LeftFront_CanTray,Reason_Tray_Error,1) ,LIM(110,Place_Can_At_Index,124) XIC(I_Right_Can_RTray_Installed) XIC(I_Right_Can_Drawer_Closed) XIC(I_Right_Can_Drawer_Locked) CMP(Tray_Status.RightCan_Rear[Place_Can_At_Index-110]=0) CPT(Reason_Drawer_Error_Index,Place_Can_At_Index-109) COP(str_RightRear_CanTray,Reason_Tray_Error,1) ,LIM(125,Place_Can_At_Index,139) XIC(I_Right_Can_FTray_Installed) XIC(I_Right_Can_Drawer_Closed) XIC(I_Right_Can_Drawer_Locked) CMP(Tray_Status.RightCan_Front[Place_Can_At_Index-125]=0) CPT(Reason_Drawer_Error_Index,Place_Can_At_Index-124) COP(str_RightFront_CanTray,Reason_Tray_Error,1) ]OTE(Bit_CanSafeToPlace);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(I_PM_Drawer_Closed)XIC(I_PM_Drawer_Locked)XIC(I_PM_Right_Tray_Installed)[JSR(subPMCanTrayFind,1,Tray_Status.PM_Tray_Can,Index_CanPM_Avail) ,GRT(Index_CanPM_Avail,0) OTE(Bit_PM_Can_SafetoPlace) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Don't stop sequence if conveyor has picked part
+
+JEO - Updated to look at queued layer status of array position 1, now that we aren't using position 0.  - 05/15/15]]></Comment>
+      <Text><![CDATA[[GRT(StackData.Can_Layer.Layer_Status,1) ,GRT(StackData.Insulator_Layer.Layer_Status,0) ,GRT(StackData.Layer[15].Layer_Status,0) ,GRT(StackData.Layer[14].Layer_Status,0) ,GRT(StackData.Layer[13].Layer_Status,0) ,GRT(StackData.Layer[12].Layer_Status,0) ,GRT(StackData.Layer[11].Layer_Status,0) ,GRT(StackData.Layer[10].Layer_Status,0) ,GRT(StackData.Layer[9].Layer_Status,0) ,GRT(StackData.Layer[8].Layer_Status,0) ,GRT(StackData.Layer[7].Layer_Status,0) ,GRT(StackData.Layer[6].Layer_Status,0) ,GRT(StackData.Layer[5].Layer_Status,0) ,GRT(StackData.Layer[4].Layer_Status,0) ,GRT(StackData.Layer[3].Layer_Status,0) ,GRT(StackData.Layer[2].Layer_Status,0) ,GRT(StackData.Layer[1].Layer_Status,0) ,GRT(StackDataQueue[1].Layer_Status,0) ,XIC(ConveyorPickedAnode) ]OTE(Bit_WIP_InMachine);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Index_LeftFront_Can_Avail,0) OTU(Started_Tray_LeftFront) ,EQU(Index_RightFront_Can_Avail,0) OTU(Started_Tray_RightFront) ,EQU(Index_LeftRear_Can_Avail,0) OTU(Started_Tray_LeftRear) ,EQU(Index_RightRear_Can_Avail,0) OTU(Started_Tray_RightRear) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[The following rungs decides which tray location to process
+This removes the robot the need to track part locations
+Can Priority:
+Front Left
+Front Right
+Rear Left
+Rear Right]]></Comment>
+      <Text><![CDATA[[XIO(Started_Tray_RightFront) XIO(Started_Tray_LeftRear) XIO(Started_Tray_RightRear) GRT(Index_LeftFront_Can_Avail,0) ADD(94,Index_LeftFront_Can_Avail,RobotIndex_Can_Tray) JMP(escape1) ,XIO(Started_Tray_LeftFront) XIO(Started_Tray_LeftRear) XIO(Started_Tray_RightRear) GRT(Index_RightFront_Can_Avail,0) ADD(124,Index_RightFront_Can_Avail,RobotIndex_Can_Tray) JMP(escape1) ,XIO(Started_Tray_LeftFront) XIO(Started_Tray_RightFront) XIO(Started_Tray_RightRear) GRT(Index_LeftRear_Can_Avail,0) ADD(79,Index_LeftRear_Can_Avail,RobotIndex_Can_Tray) JMP(escape1) ,XIO(Started_Tray_LeftFront) XIO(Started_Tray_RightFront) XIO(Started_Tray_LeftRear) GRT(Index_RightRear_Can_Avail,0) ADD(109,Index_RightRear_Can_Avail,RobotIndex_Can_Tray) JMP(escape1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(escape1)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Index_LeftFront_Insulator_Avail,0) OTU(Insul_Started_Tray_LeftFront) ,EQU(Index_RightFront_Insulator_Avail,0) OTU(Insul_Started_Tray_RightFront) ,EQU(Index_LeftRear_Insulator_Avail,0) OTU(Insul_Started_Tray_LeftRear) ,EQU(Index_RightRear_Insulator_Avail,0) OTU(Insul_Started_Tray_RightRear) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[The following rungs decides which tray location to process
+This removes the robot the need to track part locations
+Insulator Priority:
+Front Left
+Front Right
+Rear Left
+Rear Right]]></Comment>
+      <Text><![CDATA[[XIO(Insul_Started_Tray_RightFront) XIO(Insul_Started_Tray_LeftRear) XIO(Insul_Started_Tray_RightRear) GRT(Index_LeftFront_Insulator_Avail,0) ADD(154,Index_LeftFront_Insulator_Avail,RobotIndex_Insulator_Tray) JMP(escape2) ,XIO(Insul_Started_Tray_LeftFront) XIO(Insul_Started_Tray_LeftRear) XIO(Insul_Started_Tray_RightRear) GRT(Index_RightFront_Insulator_Avail,0) ADD(184,Index_RightFront_Insulator_Avail,RobotIndex_Insulator_Tray) JMP(escape2) ,XIO(Insul_Started_Tray_LeftFront) XIO(Insul_Started_Tray_RightFront) XIO(Insul_Started_Tray_RightRear) GRT(Index_LeftRear_Insulator_Avail,0) ADD(139,Index_LeftRear_Insulator_Avail,RobotIndex_Insulator_Tray) JMP(escape2) ,XIO(Insul_Started_Tray_LeftFront) XIO(Insul_Started_Tray_RightFront) XIO(Insul_Started_Tray_LeftRear) GRT(Index_RightRear_Insulator_Avail,0) ADD(169,Index_RightRear_Insulator_Avail,RobotIndex_Insulator_Tray) JMP(escape2) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(escape2)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[When a robot picks parts from the tray, the following rungs take care of part removal by robot
+
+]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Robot_Picked_Insulator) [JSR(subInsulatorPicker,0) ,OTU(Bit_Robot_Picked_Insulator) ] ,XIC(Bit_Robot_Picked_Can) [JSR(subCanPicker,0) ,OTU(Bit_Robot_Picked_Can) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Button Opening of Drawers]]></Comment>
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Can_Drawer_Open)[XIO(Bit_Robot_LeftCan_Lockout) OTL(actLCanDrawerLock.ACT.Retract_Req) ,OTU(HMI.From_HMI.Left_Can_Drawer_Open) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Button Opening of Drawers]]></Comment>
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Can_Drawer_Open)[XIO(Bit_Robot_RightCan_Lockout) OTL(actRCanDrawerLock.ACT.Retract_Req) ,OTU(HMI.From_HMI.Right_Can_Drawer_Open) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Button Opening of Drawers]]></Comment>
+      <Text><![CDATA[XIC(HMI.From_HMI.Left_Insulator_Drawer_Open)[XIO(Bit_Robot_LeftInsulator_Lockout) OTL(actLInsulatorDrawerLock.ACT.Retract_Req) ,OTU(HMI.From_HMI.Left_Insulator_Drawer_Open) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Button Opening of Drawers]]></Comment>
+      <Text><![CDATA[XIC(HMI.From_HMI.Right_Insulator_Drawer_Open)[XIO(Bit_Robot_Rightnsulator_Lockout) OTL(actRInsulatorDrawerLock.ACT.Retract_Req) ,OTU(HMI.From_HMI.Right_Insulator_Drawer_Open) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Button Opening of Drawers]]></Comment>
+      <Text><![CDATA[XIC(HMI.From_HMI.PM_Drawer_Open)[XIO(Bit_Robot_PM_Lockout) OTL(actPMDrawerLock.ACT.Retract_Req) ,OTU(HMI.From_HMI.PM_Drawer_Open) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Locking of Drawers]]></Comment>
+      <Text><![CDATA[XIC(I_Left_Can_Drawer_Closed)[TON(Machine_Timers[30],?,?) ,XIC(Machine_Timers[30].DN) ONS(Machine_Oneshots[1].8) [OTL(actLCanDrawerLock.ACT.Extend_Req) ,OTL(HMI.From_HMI.Left_Can_Drawer_Fill) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Locking of Drawers]]></Comment>
+      <Text><![CDATA[XIC(I_Right_Can_Drawer_Closed)[TON(Machine_Timers[31],?,?) ,XIC(Machine_Timers[31].DN) ONS(Machine_Oneshots[1].9) [OTL(actRCanDrawerLock.ACT.Extend_Req) ,OTL(HMI.From_HMI.Right_Can_Drawer_Fill) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Locking of Drawers]]></Comment>
+      <Text><![CDATA[XIC(I_Left_Insul_Drawer_Closed)[TON(Machine_Timers[32],?,?) ,XIC(Machine_Timers[32].DN) ONS(Machine_Oneshots[1].10) [OTL(actLInsulatorDrawerLock.ACT.Extend_Req) ,OTL(HMI.From_HMI.Left_Insulator_Drawer_Fill) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Locking of Drawers]]></Comment>
+      <Text><![CDATA[XIC(I_Right_Insul_Drawer_Closed)[TON(Machine_Timers[33],?,?) ,XIC(Machine_Timers[33].DN) ONS(Machine_Oneshots[1].11) [OTL(actRInsulatorDrawerLock.ACT.Extend_Req) ,OTL(HMI.From_HMI.Right_Insulator_Drawer_Fill) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Locking of Drawers]]></Comment>
+      <Text><![CDATA[XIC(I_PM_Drawer_Closed)[TON(Machine_Timers[34],?,?) ,XIC(Machine_Timers[34].DN) ONS(Machine_Oneshots[1].12) OTL(actPMDrawerLock.ACT.Extend_Req) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Blank out trace data if drawer is opened 
+Also handles discrete data emptying]]></Comment>
+      <Text><![CDATA[[XIO(I_Left_Insul_Drawer_Closed) COP(K_Str_Blank,StackData.HMI_Insulator_Data_QueueL,1) ,XIO(I_Right_Insul_Drawer_Closed) COP(K_Str_Blank,StackData.HMI_Insulator_Data_QueueR,1) ,XIC(I_Discrete_Empty) [MOV(1000,tmrMachine[11].PRE) ,TON(tmrMachine[11],?,?) ,XIC(tmrMachine[11].DN) [XIC(seqHitchPunch.On) OTL(Bit_Spool_Empty) ,COP(K_Str_Blank,StackData.HMI_Discrete_Data_Queue,1) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Allow editing trace data]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Allow_TraceData_Changing) ,XIO(System.Running) XIO(seqAbort.On) XIO(seqHoming.On) ,XIO(Bit_Robot_LeftInsulator_Lockout) XIO(Bit_Robot_Rightnsulator_Lockout) XIO(Bit_Robot_RightCan_Lockout) XIO(Bit_Robot_PM_Lockout) ]OTE(HMI.To_HMI.TraceDataEntryAllowed);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Displays on main screen
+
+JEO - Added StackDataQueue to logic.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_1_Type.Value,0) [COP(Const_BotAnode,StackData.Layer[1].Layer_String,1) ,COP(Const_BotAnode,StackDataQueue[0].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,1) [COP(Const_Discrete,StackData.Layer[1].Layer_String,1) ,COP(Const_Discrete,StackDataQueue[0].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,2) [COP(Const_Cathode,StackData.Layer[1].Layer_String,1) ,COP(Const_Cathode,StackDataQueue[0].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,3) [COP(Const_TopAnode,StackData.Layer[1].Layer_String,1) ,COP(Const_TopAnode,StackDataQueue[0].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,4) [COP(Const_MiddleAnode,StackData.Layer[1].Layer_String,1) ,COP(Const_MiddleAnode,StackDataQueue[0].Layer_String,1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Added StackDataQueue to logic.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_2_Type.Value,0) [COP(Const_BotAnode,StackData.Layer[2].Layer_String,1) ,COP(Const_BotAnode,StackDataQueue[1].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,1) [COP(Const_Discrete,StackData.Layer[2].Layer_String,1) ,COP(Const_Discrete,StackDataQueue[1].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,2) [COP(Const_Cathode,StackData.Layer[2].Layer_String,1) ,COP(Const_Cathode,StackDataQueue[1].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,3) [COP(Const_TopAnode,StackData.Layer[2].Layer_String,1) ,COP(Const_TopAnode,StackDataQueue[1].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,4) [COP(Const_MiddleAnode,StackData.Layer[2].Layer_String,1) ,COP(Const_MiddleAnode,StackDataQueue[1].Layer_String,1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Added StackDataQueue to logic.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_3_Type.Value,0) [COP(Const_BotAnode,StackData.Layer[3].Layer_String,1) ,COP(Const_BotAnode,StackDataQueue[2].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,1) [COP(Const_Discrete,StackData.Layer[3].Layer_String,1) ,COP(Const_Discrete,StackDataQueue[2].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,2) [COP(Const_Cathode,StackData.Layer[3].Layer_String,1) ,COP(Const_Cathode,StackDataQueue[2].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,3) [COP(Const_TopAnode,StackData.Layer[3].Layer_String,1) ,COP(Const_TopAnode,StackDataQueue[2].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,4) [COP(Const_MiddleAnode,StackData.Layer[3].Layer_String,1) ,COP(Const_MiddleAnode,StackDataQueue[2].Layer_String,1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Added StackDataQueue to logic.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_4_Type.Value,0) [COP(Const_BotAnode,StackData.Layer[4].Layer_String,1) ,COP(Const_BotAnode,StackDataQueue[3].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,1) [COP(Const_Discrete,StackData.Layer[4].Layer_String,1) ,COP(Const_Discrete,StackDataQueue[3].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,2) [COP(Const_Cathode,StackData.Layer[4].Layer_String,1) ,COP(Const_Cathode,StackDataQueue[3].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,3) [COP(Const_TopAnode,StackData.Layer[4].Layer_String,1) ,COP(Const_TopAnode,StackDataQueue[3].Layer_String,1) ] ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,4) [COP(Const_MiddleAnode,StackData.Layer[4].Layer_String,1) ,COP(Const_MiddleAnode,StackDataQueue[3].Layer_String,1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_5_Type.Value,0) COP(Const_BotAnode,StackData.Layer[5].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,1) COP(Const_Discrete,StackData.Layer[5].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,2) COP(Const_Cathode,StackData.Layer[5].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,3) COP(Const_TopAnode,StackData.Layer[5].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[5].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_6_Type.Value,0) COP(Const_BotAnode,StackData.Layer[6].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,1) COP(Const_Discrete,StackData.Layer[6].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,2) COP(Const_Cathode,StackData.Layer[6].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,3) COP(Const_TopAnode,StackData.Layer[6].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[6].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_7_Type.Value,0) COP(Const_BotAnode,StackData.Layer[7].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,1) COP(Const_Discrete,StackData.Layer[7].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,2) COP(Const_Cathode,StackData.Layer[7].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,3) COP(Const_TopAnode,StackData.Layer[7].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[7].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_8_Type.Value,0) COP(Const_BotAnode,StackData.Layer[8].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,1) COP(Const_Discrete,StackData.Layer[8].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,2) COP(Const_Cathode,StackData.Layer[8].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,3) COP(Const_TopAnode,StackData.Layer[8].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[8].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_9_Type.Value,0) COP(Const_BotAnode,StackData.Layer[9].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,1) COP(Const_Discrete,StackData.Layer[9].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,2) COP(Const_Cathode,StackData.Layer[9].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,3) COP(Const_TopAnode,StackData.Layer[9].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[9].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_10_Type.Value,0) COP(Const_BotAnode,StackData.Layer[10].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,1) COP(Const_Discrete,StackData.Layer[10].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,2) COP(Const_Cathode,StackData.Layer[10].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,3) COP(Const_TopAnode,StackData.Layer[10].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[10].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_11_Type.Value,0) COP(Const_BotAnode,StackData.Layer[11].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,1) COP(Const_Discrete,StackData.Layer[11].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,2) COP(Const_Cathode,StackData.Layer[11].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,3) COP(Const_TopAnode,StackData.Layer[11].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[11].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_12_Type.Value,0) COP(Const_BotAnode,StackData.Layer[12].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,1) COP(Const_Discrete,StackData.Layer[12].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,2) COP(Const_Cathode,StackData.Layer[12].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,3) COP(Const_TopAnode,StackData.Layer[12].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[12].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_13_Type.Value,0) COP(Const_BotAnode,StackData.Layer[13].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,1) COP(Const_Discrete,StackData.Layer[13].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,2) COP(Const_Cathode,StackData.Layer[13].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,3) COP(Const_TopAnode,StackData.Layer[13].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[13].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_14_Type.Value,0) COP(Const_BotAnode,StackData.Layer[14].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,1) COP(Const_Discrete,StackData.Layer[14].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,2) COP(Const_Cathode,StackData.Layer[14].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,3) COP(Const_TopAnode,StackData.Layer[14].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[14].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Machine_Run_Recipe.Layer_15_Type.Value,0) COP(Const_BotAnode,StackData.Layer[15].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,1) COP(Const_Discrete,StackData.Layer[15].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,2) COP(Const_Cathode,StackData.Layer[15].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,3) COP(Const_TopAnode,StackData.Layer[15].Layer_String,1) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,4) COP(Const_MiddleAnode,StackData.Layer[15].Layer_String,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[IP and DN statuses]]></Comment>
+      <Text><![CDATA[[EQU(StackData.Current_Stack_Layer,1) MOV(1,StackData.Layer[1].Layer_Status) ,EQU(StackData.Current_Stack_Layer,2) [MOV(2,StackData.Layer[1].Layer_Status) ,MOV(1,StackData.Layer[2].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,3) [MOV(2,StackData.Layer[2].Layer_Status) ,MOV(1,StackData.Layer[3].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,4) [MOV(2,StackData.Layer[3].Layer_Status) ,MOV(1,StackData.Layer[4].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,5) [MOV(2,StackData.Layer[4].Layer_Status) ,MOV(1,StackData.Layer[5].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,6) [MOV(2,StackData.Layer[5].Layer_Status) ,MOV(1,StackData.Layer[6].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,7) [MOV(2,StackData.Layer[6].Layer_Status) ,MOV(1,StackData.Layer[7].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,8) [MOV(2,StackData.Layer[7].Layer_Status) ,MOV(1,StackData.Layer[8].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,9) [MOV(2,StackData.Layer[8].Layer_Status) ,MOV(1,StackData.Layer[9].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,10) [MOV(2,StackData.Layer[9].Layer_Status) ,MOV(1,StackData.Layer[10].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,11) [MOV(2,StackData.Layer[10].Layer_Status) ,MOV(1,StackData.Layer[11].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,12) [MOV(2,StackData.Layer[11].Layer_Status) ,MOV(1,StackData.Layer[12].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,13) [MOV(2,StackData.Layer[12].Layer_Status) ,MOV(1,StackData.Layer[13].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,14) [MOV(2,StackData.Layer[13].Layer_Status) ,MOV(1,StackData.Layer[14].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,15) [MOV(2,StackData.Layer[14].Layer_Status) ,MOV(1,StackData.Layer[15].Layer_Status) ] ,EQU(StackData.Current_Stack_Layer,17) [MOV(2,StackData.Layer[1].Layer_Status) ,MOV(2,StackData.Layer[2].Layer_Status) ,MOV(2,StackData.Layer[3].Layer_Status) ,MOV(2,StackData.Layer[4].Layer_Status) ,MOV(2,StackData.Layer[5].Layer_Status) ,MOV(2,StackData.Layer[6].Layer_Status) ,MOV(2,StackData.Layer[7].Layer_Status) ,MOV(2,StackData.Layer[8].Layer_Status) ,MOV(2,StackData.Layer[9].Layer_Status) ,MOV(2,StackData.Layer[10].Layer_Status) ,MOV(2,StackData.Layer[11].Layer_Status) ,MOV(2,StackData.Layer[12].Layer_Status) ,MOV(2,StackData.Layer[13].Layer_Status) ,MOV(2,StackData.Layer[14].Layer_Status) ,MOV(2,StackData.Layer[15].Layer_Status) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Current Processing part below
+
+JEO - Moved Queue battery status in parrallel with StackData.Current_Stack_Layer so we aren't constrained to specific layer types at each layer.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[[EQU(StackData.Current_Stack_Layer,1) ,XIC(Bit_Working_On_Queue_Battery) EQU(intCurrent_Queued_Stack_Layer,1) ] [EQU(Machine_Run_Recipe.Layer_1_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,4) ] ,[EQU(StackData.Current_Stack_Layer,2) ,EQU(intCurrent_Queued_Stack_Layer,2) ] [EQU(Machine_Run_Recipe.Layer_2_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,4) ] ,[EQU(StackData.Current_Stack_Layer,3) ,EQU(intCurrent_Queued_Stack_Layer,3) ] [EQU(Machine_Run_Recipe.Layer_3_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,4) ] ,[EQU(StackData.Current_Stack_Layer,4) ,EQU(intCurrent_Queued_Stack_Layer,4) ] [EQU(Machine_Run_Recipe.Layer_4_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,5) [EQU(Machine_Run_Recipe.Layer_5_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,6) [EQU(Machine_Run_Recipe.Layer_6_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,7) [EQU(Machine_Run_Recipe.Layer_7_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,8) [EQU(Machine_Run_Recipe.Layer_8_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,9) [EQU(Machine_Run_Recipe.Layer_9_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,10) [EQU(Machine_Run_Recipe.Layer_10_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,11) [EQU(Machine_Run_Recipe.Layer_11_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,12) [EQU(Machine_Run_Recipe.Layer_12_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,13) [EQU(Machine_Run_Recipe.Layer_13_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,14) [EQU(Machine_Run_Recipe.Layer_14_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,4) ] ,EQU(StackData.Current_Stack_Layer,15) [EQU(Machine_Run_Recipe.Layer_15_Type.Value,0) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,4) ] ]OTE(Bit_Processing_Anode);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Current Processing part below
+
+JEO - Moved Queue battery status in parrallel with StackData.Current_Stack_Layer so we aren't constrained to specific layer types at each layer.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[[EQU(StackData.Current_Stack_Layer,1) ,XIC(Bit_Working_On_Queue_Battery) EQU(intCurrent_Queued_Stack_Layer,1) ] EQU(Machine_Run_Recipe.Layer_1_Type.Value,1) ,[EQU(StackData.Current_Stack_Layer,2) ,EQU(intCurrent_Queued_Stack_Layer,2) ] EQU(Machine_Run_Recipe.Layer_2_Type.Value,1) ,[EQU(StackData.Current_Stack_Layer,3) ,EQU(intCurrent_Queued_Stack_Layer,3) ] EQU(Machine_Run_Recipe.Layer_3_Type.Value,1) ,[EQU(StackData.Current_Stack_Layer,4) ,EQU(intCurrent_Queued_Stack_Layer,4) ] EQU(Machine_Run_Recipe.Layer_4_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,5) EQU(Machine_Run_Recipe.Layer_5_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,6) EQU(Machine_Run_Recipe.Layer_6_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,7) EQU(Machine_Run_Recipe.Layer_7_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,8) EQU(Machine_Run_Recipe.Layer_8_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,9) EQU(Machine_Run_Recipe.Layer_9_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,10) EQU(Machine_Run_Recipe.Layer_10_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,11) EQU(Machine_Run_Recipe.Layer_11_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,12) EQU(Machine_Run_Recipe.Layer_12_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,13) EQU(Machine_Run_Recipe.Layer_13_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,14) EQU(Machine_Run_Recipe.Layer_14_Type.Value,1) ,EQU(StackData.Current_Stack_Layer,15) EQU(Machine_Run_Recipe.Layer_15_Type.Value,1) ]OTE(Bit_Processing_Discrete);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Current Processing part below
+
+JEO - Moved Queue battery status in parrallel with StackData.Current_Stack_Layer so we aren't constrained to specific layer types at each layer.  - 05/14/15]]></Comment>
+      <Text><![CDATA[[[EQU(StackData.Current_Stack_Layer,1) ,XIC(Bit_Working_On_Queue_Battery) EQU(intCurrent_Queued_Stack_Layer,1) ] EQU(Machine_Run_Recipe.Layer_1_Type.Value,2) ,[EQU(StackData.Current_Stack_Layer,2) ,EQU(intCurrent_Queued_Stack_Layer,2) ] EQU(Machine_Run_Recipe.Layer_2_Type.Value,2) ,[EQU(StackData.Current_Stack_Layer,3) ,EQU(intCurrent_Queued_Stack_Layer,3) ] EQU(Machine_Run_Recipe.Layer_3_Type.Value,2) ,[EQU(StackData.Current_Stack_Layer,4) ,EQU(intCurrent_Queued_Stack_Layer,4) ] EQU(Machine_Run_Recipe.Layer_4_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,5) EQU(Machine_Run_Recipe.Layer_5_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,6) EQU(Machine_Run_Recipe.Layer_6_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,7) EQU(Machine_Run_Recipe.Layer_7_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,8) EQU(Machine_Run_Recipe.Layer_8_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,9) EQU(Machine_Run_Recipe.Layer_9_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,10) EQU(Machine_Run_Recipe.Layer_10_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,11) EQU(Machine_Run_Recipe.Layer_11_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,12) EQU(Machine_Run_Recipe.Layer_12_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,13) EQU(Machine_Run_Recipe.Layer_13_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,14) EQU(Machine_Run_Recipe.Layer_14_Type.Value,2) ,EQU(StackData.Current_Stack_Layer,15) EQU(Machine_Run_Recipe.Layer_15_Type.Value,2) ]OTE(Bit_Processing_Cathode);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Tray_Status.PM_Tray_Discrete[0],0)EQU(Tray_Status.PM_Tray_Discrete[1],0)EQU(Tray_Status.PM_Tray_Discrete[2],0)EQU(Tray_Status.PM_Tray_Discrete[3],0)EQU(Tray_Status.PM_Tray_Discrete[4],0)EQU(Tray_Status.PM_Tray_Discrete[5],0)EQU(Tray_Status.PM_Tray_Discrete[6],0)EQU(Tray_Status.PM_Tray_Discrete[7],0)EQU(Tray_Status.PM_Tray_Discrete[8],0)EQU(Tray_Status.PM_Tray_Discrete[9],0)OTE(Bit_PM_Discrete_Empty);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Tray_Status.PM_Tray_Can[0],0)EQU(Tray_Status.PM_Tray_Can[1],0)EQU(Tray_Status.PM_Tray_Can[2],0)EQU(Tray_Status.PM_Tray_Can[3],0)EQU(Tray_Status.PM_Tray_Can[4],0)EQU(Tray_Status.PM_Tray_Can[5],0)EQU(Tray_Status.PM_Tray_Can[6],0)EQU(Tray_Status.PM_Tray_Can[7],0)EQU(Tray_Status.PM_Tray_Can[8],0)EQU(Tray_Status.PM_Tray_Can[9],0)EQU(Tray_Status.PM_Tray_Can[10],0)EQU(Tray_Status.PM_Tray_Can[11],0)EQU(Tray_Status.PM_Tray_Can[12],0)EQU(Tray_Status.PM_Tray_Can[13],0)EQU(Tray_Status.PM_Tray_Can[14],0)OTE(Bit_PM_Can_Empty);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

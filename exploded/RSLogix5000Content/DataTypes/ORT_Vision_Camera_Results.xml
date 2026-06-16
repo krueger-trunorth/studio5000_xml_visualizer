@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_Vision_Camera_Results" Family="NoFamily" Class="User">
+  <Description><![CDATA[Inspection results from the vision system to the PLC]]></Description>
+  <Members>
+    <Member Name="iResultCode" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The result code of the inspection - 0 is good and any other value is an error]]></Description>
+    </Member>
+    <Member Name="dblResults" DataType="REAL" Dimension="30" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The real results from the inspection]]></Description>
+    </Member>
+    <Member Name="strResults" DataType="STRING" Dimension="1" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The string result from the inspection]]></Description>
+    </Member>
+  </Members>
+</DataType>

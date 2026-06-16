@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="PIA_Machine" Family="NoFamily" Class="User">
+  <Description><![CDATA[these variables are used by the machine (process) to interface with PIA]]></Description>
+  <Members>
+    <Member Name="ZZZZZZZZZZPIA_Machin0" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Alarm_Clear_All_PB" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin0" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Clear All PIA Alarms PB]]></Description>
+    </Member>
+    <Member Name="Alarm_Mc_State" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[State that the PLC was in when alarmed.]]></Description>
+    </Member>
+    <Member Name="Alarm_Message" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Alarm message.]]></Description>
+    </Member>
+    <Member Name="Alarm_Message_Trigger" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Alarm trigger.]]></Description>
+    </Member>
+    <Member Name="Alarm_Pia_State" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[State that the PIA application was in when alarmed.]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZPIA_Machin6" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="CloseAssy_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin6" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Close Assy step Complete Status
+(1 = step complete)]]></Description>
+    </Member>
+    <Member Name="Data_PPC" DataType="PIA_Data_Base" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives Pre-Process Check Data from this tag.]]></Description>
+    </Member>
+    <Member Name="Data_Setup" DataType="PIA_Data_Base" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives Setup Data from this tag.]]></Description>
+    </Member>
+    <Member Name="Data_SOB" DataType="STRING" Dimension="75" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives Start of Build Data from this tag.]]></Description>
+    </Member>
+    <Member Name="Data_Trace" DataType="PIA_Data_Base" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives Trace Data from this tag.]]></Description>
+    </Member>
+    <Member Name="Exc_Rej" DataType="PIA_Exception" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives exception information related to Rejects from this tag.]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZPIA_Machin13" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Initialized" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[PLC and PIA application have been initialized.]]></Description>
+    </Member>
+    <Member Name="MatlArrived_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Material Arrived Step Complete Status
+(1 = step complete)]]></Description>
+    </Member>
+    <Member Name="Perm_Close_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Close Assembly Permissive From Machine.]]></Description>
+    </Member>
+    <Member Name="Perm_Logoff" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Logoff Permissive From Machine.]]></Description>
+    </Member>
+    <Member Name="Perm_Precheck_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Precheck Permissive From Machine]]></Description>
+    </Member>
+    <Member Name="Perm_Setup_From_Req" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[PIA is requesting to send Setup data to the PLC]]></Description>
+    </Member>
+    <Member Name="Perm_Setup_To_Req" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[PIA is requesting Setup data from the PLC]]></Description>
+    </Member>
+    <Member Name="Perm_Trav_Req" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin13" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[Traveler Request Permissive From Machine]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZPIA_Machin22" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Perm_Trav_SOB_Atlas_Req" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Start of build request for Atlas Laser Marker Permissive]]></Description>
+    </Member>
+    <Member Name="Perm_Trav_SOB_Req" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Start of Build Request Permissive]]></Description>
+    </Member>
+    <Member Name="PPC_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Preprocess Check Complete Status
+(1 = results are ready)]]></Description>
+    </Member>
+    <Member Name="PPC_Fail" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Results of the pre-process check have yielded a fail
+(1 = Fail)]]></Description>
+    </Member>
+    <Member Name="PPC_Pass" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Results of the pre-process check have yielded a pass
+(1 = Pass)]]></Description>
+    </Member>
+    <Member Name="Setup_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[Setup Step Complete Status
+(1 = step complete)]]></Description>
+    </Member>
+    <Member Name="Signoff_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[Signoff step Complete Status
+(1 = results are ready)]]></Description>
+    </Member>
+    <Member Name="Signoff_Fail" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin22" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[Signoff Failed
+(1 = Failed)]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZPIA_Machin31" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Signoff_Pass" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin31" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Signoff Passed
+(1 = Passed)]]></Description>
+    </Member>
+    <Member Name="Signoff_Rwk_Pass" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin31" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Passed Rework Signoff
+(1 = Passed)]]></Description>
+    </Member>
+    <Member Name="SOB_Complete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin31" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Start Of Build Step Complete Status
+(1 = step complete)]]></Description>
+    </Member>
+    <Member Name="SoB_Trav_Qty" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[start of build traveler quantity]]></Description>
+    </Member>
+    <Member Name="Trav_Numbers" DataType="STRING" Dimension="75" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receiveds traveler numbers from this tag.]]></Description>
+    </Member>
+    <Member Name="Trav_Qty" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Code sends/receives Traveler number qty from this tag.]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZPIA_Machin38" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Trans_In_Process" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Machin38" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pia Transaction Status
+(on = In Process)]]></Description>
+    </Member>
+  </Members>
+</DataType>

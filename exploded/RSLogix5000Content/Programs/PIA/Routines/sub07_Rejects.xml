@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="sub07_Rejects" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[CPS(k_pass_string,Pia.Machine.Exc_Rej.Reject[0],1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[************************* Part within a lot traveler passed assembly *************************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,6010)EQU(Pia.From_State,6510)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]MOV(6015,Pia.To_State)OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[************************* Part within a lot traveler failed, serial trav failed or end-of-lot reporting *************************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,6020)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_lotrej_01) [CPS(k_blank_exception,Pia.TO_PIA.Reject_Exc,1) ,CPS(k_blank_exception,Pia.FROM_PIA.Reject_Exc,1) ,OTU(data_chk_dn) ] ,JSR(subxx_ExcDataChk,2,k_blank_exception,Pia.TO_PIA.Reject_Exc) ,XIC(data_chk_dn) XIC(data_chk_ok) MOV(6030,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,6030)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_lotrej_02) [CPS(Pia.Machine.Exc_Rej,Pia.TO_PIA.Reject_Exc,1) ,OTU(data_chk_dn) ] XIO(debug_next_step) ,JSR(subxx_ExcDataChk,2,Pia.Machine.Exc_Rej,Pia.TO_PIA.Reject_Exc) ,XIC(data_chk_dn) XIC(data_chk_ok) MOV(6060,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,6060)EQU(Pia.From_State,6540)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_lotrej_03) OTU(data_chk_dn) XIO(debug_next_step) ,JSR(subxx_ExcDataChk,2,Pia.Machine.Exc_Rej,Pia.FROM_PIA.Reject_Exc) ,XIC(data_chk_dn) [XIC(data_chk_ok) MOV(6070,Pia.To_State) ,XIO(data_chk_ok) [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(17,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(6080,Pia.To_State) ] ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********************************* RETURN TO IDLE *********************************]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Pia.To_State,6015) ,EQU(Pia.To_State,6070) ,EQU(Pia.To_State,6080) ]EQU(Pia.From_State,100)[MOV(100,Pia.To_State) ,MOV(0,Pia.Command) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

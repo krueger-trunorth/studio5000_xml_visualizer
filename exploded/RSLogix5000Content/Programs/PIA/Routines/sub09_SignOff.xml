@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="sub09_SignOff" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Case: Signoff pass
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,100)EQU(Pia.From_State,100)EQU(Pia.Machine.Alarm_Mc_State,0)EQU(Pia.Machine.Alarm_Pia_State,0)XIC(Pia.Trig.SignPass_Rqst)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(9010,Pia.To_State) ,OTU(Pia.Trig.SignPass_Rqst) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,9010)EQU(Pia.From_State,9520)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][OTL(Pia.Machine.Signoff_Pass) ,OTU(Pia.Machine.Signoff_Fail) ,OTU(Pia.Machine.Signoff_Rwk_Pass) ,MOV(9015,Pia.To_State) OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Case: Signoff failed, no rework yet.
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,100)EQU(Pia.From_State,100)EQU(Pia.Machine.Alarm_Mc_State,0)EQU(Pia.Machine.Alarm_Pia_State,0)XIC(Pia.Trig.SignFail_Rqst)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(9040,Pia.To_State) ,OTU(Pia.Trig.SignFail_Rqst) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,9040)EQU(Pia.From_State,9540)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(9070,Pia.To_State) ,OTL(Pia.Machine.Signoff_Fail) ,OTU(Pia.Machine.Signoff_Pass) ,OTU(Pia.Machine.Signoff_Rwk_Pass) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,9070)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]EQU(Pia.From_State,9570)[MOV(9100,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Case: Signoff pass with MATT rework record
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,100)EQU(Pia.From_State,100)EQU(Pia.Machine.Alarm_Mc_State,0)EQU(Pia.Machine.Alarm_Pia_State,0)XIC(Pia.Trig.SignRwkPass_Rqst)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(9190,Pia.To_State) ,OTU(Pia.Trig.SignRwkPass_Rqst) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,9190)EQU(Pia.From_State,9620)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(9200,Pia.To_State) OTU(debug_next_step) ,OTL(Pia.Machine.Signoff_Rwk_Pass) ,OTU(Pia.Machine.Signoff_Fail) ,OTU(Pia.Machine.Signoff_Pass) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********************************* RETURN TO IDLE *********************************]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Pia.To_State,9015) ,EQU(Pia.To_State,9100) ,EQU(Pia.To_State,9120) ,EQU(Pia.To_State,9160) ,EQU(Pia.To_State,9200) ,EQU(Pia.To_State,9400) ,EQU(Pia.To_State,9420) ,EQU(Pia.To_State,9460) ]EQU(Pia.From_State,100)[MOV(100,Pia.To_State) ,MOV(0,Pia.Command) ,OTE(signoff_complete) ,OTU(Pia.Machine.CloseAssy_Complete) ,OTU(Pia.Machine.SOB_Complete) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

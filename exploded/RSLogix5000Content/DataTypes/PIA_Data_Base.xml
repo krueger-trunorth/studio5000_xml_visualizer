@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="PIA_Data_Base" Family="NoFamily" Class="User">
+  <Description><![CDATA[change the size of this array based on the required setup and trace data needed for your machine]]></Description>
+  <Members>
+    <Member Name="Value" DataType="STRING" Dimension="85" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

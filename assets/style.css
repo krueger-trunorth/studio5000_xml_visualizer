@@ -1,0 +1,367 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+#react-entry-point,
+#react-entry-point > div {
+    height: 100%;
+}
+
+.tree {
+    user-select: none;
+}
+
+.tree-row {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24292f;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.tree-row:hover {
+    background: #eef1f4;
+}
+
+.tree-dir {
+    font-weight: 500;
+}
+
+.tree-selected {
+    background: #dbeafe;
+}
+
+.tree-selected:hover {
+    background: #cfe2fd;
+}
+
+.status-ok {
+    color: #1a7f37;
+}
+
+.status-error {
+    color: #cf222e;
+}
+
+/* Search results dropdown */
+.search-result {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.search-result:hover {
+    background: #eef1f4;
+}
+
+.sr-name {
+    font-size: 13px;
+    color: #24292f;
+}
+
+.sr-path {
+    font-size: 11px;
+    color: #8b949e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-empty {
+    padding: 6px 8px;
+    font-size: 12px;
+    color: #8b949e;
+}
+
+/* Content search (search inside files) */
+.cs-summary {
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #57606a;
+    border-bottom: 1px solid #eaeef2;
+    position: sticky;
+    top: 0;
+    background: #fff;
+}
+
+.content-result {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #f0f2f4;
+    background: transparent;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.content-result:hover {
+    background: #eef1f4;
+}
+
+.cs-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cs-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: #57606a;
+    border-radius: 10px;
+    padding: 0 6px;
+    line-height: 16px;
+}
+
+.cs-snippets {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cs-snippet {
+    display: flex;
+    gap: 6px;
+    font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+    font-size: 11px;
+    color: #57606a;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cs-lineno {
+    color: #8b949e;
+    min-width: 34px;
+    text-align: right;
+    flex: 0 0 auto;
+}
+
+.cs-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cs-line mark {
+    background: #fff3b0;
+    color: #1f2328;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+/* Navbar collapse toggle row (always visible, even when collapsed) */
+.nav-toggle-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px;
+}
+
+.nav-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+/* Main content fills viewport below the header so previews get real height */
+.app-main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Tree sits inside the Mantine navbar */
+.tree {
+    padding: 0 4px 8px 4px;
+}
+
+/* IDE-style open-file tab strip: horizontal, scrolls when tabs overflow */
+.file-tabs {
+    margin-bottom: 8px;
+    min-width: 0;
+}
+
+.file-tabs .mantine-Tabs-list,
+.file-tabs [role="tablist"] {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+}
+
+.file-tabs [role="tab"] {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+/* Slim scrollbar for the tab strip */
+.file-tabs [role="tablist"]::-webkit-scrollbar {
+    height: 6px;
+}
+
+.file-tabs [role="tablist"]::-webkit-scrollbar-thumb {
+    background: #c8ced4;
+    border-radius: 3px;
+}
+
+/* Main preview area: view-mode-driven layout (vertical stack) */
+#preview-container {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preview-block {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.preview-body,
+.xml-view {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: auto;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #fafbfc;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #57606a;
+}
+
+.csv-count {
+    font-weight: 400;
+    color: #8b949e;
+}
+
+/* Small mode tag (XML / CSV) preceding the file path in the section header */
+.section-label {
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #57606a;
+    background: #eef1f4;
+    border-radius: 4px;
+    padding: 1px 6px;
+}
+
+/* Full path of the open file, shown in the section header */
+.file-path {
+    font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #24292f;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+/* Empty state shown when no file is open */
+.empty-state {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.view-xml #xml-block {
+    flex: 1 1 0;
+}
+
+.view-xml #csv-block {
+    display: none;
+}
+
+.view-csv #csv-block {
+    flex: 1 1 0;
+}
+
+.view-csv #xml-block {
+    display: none;
+}
+
+/* XML preview (dcc.Markdown code block) */
+.xml-view {
+    font-size: 12px;
+}
+
+.xml-view pre {
+    margin: 0;
+    padding: 8px;
+    background: #fafbfc;
+    white-space: pre;
+}
+
+.xml-view code,
+.xml-view pre code.hljs {
+    font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+    background: transparent;
+    padding: 0;
+}
+
+/* highlight.js token colors (light theme) so XML is colored offline */
+.hljs {
+    background: #fafbfc;
+    color: #24292f;
+}
+
+.hljs-tag,
+.hljs-tag .hljs-punctuation {
+    color: #57606a;
+}
+
+.hljs-name {
+    color: #116329;
+}
+
+.hljs-attr {
+    color: #6639ba;
+}
+
+.hljs-string {
+    color: #0a3069;
+}
+
+.hljs-comment {
+    color: #6e7781;
+    font-style: italic;
+}

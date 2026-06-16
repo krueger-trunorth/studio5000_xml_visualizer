@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Scratch_Type" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT,4=anodeM, 5=fullcan, 6=insulator, 7=getstack
+8=emptycan]]></Description>
+  <Data Format="L5K"><![CDATA[5]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="DINT" Radix="Decimal" Value="5" />
+  </Data>
+</Tag>

@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="O_Enable_Robot_Power" TagType="Alias" Radix="Decimal" AliasFor="Local:4:O.Data.29" ExternalAccess="Read/Write" />

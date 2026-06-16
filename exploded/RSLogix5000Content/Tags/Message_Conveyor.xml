@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Message_Conveyor" TagType="Base" DataType="STRING" Dimensions="4" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[57,'Check Anode Cassette Conveyor Orientation (bad RFID Read)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[59,'Check Cathode Cassette Conveyor Orientation (bad RFID Read)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[5,'Retry$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[7,'Release$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="STRING" Dimensions="4">
+      <Element Index="[0]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="57" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Check Anode Cassette Conveyor Orientation (bad RFID Read)']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[1]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="59" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Check Cathode Cassette Conveyor Orientation (bad RFID Read)']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[2]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Retry']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[3]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="7" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Release']]></DataValueMember>
+        </Structure>
+      </Element>
+    </Array>
+  </Data>
+</Tag>

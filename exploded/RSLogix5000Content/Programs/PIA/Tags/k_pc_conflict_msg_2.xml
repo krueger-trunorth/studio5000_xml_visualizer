@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="k_pc_conflict_msg_2" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[11,', PC ID2 = $00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]></Data>
+  <Data Format="String" Length="11"><![CDATA[', PC ID2 = ']]></Data>
+</Tag>

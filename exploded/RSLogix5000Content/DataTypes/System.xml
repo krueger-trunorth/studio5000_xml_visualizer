@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="System" Family="NoFamily" Class="User">
+  <Members>
+    <Member Name="Status" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine status]]></Description>
+    </Member>
+    <Member Name="Access_Level" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[User security level]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZSystem2" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Auto" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Auto Mode Flag]]></Description>
+    </Member>
+    <Member Name="Manual" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Manual Mode Flag]]></Description>
+    </Member>
+    <Member Name="Alarm" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Alarm Flag]]></Description>
+    </Member>
+    <Member Name="Running" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[Running Flag]]></Description>
+    </Member>
+    <Member Name="Stepping" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[Step mode is enabled]]></Description>
+    </Member>
+    <Member Name="Stopping" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[Stopping Tag]]></Description>
+    </Member>
+    <Member Name="Pause_IP" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pause in progress]]></Description>
+    </Member>
+    <Member Name="Paused" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem2" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[System is Paused]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZSystem11" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Homed" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem11" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[System homed]]></Description>
+    </Member>
+    <Member Name="Message" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Message banner]]></Description>
+    </Member>
+    <Member Name="Username" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current Username]]></Description>
+    </Member>
+    <Member Name="S88_State" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZSystem16" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Stopped" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem16" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="Resetting" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem16" BitNumber="1" ExternalAccess="Read/Write" />
+    <Member Name="Warn" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSystem16" BitNumber="2" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

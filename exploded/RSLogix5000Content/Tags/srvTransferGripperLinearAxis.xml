@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="srvTransferGripperLinearAxis" TagType="Base" DataType="ORT_Servo_CIP" Constant="false" ExternalAccess="Read/Write">
+  <Comments>
+    <Comment Operand=".LOCATIONS[0]"><![CDATA[Aborted Position]]></Comment>
+    <Comment Operand=".LOCATIONS[1]"><![CDATA[Stack Position]]></Comment>
+    <Comment Operand=".LOCATIONS[2]"><![CDATA[Insulator Position]]></Comment>
+    <Comment Operand=".LOCATIONS[3]"><![CDATA[Can Position]]></Comment>
+  </Comments>
+  <Data Format="L5K"><![CDATA[[[237987,1.00000000e-001,-1.00000000e+000,5.70000000e+001,1.00000000e+001,1.00000000e+001
+		,5.00000000e+000,0,5.95250018e-002,9.81000000e+003,9.81000000e+003,1.50000000e+002,0.00000000e+000
+		,0.00000000e+000,0,0,0,[1933770,2000,0],1.00000000e+001,[1548005,30000,0],[570425344,0,0,1,0,0,0,0,0],[-1577058304
+		,0,2,1,0,0,0,0,0],[33554432,0,0,0,0,0,0,0,0],[[570425344,0,0,1,0,0,0,0,0],[33554432,0,0,0,0,0,0,0,0],[33554432,0,0,0,0,0,0,0,0]],[704643072
+		,0,0,0,0,0,0,0,0],[704643072,0,0,0,0,0,0,0,0],[570425344,0,0,0,0,0,0,0,0],[33554432,0,0,0,0,0,0,0,0],[704643072,0,0,0,0,0,0,0,0],[704643072
+		,0,0,0,0,0,0,0,0],[704643072,0,0,17,0,0,0,0,0],34,[939673,2000,0],[2653470,2000,0],1.00000000e+001,0.00000000e+000
+		,[0,1000,0],1,1,0,[315252,6000,0],[[33554432,0,0,0,0,0,0,0,0],[33554432,0,0,0,0,0,0,0,0]],[1940947,30000,0],0],[0.00000000e+000
+		,-7.00000000e+000,2.00000000e+001,9.81000000e+003,9.81000000e+003,5.00000000e+001,5.00000000e+001
+		,0,0],[0.00000000e+000,4.60000000e+001,4.50000000e+001,3.70000000e+001,1.97362396e+002,4.88834991e+001
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		],[[16,'Aborted Position$00$00$00$00$00$00$00$00$00'],[14,'Stack Position$00$00$00$00$00$00$00$00$00$00$00'
+		],[18,'Insulator Position$00$00$00$00$00$00$00'],[12,'Can Position$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]],[0.00000000e+000,4.60000000e+001,5.24994125e+001,3.20000000e+001,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		],[2,'mm$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[7,'0 to 57$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[4,'mm/s$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[5,'mm/s$B2$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[5,'mm/s$B2$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'],[15,'Linear Transfer$00$00$00$00$00$00$00$00$00$00'
+		],1,1,1,99]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_Servo_CIP">
+      <StructureMember Name="Servo" DataType="Servo_CIP">
+        <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+        <DataValueMember Name="EnableOut" DataType="BOOL" Value="1" />
+        <DataValueMember Name="bitManualMode" DataType="BOOL" Value="0" />
+        <DataValueMember Name="dblManualMultiplierONS" DataType="REAL" Radix="Float" Value="0.1" />
+        <DataValueMember Name="dblPositionLL" DataType="REAL" Radix="Float" Value="-1.0" />
+        <DataValueMember Name="dblPositionUL" DataType="REAL" Radix="Float" Value="57.0" />
+        <DataValueMember Name="dblBackoffEOTDistUL" DataType="REAL" Radix="Float" Value="10.0" />
+        <DataValueMember Name="dblBackoffEOTOffsetDist" DataType="REAL" Radix="Float" Value="10.0" />
+        <DataValueMember Name="dblBackoffEOTOffsetSpeed" DataType="REAL" Radix="Float" Value="5.0" />
+        <DataValueMember Name="permDisableDrive" DataType="BOOL" Value="0" />
+        <DataValueMember Name="permInhibitMotion" DataType="BOOL" Value="0" />
+        <DataValueMember Name="intAbsMoveType" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="bitUseHardEOT" DataType="BOOL" Value="1" />
+        <DataValueMember Name="bitUseSoftEOT" DataType="BOOL" Value="0" />
+        <DataValueMember Name="bitBypassDriveEnableInputChecking" DataType="BOOL" Value="1" />
+        <DataValueMember Name="bitDisableHardEOTRecoveryIfOK" DataType="BOOL" Value="1" />
+        <DataValueMember Name="statActualPosition" DataType="REAL" Radix="Float" Value="0.059525" />
+        <DataValueMember Name="dblAccelMax" DataType="REAL" Radix="Float" Value="9810.0" />
+        <DataValueMember Name="dblDecelMax" DataType="REAL" Radix="Float" Value="9810.0" />
+        <DataValueMember Name="dblSpeedMax" DataType="REAL" Radix="Float" Value="150.0" />
+        <DataValueMember Name="dblTeachLocFeedback" DataType="REAL" Radix="Float" Value="0.0" />
+        <DataValueMember Name="dblPreviousTeachLocFeedback" DataType="REAL" Radix="Float" Value="0.0" />
+        <DataValueMember Name="intTeachIndex" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="statFaultCode" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="intEOTRecoverStep" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="statFaulted" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statEOTpos" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statEOTneg" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statHomeEnable" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statHomed" DataType="BOOL" Value="1" />
+        <DataValueMember Name="statHoming" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statStopComplete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="statMoveAbsComplete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="statMoveRelComplete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="statEnabled" DataType="BOOL" Value="0" />
+        <DataValueMember Name="statManBrakeReleased" DataType="BOOL" Value="0" />
+        <DataValueMember Name="bitSaveLocation" DataType="BOOL" Value="0" />
+        <DataValueMember Name="bitAbsoluteHome" DataType="BOOL" Value="0" />
+      </StructureMember>
+      <StructureMember Name="Command" DataType="Servo_Cmds_CIP">
+        <DataValueMember Name="Move_Abs_Position" DataType="REAL" Radix="Float" Value="0.0" />
+        <DataValueMember Name="Move_Rel_Position" DataType="REAL" Radix="Float" Value="-7.0" />
+        <DataValueMember Name="Speed" DataType="REAL" Radix="Float" Value="20.0" />
+        <DataValueMember Name="Accel" DataType="REAL" Radix="Float" Value="9810.0" />
+        <DataValueMember Name="Decel" DataType="REAL" Radix="Float" Value="9810.0" />
+        <DataValueMember Name="AccelJerk" DataType="REAL" Radix="Float" Value="50.0" />
+        <DataValueMember Name="DecelJerk" DataType="REAL" Radix="Float" Value="50.0" />
+        <DataValueMember Name="Teach" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Move_Abs_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Clear_Fault_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Move_Rel_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Home_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Stop_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Jog_Pos_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Jog_Neg_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Enable_OT" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Disable_OT" DataType="BOOL" Value="0" />
+        <DataValueMember Name="ManDriveDisable" DataType="BOOL" Value="0" />
+        <DataValueMember Name="ManBrakeRelease" DataType="BOOL" Value="0" />
+        <DataValueMember Name="HomeEnable" DataType="BOOL" Value="0" />
+        <DataValueMember Name="LoadLoc" DataType="BOOL" Value="0" />
+      </StructureMember>
+      <ArrayMember Name="Locations" DataType="REAL" Dimensions="24" Radix="Float">
+        <Element Index="[0]" Value="0.0" />
+        <Element Index="[1]" Value="46.0" />
+        <Element Index="[2]" Value="45.0" />
+        <Element Index="[3]" Value="37.0" />
+        <Element Index="[4]" Value="197.3624" />
+        <Element Index="[5]" Value="48.8835" />
+        <Element Index="[6]" Value="0.0" />
+        <Element Index="[7]" Value="0.0" />
+        <Element Index="[8]" Value="0.0" />
+        <Element Index="[9]" Value="0.0" />
+        <Element Index="[10]" Value="0.0" />
+        <Element Index="[11]" Value="0.0" />
+        <Element Index="[12]" Value="0.0" />
+        <Element Index="[13]" Value="0.0" />
+        <Element Index="[14]" Value="0.0" />
+        <Element Index="[15]" Value="0.0" />
+        <Element Index="[16]" Value="0.0" />
+        <Element Index="[17]" Value="0.0" />
+        <Element Index="[18]" Value="0.0" />
+        <Element Index="[19]" Value="0.0" />
+        <Element Index="[20]" Value="0.0" />
+        <Element Index="[21]" Value="0.0" />
+        <Element Index="[22]" Value="0.0" />
+        <Element Index="[23]" Value="0.0" />
+      </ArrayMember>
+      <ArrayMember Name="LocationDesc" DataType="STRING_25" Dimensions="24">
+        <Element Index="[0]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="16" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['Aborted Position']]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[1]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="14" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['Stack Position']]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[2]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="18" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['Insulator Position']]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[3]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="12" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['Can Position']]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[4]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[5]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[6]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[7]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[8]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[9]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[10]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[11]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[12]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[13]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[14]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[15]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[16]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[17]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[18]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[19]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[20]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[21]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[22]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+        <Element Index="[23]">
+          <Structure DataType="STRING_25">
+            <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA[]]></DataValueMember>
+          </Structure>
+        </Element>
+      </ArrayMember>
+      <ArrayMember Name="LocationsPrev" DataType="REAL" Dimensions="24" Radix="Float">
+        <Element Index="[0]" Value="0.0" />
+        <Element Index="[1]" Value="46.0" />
+        <Element Index="[2]" Value="52.499413" />
+        <Element Index="[3]" Value="32.0" />
+        <Element Index="[4]" Value="0.0" />
+        <Element Index="[5]" Value="0.0" />
+        <Element Index="[6]" Value="0.0" />
+        <Element Index="[7]" Value="0.0" />
+        <Element Index="[8]" Value="0.0" />
+        <Element Index="[9]" Value="0.0" />
+        <Element Index="[10]" Value="0.0" />
+        <Element Index="[11]" Value="0.0" />
+        <Element Index="[12]" Value="0.0" />
+        <Element Index="[13]" Value="0.0" />
+        <Element Index="[14]" Value="0.0" />
+        <Element Index="[15]" Value="0.0" />
+        <Element Index="[16]" Value="0.0" />
+        <Element Index="[17]" Value="0.0" />
+        <Element Index="[18]" Value="0.0" />
+        <Element Index="[19]" Value="0.0" />
+        <Element Index="[20]" Value="0.0" />
+        <Element Index="[21]" Value="0.0" />
+        <Element Index="[22]" Value="0.0" />
+        <Element Index="[23]" Value="0.0" />
+      </ArrayMember>
+      <StructureMember Name="strPositionUnits" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="2" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['mm']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="strPositionRange" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="7" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['0 to 57']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="strVelocityDesc" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="4" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['mm/s']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="strAccelDesc" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['mm/s$B2']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="strDecelDesc" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['mm/s$B2']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Description" DataType="STRING_25">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="15" />
+        <DataValueMember Name="DATA" DataType="STRING_25" Radix="ASCII"><![CDATA['Linear Transfer']]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="Teach_Access" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="Home_Access" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="DriveDisable_Access" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="BrakeRelease_Access" DataType="DINT" Radix="Decimal" Value="99" />
+    </Structure>
+  </Data>
+</Tag>

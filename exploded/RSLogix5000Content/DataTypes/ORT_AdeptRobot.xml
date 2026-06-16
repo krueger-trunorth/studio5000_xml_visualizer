@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_AdeptRobot" Family="NoFamily" Class="User">
+  <Description><![CDATA[Hides/Shows Controls on Robot HMI]]></Description>
+  <Members>
+    <Member Name="Robot" DataType="Robot" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Add on instruction, also contains statuses code can use]]></Description>
+    </Member>
+    <Member Name="Commands" DataType="Robot_Commands" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Commands user can send to robot]]></Description>
+    </Member>
+    <Member Name="Desc" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Name of Robot]]></Description>
+    </Member>
+    <Member Name="LocationConfig" DataType="Adept_Location" Dimension="201" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location Storage
+(1 Based)]]></Description>
+    </Member>
+    <Member Name="World_Current_Value" DataType="Adept_Coordinates" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[World Coordinates Display]]></Description>
+    </Member>
+    <Member Name="Joint_Current_Value" DataType="Adept_Joints" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Joint Coordinates Display]]></Description>
+    </Member>
+    <Member Name="HMI_Location_Config_Feedback" DataType="Adept_Location" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[HMI Display]]></Description>
+    </Member>
+    <Member Name="ConfigVisible" DataType="BOOL" Dimension="32" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Hides/Shows Controls on Robot HMI]]></Description>
+    </Member>
+    <Member Name="PalletConfig" DataType="Adept_Pallet" Dimension="6" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pallet storage (1 Based)]]></Description>
+    </Member>
+  </Members>
+</DataType>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AddOnInstructionDefinition Name="AOI_HexStrToStr" Revision="1.5" RevisionExtension="0" Vendor="BSC" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2010-01-16T00:11:24.921Z" CreatedBy="PMC\barryhahn" EditedDate="2012-06-26T14:59:59.097Z" EditedBy="BSCI\kultm" SoftwareRevision="v17.00">
+  <Description><![CDATA[Input: String
+Output: Hex value of Input string]]></Description>
+  <RevisionNote><![CDATA[v1.5.0
+-> Added comments to logic
+-> Changed revision format to follow guidance
+-> Matched revision to AOI_RFID]]></RevisionNote>
+  <AdditionalHelpText><![CDATA[Example:
+Input string: $FF$AB$00$10, Len 4
+Output string: FFAB0010, Len 8
+
+Max input string len = 41]]></AdditionalHelpText>
+  <Parameters>
+    <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Input - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Output - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="In" TagType="Base" DataType="STRING" Usage="InOut" Required="true" Visible="true" Constant="false" />
+    <Parameter Name="Out" TagType="Base" DataType="STRING" Usage="InOut" Required="true" Visible="true" Constant="false" />
+  </Parameters>
+  <LocalTags>
+    <LocalTag Name="wrk_InputStringSize" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="idx" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="BTDT_High" DataType="FBD_BIT_FIELD_DISTRIBUTE" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[[1,0,0,1,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="FBD_BIT_FIELD_DISTRIBUTE">
+          <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+          <DataValueMember Name="Source" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="SourceBit" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Length" DataType="DINT" Radix="Decimal" Value="1" />
+          <DataValueMember Name="DestBit" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Target" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="EnableOut" DataType="BOOL" Value="0" />
+          <DataValueMember Name="Dest" DataType="DINT" Radix="Decimal" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="wrk_highNibble" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="wrk_lowNibble" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="wrk_idxStr" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+  </LocalTags>
+  <Routines />
+</AddOnInstructionDefinition>

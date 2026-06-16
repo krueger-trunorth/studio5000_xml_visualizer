@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Message_Robot_Popup" TagType="Base" DataType="STRING" Dimensions="8" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[74,'Please Reload the Machine or Choose an Option from the Button Description.$00$00$00$00$00$00$00$00'
+		],[22,'Reload Entire $rmachine$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[31,'Empty Entire $rMachine and Abort$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[7,'Manual$r$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[41,'Clear Part from Flipper Area and Cassette$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[7,'Cleared$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[4,'Wait$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[36,'Clear Completed Battery from Machine$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="STRING" Dimensions="8">
+      <Element Index="[0]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="74" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Please Reload the Machine or Choose an Option from the Button Description.']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[1]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Reload Entire $rmachine']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[2]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="31" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Empty Entire $rMachine and Abort']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[3]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="7" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Manual$r']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[4]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="41" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Clear Part from Flipper Area and Cassette']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[5]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="7" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Cleared']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[6]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="4" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Wait']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[7]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="36" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Clear Completed Battery from Machine']]></DataValueMember>
+        </Structure>
+      </Element>
+    </Array>
+  </Data>
+</Tag>

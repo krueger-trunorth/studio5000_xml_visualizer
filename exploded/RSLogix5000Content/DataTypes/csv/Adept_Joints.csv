@@ -1,0 +1,10 @@
+attr_Class,attr_DataType,attr_Dimension,attr_ExternalAccess,attr_Family,attr_Hidden,attr_Name,attr_Radix,path,tag,text
+User,,,,NoFamily,,Adept_Joints,,DataType,DataType,
+,,,,,,,,DataType/Description,Description,DO NOT MODIFY THIS UDT DEFINITION UNDER ANY CIRCUMSTANCE!
+,,,,,,,,DataType/Members,Members,
+,REAL,0,Read/Write,,false,_1,Float,DataType/Members/Member,Member,
+,REAL,0,Read/Write,,false,_2,Float,DataType/Members/Member,Member,
+,REAL,0,Read/Write,,false,_3,Float,DataType/Members/Member,Member,
+,REAL,0,Read/Write,,false,_4,Float,DataType/Members/Member,Member,
+,REAL,0,Read/Write,,false,_5,Float,DataType/Members/Member,Member,
+,REAL,0,Read/Write,,false,_6,Float,DataType/Members/Member,Member,

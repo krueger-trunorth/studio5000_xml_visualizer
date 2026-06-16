@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="bcDataToPLC" TagType="Base" DataType="UDT_BarCodeReader_to_PLC" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1244,1244,[591068,'82381927$r$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="UDT_BarCodeReader_to_PLC">
+      <DataValueMember Name="bitError" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitResultDataAvailable" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitResultDataStrobe" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved0_3" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved0_4" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved0_5" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitBufferOverflowError" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitGeneralError" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitBUSY" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitTRG_BUSY" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitLOCK_BUSY" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitMODE_BUSY" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitERR_BUSY" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved1_5" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved1_6" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved1_7" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReadComplete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitPresetComplete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitRegisterPresetDataComplete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitTuneComplete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved2_4" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved2_5" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved2_6" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitEXTRequestComplete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReadFalure" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitPresetFalure" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitRegisterPresetDataFalure" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitTuneFalure" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved3_4" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved3_5" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved3_6" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitEXTRequestFalure" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitIn1Status" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitIn2Status" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved4_2" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved4_3" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitOut1Status" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitOut2Status" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitOut3Status" DataType="BOOL" Value="0" />
+      <DataValueMember Name="bitReserved4_7" DataType="BOOL" Value="0" />
+      <DataValueMember Name="sintReserved5" DataType="SINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intReserved6to7" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="dintReserved8to11" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="dintReserved12to15" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intReadResultCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intPresetResultCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intRegisterPresetDataResultCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intTuneResultCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="dintReserved24to27" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intReserved28to29" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intEXTRequestResultCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intGeneralErrorCode" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intReserved34to35" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="intResultDataReadyCount" DataType="INT" Radix="Decimal" Value="1244" />
+      <DataValueMember Name="intResultDataUpdateCount" DataType="INT" Radix="Decimal" Value="1244" />
+      <StructureMember Name="strResultData" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="591068" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['82381927$r$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00']]></DataValueMember>
+      </StructureMember>
+    </Structure>
+  </Data>
+</Tag>

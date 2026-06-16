@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="I_Takeup_Tension" TagType="Alias" Radix="Decimal" AliasFor="Local:2:I.Data.6" ExternalAccess="Read/Write" />

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="rtClockUpdate" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[get current time stamp from PLC clock, this is unix time and is stored as a LINT and represents the number of microseconds from January 1st, 1970 at UTC
+
+convert this to number of seconds by dividing by 1,000,000, store this number in a DINT so it can be compared to the time stamp from the HMI which is unix time but stored as number of seconds
+
+then calculate the difference in seconds between the PLC clock and the HMI clock]]></Comment>
+      <Text><![CDATA[[NEQ(iDateTimeIntFromHMI,HMI_From_HMI_DateTimeInt) [OTE(bitTimeUpdated) ,MOV(HMI_From_HMI_DateTimeInt,iDateTimeIntFromHMI) ] ,XIC(bitTimeUpdated) [GSV(WallClockTime,,CurrentValue,lintCurrentTimeStamp) MOV(1000000,K_intMicroSecPerSec) L_DIV(LINT_Division,lintCurrentTimeStamp,K_intMicroSecPerSec,lintCurrentTimeStampSec,intTimeStampRemainder) CPS(lintCurrentTimeStampSec,intCurrentDateTimeSec[0],2) ,SUB(intCurrentDateTimeSec[0],iDateTimeIntFromHMI,intPLC_HMI_Clock_Diff) ABS(intPLC_HMI_Clock_Diff,intPLC_HMI_Clock_Diff) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset time checking tags on first scan]]></Comment>
+      <Text><![CDATA[XIC(S:FS)MOV(intCurrentDateTimeSec[0],HMI_From_HMI_DateTimeInt)MOV(intCurrentDateTimeSec[0],iDateTimeIntFromHMI)MOV(0,intPLC_HMI_Clock_Diff)OTU(bitTimeUpdated);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[TGL - added rung to set clock from HMI on Estop - 11/30/2018
+TGL - Modified to only change time if difference is GEQ alarm setting. Modified to use epoch datetime form HMI - 2/11/2019
+]]></Comment>
+      <Text><![CDATA[EQU(System.Status,0)[TON(tmrSetClockDelay,?,?) ,XIC(tmrSetClockDelay.DN) XIC(bitTimeUpdated) GEQ(intPLC_HMI_Clock_Diff,intTimeOffsetAllowed) [COP(HMI_From_HMI_DateTimeInt,lintCurrentTimeStampHMI,1) L_MUL(LINT_Multiplication1,lintCurrentTimeStampHMI,K_intMicroSecPerSec,lintCurrentTimeStampHMI) ,ONS(onsBits[0].1) SSV(WallClockTime,,CurrentValue,lintCurrentTimeStampHMI) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

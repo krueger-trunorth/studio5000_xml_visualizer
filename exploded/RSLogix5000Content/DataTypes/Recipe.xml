@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Recipe" Family="NoFamily" Class="User">
+  <Description><![CDATA[Part Settings]]></Description>
+  <Members>
+    <Member Name="RecipeName" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Folder" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="TempRecipeName" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Development" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Pages" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Load_Cell_High" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Load_Cell_Low" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Stack_Z_Handoff_Height" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Insulator_Stretch_Dist" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Cathode_X_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Cathode_Y_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Cathode_R_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Anode_X_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Anode_Y_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Anode_R_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Discrete_X_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Discrete_Y_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="R_Discrete_R_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Can_Insert_Speed" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Number_of_Layers" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Layer_1_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_2_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_3_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_4_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_5_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_6_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_7_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_8_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_9_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_10_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_11_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_12_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_13_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_14_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Layer_15_Type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=anodeB,1=discrete,2=cathode,3=anodeT, 8=anodeM]]></Description>
+    </Member>
+    <Member Name="Can_InsertTo_Finger" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location overrides what is in servo]]></Description>
+    </Member>
+    <Member Name="Xfer_Linear_Stack_Platform_Extend_Loc" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location overrides what is in servo]]></Description>
+    </Member>
+    <Member Name="Xfer_Linear_Stack_Platform_Insulator_Loc" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location overrides what is in servo]]></Description>
+    </Member>
+    <Member Name="Xfer_Linear_Stack_Insert_Loc" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location overrides what is in servo]]></Description>
+    </Member>
+    <Member Name="Xfer_Linear_Stack_Retract_Dist" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Location overrides what is in servo]]></Description>
+    </Member>
+    <Member Name="Can_InsertTo_Transfer" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Insulator_Final_Stretch" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Unfold_Length" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Unfold_from_End_Dist" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Robot_Insu_DriveDown" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Battery_type" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=LL, 1 = SL]]></Description>
+    </Member>
+    <Member Name="Insulator_Stretch_Shft_X" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Insulator_Stretch_Shft_Y" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="EnableCanVisionOffset" DataType="ORT_RecipeParamDINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Off, 1=On]]></Description>
+    </Member>
+    <Member Name="R_Can_X_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[mm]]></Description>
+    </Member>
+    <Member Name="R_Can_Y_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[mm]]></Description>
+    </Member>
+    <Member Name="R_Can_R_Offset" DataType="ORT_RecipeParam" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[deg]]></Description>
+    </Member>
+  </Members>
+</DataType>

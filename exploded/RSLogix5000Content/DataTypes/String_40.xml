@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="String_40" Family="StringFamily" Class="User">
+  <Description><![CDATA[40 Character String]]></Description>
+  <Members>
+    <Member Name="LEN" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="DATA" DataType="SINT" Dimension="40" Radix="ASCII" Hidden="false" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

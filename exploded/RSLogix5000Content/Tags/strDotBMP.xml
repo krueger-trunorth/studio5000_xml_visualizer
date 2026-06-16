@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="strDotBMP" TagType="Base" DataType="STRING_4" Constant="true" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[4,'.bmp']]]></Data>
+  <Data Format="String" Length="4"><![CDATA['.bmp']]></Data>
+</Tag>

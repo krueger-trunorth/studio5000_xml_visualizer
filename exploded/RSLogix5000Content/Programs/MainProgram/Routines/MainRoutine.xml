@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="MainRoutine" Type="RLL">
+  <Description><![CDATA[Main]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Call all main sequences and routines that need constant update]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtAlarms,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtControl,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtClockUpdate,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtHMI,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtLoadLocations,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtTrayTracker,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqAbort,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqAuto_HitchPunch,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqCamera_Cal,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqConveyor_Purge,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqCamera_Ver,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqCanInsert,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqConveyor_Anode,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqConveyor_Cathode,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqHoming,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqManual_Hitch,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqManual_DiePunch,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqOpHitch,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Removed PIA bypass logic that was keeping this subroutine from being called.]]></Comment>
+      <Text><![CDATA[JSR(seqPIA,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[JSR(seqRobot_Exec,0) ,JSR(seqRobot_Stack,0) ,JSR(seqRobot_Discrete,0) ,JSR(seqRobot_Cathode,0) ,JSR(seqRobot_Anode,0) ,JSR(seqRobot_ClearAnodes,0) ,JSR(seqRobot_Insulator,0) ,JSR(seqRobot_Can,0) ,JSR(seqRobot_Reject,0) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtTrayTracker,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqTransferGripper,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(seqWebDancer,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(subMessageSetter,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(subGetTimeString,0,CurrentDateTime);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset all sequences on startup]]></Comment>
+      <Text><![CDATA[XIC(S:FS)[OTL(seqAbort.Reset) OTL(seqHoming.Reset) OTL(seqRobot.Reset) ,OTL(seqCal_Camera.Reset) OTL(seqVer_Camera.Reset) ,OTL(SeqClearConveyor.Reset) OTL(seqConveyor_Anode.Reset) OTL(seqConveyor_Cathode.Reset) ,OTL(seqConveyor_Anode_sub.Reset) OTL(seqConveyor_Cathode_sub.Reset) ,OTL(seqHitchPunch.Reset) OTL(seqOpHitch.Reset) OTL(seqManualHitch.Reset) OTL(seqManualPunch.Reset) ,OTL(seqCanInsert.Reset) OTL(seqTransferGripper.Reset) ,OTL(Dancer_Payout.Reset) OTL(Dancer_Takeup.Reset) OTL(seqWebDancer.Reset) ,OTL(vbRobotLoc.bitLoadAll) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Prevent from fightnig door closed sensors]]></Comment>
+      <Text><![CDATA[[TON(Machine_Timers[16],?,?) ,XIC(Machine_Timers[16].DN) ONS(Machine_Oneshots[6].2) OTL(Bit_Clear_Tray_Parts) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(seqConveyor_Anode.Perm) ,XIC(seqConveyor_Cathode.Perm) ]OTE(O_Machine_Running);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

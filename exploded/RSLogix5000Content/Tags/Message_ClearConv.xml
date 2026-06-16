@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Message_ClearConv" TagType="Base" DataType="STRING" Dimensions="30" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[15,'Select Conveyor$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[29,'Check robot EOAT vac is clear$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Waiting for cassette$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[17,'Move to Top Anode$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[26,'Pick Top Anode with Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[33,'Move to Approach and Check Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[41,'Vac Fault - Clear Alarm and Press Proceed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Call Reject Sequence$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Move to Middle Anode$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[30,'Pick Middle Anode with Vacuum$t$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[33,'Move to Approach and Check Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[41,'Vac Fault - Clear Alarm and Press Proceed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Call Reject Sequence$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Move to Bottom Anode$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[29,'Pick Bottom Anode with Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[33,'Move to Approach and Check Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[41,'Vac Fault - Clear Alarm and Press Proceed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Call Reject Sequence$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Anode Cassette Cleared$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[27,'Move to Robot Init Position$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[15,'Move to Cathode$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[24,'Pick Cathode with Vacuum$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Move to Abort Location$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[9,'Drop Part$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[27,'Vacuum Check - Is Part Off?$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="STRING" Dimensions="30">
+      <Element Index="[0]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="15" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Select Conveyor']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[1]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="29" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Check robot EOAT vac is clear']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[2]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Waiting for cassette']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[3]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[4]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="17" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Top Anode']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[5]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="26" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Pick Top Anode with Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[6]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="33" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Approach and Check Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[7]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="41" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Vac Fault - Clear Alarm and Press Proceed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[8]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Call Reject Sequence']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[9]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Middle Anode']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[10]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="30" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Pick Middle Anode with Vacuum$t']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[11]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="33" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Approach and Check Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[12]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="41" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Vac Fault - Clear Alarm and Press Proceed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[13]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Call Reject Sequence']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[14]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Bottom Anode']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[15]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="29" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Pick Bottom Anode with Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[16]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="33" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Approach and Check Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[17]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="41" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Vac Fault - Clear Alarm and Press Proceed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[18]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="20" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Call Reject Sequence']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[19]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Anode Cassette Cleared']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[20]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="27" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Robot Init Position']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[21]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[22]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="15" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Cathode']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[23]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="24" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Pick Cathode with Vacuum']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[24]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[25]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Move to Abort Location']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[26]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="9" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Drop Part']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[27]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="27" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Vacuum Check - Is Part Off?']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[28]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[29]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+        </Structure>
+      </Element>
+    </Array>
+  </Data>
+</Tag>

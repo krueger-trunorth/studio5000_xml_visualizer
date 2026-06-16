@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="PIA_Trig" Family="NoFamily" Class="User">
+  <Members>
+    <Member Name="ZZZZZZZZZZPIA_Trig0" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Allow_Logoff" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="Setup_To_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="1" ExternalAccess="Read/Write" />
+    <Member Name="Setup_From_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="2" ExternalAccess="Read/Write" />
+    <Member Name="Trav_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="3" ExternalAccess="Read/Write" />
+    <Member Name="Precheck_Pass_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="4" ExternalAccess="Read/Write" />
+    <Member Name="Precheck_Fail_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="5" ExternalAccess="Read/Write" />
+    <Member Name="Close_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="6" ExternalAccess="Read/Write" />
+    <Member Name="SignPass_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig0" BitNumber="7" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZPIA_Trig9" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="SignFail_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="0" ExternalAccess="Read/Write" />
+    <Member Name="SignRwkPass_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="1" ExternalAccess="Read/Write" />
+    <Member Name="SignRwkFail_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="2" ExternalAccess="Read/Write" />
+    <Member Name="Restart_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="3" ExternalAccess="Read/Write" />
+    <Member Name="Trav_SOB_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="4" ExternalAccess="Read/Write" />
+    <Member Name="Trav_SOB_Atlas_Rqst" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="5" ExternalAccess="Read/Write" />
+    <Member Name="Wait_For_PIA" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZPIA_Trig9" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[This bit prevents the PIA state change "check" timer from running.]]></Description>
+    </Member>
+  </Members>
+</DataType>

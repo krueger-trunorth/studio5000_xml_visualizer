@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_Vision_Camera_Save_Paths" Family="NoFamily" Class="User">
+  <Description><![CDATA[The paths for saving images]]></Description>
+  <Members>
+    <Member Name="strSave1Prefix" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The prefix for all images being saved]]></Description>
+    </Member>
+    <Member Name="strSave2Prefix" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The prefix for all images being saved]]></Description>
+    </Member>
+    <Member Name="strSaveLastPrefix" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The prefix for all images being saved]]></Description>
+    </Member>
+    <Member Name="strSavePath1" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The folder/full path to save an image when inspection is complete]]></Description>
+    </Member>
+    <Member Name="strSavePath2" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The folder/full path to save a second image when inspection is complete]]></Description>
+    </Member>
+    <Member Name="strSaveLastPath" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[The folder/full path to save the image into when SaveLast is requested]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZORT_Vision6" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="bSave1InFolders" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Whether the images in save path 1 are saved in folders per inspection number or not]]></Description>
+    </Member>
+    <Member Name="bSave2InFolders" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Whether the images in save path 2 are saved in folders per inspection number or not]]></Description>
+    </Member>
+    <Member Name="bSaveLastInFolders" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[Whether the images in save last are saved in folders per inspection number or not]]></Description>
+    </Member>
+    <Member Name="bSave1WithTools" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[BUGGY IF ENABLED! - Whether to save images in save path 1 with tools or not]]></Description>
+    </Member>
+    <Member Name="bSave2WithTools" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[BUGGY IF ENABLED! - Whether to save images in save path 2 with tools or not]]></Description>
+    </Member>
+    <Member Name="bSaveLastWithTools" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZORT_Vision6" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[BUGGY IF ENABLED! - Whether to save last images with tools or not]]></Description>
+    </Member>
+    <Member Name="iMaxSave1Images" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Maximum images to save in a single folder for save path 1 (0=infinite)]]></Description>
+    </Member>
+    <Member Name="iMaxSave2Images" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Maximum images to save in a single folder for save path 2 (0=infinite)]]></Description>
+    </Member>
+    <Member Name="iMaxSaveLastImages" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Maximum images to save in a single folder for save last path (0=infinite)]]></Description>
+    </Member>
+  </Members>
+</DataType>

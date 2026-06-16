@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="rtCheckAnodeData" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(Temp_Anode_Data.Data[0],K_Str_Blank)NEQ(Temp_Anode_Data.Data[1],K_Str_Blank)NEQ(Temp_Anode_Data.Data[2],K_Str_Blank)NEQ(Temp_Anode_Data.Data[3],K_Str_Blank)NEQ(Temp_Anode_Data.Data[4],K_Str_Blank)NEQ(Temp_Anode_Data.Data[5],K_Str_Blank)NEQ(Temp_Anode_Data.Data[6],K_Str_Blank)NEQ(Temp_Anode_Data.Data[7],K_Str_Blank)NEQ(Temp_Anode_Data.Data[8],K_Str_Blank)NEQ(Temp_Anode_Data.Data[9],K_Str_Blank)NEQ(Temp_Anode_Data.Data[10],K_Str_Blank)NEQ(Temp_Anode_Data.Data[11],K_Str_Blank)NEQ(Temp_Anode_Data.Data[12],K_Str_Blank)NEQ(Temp_Anode_Data.Data[13],K_Str_Blank)NEQ(Temp_Anode_Data.Data[14],K_Str_Blank)NEQ(Temp_Anode_Data.Data[15],K_Str_Blank)OTE(bit_AnodeDataOK);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[RET();]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

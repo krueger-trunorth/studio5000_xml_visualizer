@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Prescan" Type="RLL">
+  <Description><![CDATA[FirstScan]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[OTL(bitFirstScan);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

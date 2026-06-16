@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="CamCalParam" Family="NoFamily" Class="User">
+  <Members>
+    <Member Name="dblStandard" DataType="REAL" Dimension="7" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Nominal verification values]]></Description>
+    </Member>
+    <Member Name="dblCalUL" DataType="REAL" Dimension="7" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Calibration Limits]]></Description>
+    </Member>
+    <Member Name="dblCalLL" DataType="REAL" Dimension="7" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Calibration Limits]]></Description>
+    </Member>
+    <Member Name="dblCurrentCal" DataType="REAL" Dimension="26" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current calibration parameters]]></Description>
+    </Member>
+    <Member Name="dblCurrentVerify" DataType="REAL" Dimension="7" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current verification parameters]]></Description>
+    </Member>
+    <Member Name="dblPendingCal" DataType="REAL" Dimension="26" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pending calibration parameters]]></Description>
+    </Member>
+    <Member Name="dblPendingVerify" DataType="REAL" Dimension="7" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pending verification parameters]]></Description>
+    </Member>
+    <Member Name="dblVerifyUL" DataType="REAL" Dimension="6" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Verification Limits]]></Description>
+    </Member>
+    <Member Name="dblVerifyLL" DataType="REAL" Dimension="6" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Verification Limits]]></Description>
+    </Member>
+    <Member Name="strVerifyDesc" DataType="STRING" Dimension="7" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Descriptions of verification data]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZCamCalPara10" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="bitShowCal" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZCamCalPara10" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show calibration data]]></Description>
+    </Member>
+    <Member Name="bitShowVerify" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZCamCalPara10" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[Show verification data]]></Description>
+    </Member>
+    <Member Name="bitPendingFail" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Set if one of the pending or verify params fails]]></Description>
+    </Member>
+    <Member Name="bitCurrentFail" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Set if one of the current params fails]]></Description>
+    </Member>
+  </Members>
+</DataType>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="ORT_Actuator" Family="NoFamily" Class="User">
+  <Description><![CDATA[Actuator Data type for HMI]]></Description>
+  <Members>
+    <Member Name="ACT" DataType="Actuator" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Actuator]]></Description>
+    </Member>
+    <Member Name="Desc" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Description]]></Description>
+    </Member>
+    <Member Name="Extend_Desc" DataType="String_10" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Extend Description for HMI]]></Description>
+    </Member>
+    <Member Name="Retract_Desc" DataType="String_10" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Retract Description for HMI]]></Description>
+    </Member>
+    <Member Name="Extended_Desc" DataType="String_10" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Extended Description for HMI]]></Description>
+    </Member>
+    <Member Name="Retracted_Desc" DataType="String_10" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Retracted Description for HMI]]></Description>
+    </Member>
+    <Member Name="Abort_Desc" DataType="String_10" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Abort Description for HMI, Blank to Hide]]></Description>
+    </Member>
+  </Members>
+</DataType>

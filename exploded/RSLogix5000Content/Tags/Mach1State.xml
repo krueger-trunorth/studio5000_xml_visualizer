@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Mach1State" TagType="Base" DataType="Mach1_State" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[26215491,6,2,1,15,15,[1057459,15000,0],[2406596,15000,0],[-1069772449,1000,111],[3969207,1000,0]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="Mach1_State">
+      <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+      <DataValueMember Name="EnableOut" DataType="BOOL" Value="1" />
+      <DataValueMember Name="seqControl_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="AlarmActive" DataType="BOOL" Value="0" />
+      <DataValueMember Name="seqAbort_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="seqMain_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Initialized" DataType="BOOL" Value="1" />
+      <DataValueMember Name="intState" DataType="DINT" Radix="Decimal" Value="6" />
+      <DataValueMember Name="intMode" DataType="DINT" Radix="Decimal" Value="2" />
+      <DataValueMember Name="seqCal_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="seqVerify_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="seqHome_On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="intStatus" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="EStopped" DataType="BOOL" Value="1" />
+      <DataValueMember Name="NotCalibrated" DataType="BOOL" Value="0" />
+      <DataValueMember Name="NotVerified" DataType="BOOL" Value="0" />
+      <DataValueMember Name="WaitingForUser" DataType="BOOL" Value="0" />
+      <DataValueMember Name="WaitingForProcess" DataType="BOOL" Value="0" />
+      <DataValueMember Name="iWaitForProcHeldDelay" DataType="DINT" Radix="Decimal" Value="15" />
+      <DataValueMember Name="iWaitForUserHeldDelay" DataType="DINT" Radix="Decimal" Value="15" />
+      <DataValueMember Name="Key_switch_Input" DataType="BOOL" Value="0" />
+    </Structure>
+  </Data>
+</Tag>

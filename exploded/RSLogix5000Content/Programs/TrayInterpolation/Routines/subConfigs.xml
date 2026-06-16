@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subConfigs" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[[MOV(Index,s800.LocationConfig[Index].Location_Number) ,OTU(s800.LocationConfig[Index].Relative_Move) ,MOV(100,s800.LocationConfig[Index].Speed) ,MOV(100,s800.LocationConfig[Index].Acceleration) ,MOV(100,s800.LocationConfig[Index].Deceleration) ,MOV(0,s800.LocationConfig[Index].Approach_Height) ,MOV(180,s800.LocationConfig[Index].Coordinate.Pitch) ,OTU(s800.LocationConfig[Index].Approach_Absolute) ,OTU(s800.LocationConfig[Index].Coarse_Nulling) ,OTU(s800.LocationConfig[Index].Continuous_Motion) ,OTU(s800.LocationConfig[Index].Straightline_Move) ,OTU(s800.LocationConfig[Index].Coordinate_in_Joints) ,OTU(s800.LocationConfig[Index].Single_Turn) ,OTL(s800.LocationConfig[Index].Righty) ,OTU(s800.LocationConfig[Index].Below) ,OTU(s800.LocationConfig[Index].Flip) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

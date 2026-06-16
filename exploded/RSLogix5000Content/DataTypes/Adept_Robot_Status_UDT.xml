@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Adept_Robot_Status_UDT" Family="NoFamily" Class="User">
+  <Description><![CDATA[DO NOT MODIFY THIS UDT DEFINITION UNDER ANY CIRCUMSTANCE!]]></Description>
+  <Members>
+    <Member Name="ZZZZZZZZZZAdept_Robo0" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="power_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=High power off 1=High power on]]></Description>
+    </Member>
+    <Member Name="fault_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=No faults 1=System faulted]]></Description>
+    </Member>
+    <Member Name="calibrated_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot not calibrated 1=Robot calibrated]]></Description>
+    </Member>
+    <Member Name="system_initialized_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[0= 1=System initialized]]></Description>
+    </Member>
+    <Member Name="emergency_stop_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=E-stop closed 1=E-stop open]]></Description>
+    </Member>
+    <Member Name="command_execution_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Ready for command 1=Command started]]></Description>
+    </Member>
+    <Member Name="in_position_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot in motion 1=Robot in position]]></Description>
+    </Member>
+    <Member Name="jog_mode_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo0" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Not in jog mode 1=In jog mode]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo9" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="latched" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=No latch data 1=Latch data available]]></Description>
+    </Member>
+    <Member Name="tool_mode_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=No tool offset invoked 1=Tool offset invoked]]></Description>
+    </Member>
+    <Member Name="mcp_connected_state" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=No MCP connected 1=MCP connected]]></Description>
+    </Member>
+    <Member Name="righty_configuration" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot in Lefty arm configuration 1=Robot in Right arm configuration]]></Description>
+    </Member>
+    <Member Name="below_configuration" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot in Above arm configuration 1=Robot in Below arm configuration]]></Description>
+    </Member>
+    <Member Name="flip_configuration" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot in No flip arm configuration 1=Robot in Flip arm configuration]]></Description>
+    </Member>
+    <Member Name="system_heartbeat" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[Communication heartbeat]]></Description>
+    </Member>
+    <Member Name="ace_control_mode" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo9" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[0=Robot under ePLC control 1=Robot under ACE control]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo18" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="input_1001" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1001]]></Description>
+    </Member>
+    <Member Name="input_1002" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1002]]></Description>
+    </Member>
+    <Member Name="input_1003" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1003]]></Description>
+    </Member>
+    <Member Name="input_1004" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1004]]></Description>
+    </Member>
+    <Member Name="input_1005" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1005]]></Description>
+    </Member>
+    <Member Name="input_1006" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1006]]></Description>
+    </Member>
+    <Member Name="input_1007" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1007]]></Description>
+    </Member>
+    <Member Name="input_1008" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo18" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1008]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo27" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="input_1009" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1009]]></Description>
+    </Member>
+    <Member Name="input_1010" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1010]]></Description>
+    </Member>
+    <Member Name="input_1011" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1011]]></Description>
+    </Member>
+    <Member Name="input_1012" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[XDIO Input 1012]]></Description>
+    </Member>
+    <Member Name="soft_signal_2001" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ soft signal 2001]]></Description>
+    </Member>
+    <Member Name="soft_signal_2002" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ soft signal 2002]]></Description>
+    </Member>
+    <Member Name="soft_signal_2003" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ soft signal 2003]]></Description>
+    </Member>
+    <Member Name="soft_signal_2004" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo27" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ soft signal 2004]]></Description>
+    </Member>
+    <Member Name="motion_counter" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Motion counter]]></Description>
+    </Member>
+    <Member Name="state_1" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(1) function]]></Description>
+    </Member>
+    <Member Name="state_2" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(2) function]]></Description>
+    </Member>
+    <Member Name="state_3" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(3) function]]></Description>
+    </Member>
+    <Member Name="state_4" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(4) function]]></Description>
+    </Member>
+    <Member Name="state_5" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(5) function]]></Description>
+    </Member>
+    <Member Name="state_10" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[V+ STATE(10) function % motion complete]]></Description>
+    </Member>
+    <Member Name="mcp_speed" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP Speed Pot setting]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo44" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="mcp_button_F1" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_F2" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_F3" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_F4" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_speed_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_speed_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J1_X_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J1_X_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo44" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo53" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="mcp_button_jog_mode" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_slow" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J2_Y_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J2_Y_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_select_robot" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_menu" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J3_Z_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J3_Z_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo53" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo62" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="mcp_button_up" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_ok" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J4_RX_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J4_RX_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_down" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="4" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_cancel" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="5" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J5_RY_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="6" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J5_RZ_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo62" BitNumber="7" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZAdept_Robo71" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="mcp_button_left" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo71" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_right" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo71" BitNumber="1" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J6_RZ_minus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo71" BitNumber="2" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="mcp_button_J6_RZ_plus" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZAdept_Robo71" BitNumber="3" ExternalAccess="Read/Write">
+      <Description><![CDATA[MCP button]]></Description>
+    </Member>
+    <Member Name="error_number" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current error number]]></Description>
+    </Member>
+    <Member Name="error_message" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current error message]]></Description>
+    </Member>
+    <Member Name="Here" DataType="Adept_Coordinates" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current world coordinates]]></Description>
+    </Member>
+    <Member Name="PHere" DataType="Adept_Joints" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Current joint angles]]></Description>
+    </Member>
+    <Member Name="Latch_Loc" DataType="Adept_Coordinates" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Latched world coordinates]]></Description>
+    </Member>
+  </Members>
+</DataType>

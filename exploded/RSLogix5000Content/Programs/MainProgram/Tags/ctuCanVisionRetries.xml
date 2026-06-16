@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="ctuCanVisionRetries" TagType="Base" DataType="COUNTER" Constant="false" ExternalAccess="Read Only">
+  <Data Format="L5K"><![CDATA[[536870912,2,2]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="COUNTER">
+      <DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="2" />
+      <DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="2" />
+      <DataValueMember Name="CU" DataType="BOOL" Value="0" />
+      <DataValueMember Name="CD" DataType="BOOL" Value="0" />
+      <DataValueMember Name="DN" DataType="BOOL" Value="1" />
+      <DataValueMember Name="OV" DataType="BOOL" Value="0" />
+      <DataValueMember Name="UN" DataType="BOOL" Value="0" />
+    </Structure>
+  </Data>
+</Tag>

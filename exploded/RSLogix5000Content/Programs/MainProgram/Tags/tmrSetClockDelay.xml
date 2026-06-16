@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="tmrSetClockDelay" TagType="Base" DataType="TIMER" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[-1606630381,3000,3007]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="TIMER">
+      <DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="3000" />
+      <DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="3007" />
+      <DataValueMember Name="EN" DataType="BOOL" Value="1" />
+      <DataValueMember Name="TT" DataType="BOOL" Value="0" />
+      <DataValueMember Name="DN" DataType="BOOL" Value="1" />
+    </Structure>
+  </Data>
+</Tag>

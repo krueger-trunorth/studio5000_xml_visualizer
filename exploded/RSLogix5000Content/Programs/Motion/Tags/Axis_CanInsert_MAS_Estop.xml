@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Axis_CanInsert_MAS_Estop" TagType="Base" DataType="MOTION_INSTRUCTION" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Servo stop command]]></Description>
+  <Data Format="L5K"><![CDATA[[704643072,0,0,0,0,0,0,0,0]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="MOTION_INSTRUCTION">
+      <DataValueMember Name="FLAGS" DataType="DINT" Radix="Decimal" Value="704643072" />
+      <DataValueMember Name="EN" DataType="BOOL" Value="0" />
+      <DataValueMember Name="DN" DataType="BOOL" Value="1" />
+      <DataValueMember Name="ER" DataType="BOOL" Value="0" />
+      <DataValueMember Name="PC" DataType="BOOL" Value="1" />
+      <DataValueMember Name="IP" DataType="BOOL" Value="0" />
+      <DataValueMember Name="AC" DataType="BOOL" Value="0" />
+      <DataValueMember Name="ACCEL" DataType="BOOL" Value="0" />
+      <DataValueMember Name="DECEL" DataType="BOOL" Value="0" />
+      <DataValueMember Name="TrackingMaster" DataType="BOOL" Value="0" />
+      <DataValueMember Name="CalculatedDataAvailable" DataType="BOOL" Value="0" />
+      <DataValueMember Name="ERR" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="STATUS" DataType="SINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="STATE" DataType="SINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="SEGMENT" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="EXERR" DataType="SINT" Radix="Decimal" Value="0" />
+    </Structure>
+  </Data>
+</Tag>

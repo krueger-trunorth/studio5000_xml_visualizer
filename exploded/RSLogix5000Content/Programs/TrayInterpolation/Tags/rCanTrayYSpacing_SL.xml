@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="rCanTrayYSpacing_SL" TagType="Base" DataType="REAL" Radix="Float" Constant="true" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[5.07999992e+001]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="REAL" Radix="Float" Value="50.8" />
+  </Data>
+</Tag>

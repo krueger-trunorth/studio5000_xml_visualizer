@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="hb_from_tmr" TagType="Base" DataType="TIMER" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Timer Used For Detecting The Heartbeat From PIA]]></Description>
+  <Data Format="L5K"><![CDATA[[-1069748741,25000,425]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="TIMER">
+      <DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="25000" />
+      <DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="425" />
+      <DataValueMember Name="EN" DataType="BOOL" Value="1" />
+      <DataValueMember Name="TT" DataType="BOOL" Value="1" />
+      <DataValueMember Name="DN" DataType="BOOL" Value="0" />
+    </Structure>
+  </Data>
+</Tag>

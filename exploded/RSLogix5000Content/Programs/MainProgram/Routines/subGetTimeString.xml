@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subGetTimeString" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[SBR()NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[GSV(WallClockTime,?,LocalDateTime,CurrentTime[0]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[0],strYear);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[1],strMonth);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[2],strDay);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[3],strHour);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[4],strMinute);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[DTOS(CurrentTime[5],strSecond);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strYear,strConstPeriod,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(strMonth.LEN,1)CONCAT(strConstZero,strMonth,strMonth);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strMonth,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strConstPeriod,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(strDay.LEN,1)CONCAT(strConstZero,strDay,strDay);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strDay,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strConstSpace,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(strHour.LEN,1)CONCAT(strConstZero,strHour,strHour);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strHour,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strConstColon,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(strMinute.LEN,1)CONCAT(strConstZero,strMinute,strMinute);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strMinute,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strConstColon,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(strSecond.LEN,1)CONCAT(strConstZero,strSecond,strSecond);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CONCAT(strTimeStamp,strSecond,strTimeStamp);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[RET(strTimeStamp);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

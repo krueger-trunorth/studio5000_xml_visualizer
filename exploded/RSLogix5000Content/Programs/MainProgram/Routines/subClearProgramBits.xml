@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subClearProgramBits" Type="RLL">
+  <Description><![CDATA[Clears handshakes and misc variables]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[This routine clears handshakes and bits on abort that could lock up the system on a reset
+
+JEO - Added unlatch of bitOperatorRecipeSelect since this bit would get stuck on if abort was pressed while machine was waiting for operator to load a recipe.  08/05/14
+
+JEO - Added bCycle_Time top stop cycle time timing if stack is aborted.  - 10/11/14]]></Comment>
+      <Text><![CDATA[[OTU(Bit_Estop_Pressed) ,OTU(Sig_Robot_mispickAnode) ,OTU(Bit_Robot_Power_Loss) OTU(Bit_Start_Program_Sequences) OTU(Parallel_PIA_PPC) ,OTU(Bit_Positions_Moved_Computed) OTU(Bit_Spool_Empty) ,OTU(HMI.To_HMI.Show_MSG_2) ,OTU(HMI.To_HMI.Show_MSG_3) ,OTU(HMI.To_HMI.Show_MSG_4) ,OTU(HMI.To_HMI.Show_MSG_5) ,OTU(Sig_Robot_Ready_with_Can) ,OTU(Sig_Robot_DepartedfromCan) ,OTU(Sig_Robot_DepartedfromCan2) ,OTU(Sig_CanInsert_Ready_with_Can) ,OTU(Sig_Robot_Departed_fromPunch) ,OTU(Sig_Robot_AtPunch) ,OTU(Sig_Discrete_NeededBy_Robot) ,OTU(Sig_StackReadyfor_Pickup) ,OTU(ConveyorPickedAnode) ,OTU(Sig_Robot_Departed_fromStack) ,OTU(Sig_Robot_AtInsulator_Handoff) ,OTU(Sig_Robot_Ready_toPlaceInsulator) ,OTU(Sig_Robot_Stretch_Done) ,OTU(Sig_Robot_DepartedfromStretch) ,OTU(Sig_Can_Readyfor_Stack) ,OTU(Sig_Can_Insert_Done) ,OTU(Sig_CanHandoffStart) ,OTU(Sig_CanInsertatHandoff) ,OTU(Sig_RobotCanPlaceOK) ,OTU(Sig_RobotPickedDiscrete) ,OTU(Bit_Loading_Spool_Active) ,OTU(Bit_Cant_Finish_Battery_Without_Parts) ,OTU(Bit_NeedBAnode) ,OTU(Bit_NeedCathode) ,OTU(Bit_NeedTAnode) ,OTU(Bit_NeedInsulator) ,OTU(Bit_NeedCan) ,OTU(Sig_Robot_Picked_Anodes) ,OTU(Sig_Robot_Picked_Cathode) ,OTL(Detect_Stop) ,OTU(bitOperatorSelectRecipe) ,OTU(bCycle_TIme) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[RES(Machine_Counters[0]) ,RES(Machine_Counters[1]) ,RES(Machine_Counters[2]) ,RES(Machine_Counters[3]) ,RES(Machine_Counters[4]) ,RES(Machine_Counters[5]) ,RES(Machine_Counters[6]) ,RES(Machine_Counters[7]) ,RES(Machine_Counters[9]) ,RES(Machine_Counters[10]) ,RES(Machine_Counters[11]) ,RES(Machine_Counters[12]) ,RES(Machine_Counters[13]) ,RES(Machine_Counters[14]) ,RES(Machine_Counters[15]) ,RES(Machine_Counters[16]) ,RES(Machine_Counters[17]) ,RES(Machine_Counters[18]) ,RES(Machine_Counters[19]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[MOV(0,s800.Commands.Approach_Height) ,OTL(srvCanInsertAxis.Command.Enable_OT) ,OTL(srvTransferRotaryGripperAxis.Command.Enable_OT) ,OTL(srvTransferGripperLinearAxis.Command.Enable_OT) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[OTU(Bit_Robot_LeftCan_Lockout) ,OTU(Bit_Robot_RightCan_Lockout) ,OTU(Bit_Robot_LeftInsulator_Lockout) ,OTU(Bit_Robot_Rightnsulator_Lockout) ,OTU(Bit_Robot_PM_Lockout) ,MOV(1,intCurrent_Queued_Stack_Layer) ,OTU(Bit_Working_On_Queue_Battery) ,OTU(Bit_OnDemand_Can_Req) ,OTU(Bit_OnDemand_Discrete_Req) ,OTU(Bit_TopAnodeOnlyNeeded) ,OTU(Bit_Need_More_Anodes) ,OTU(Bit_BottomAnode_Rejected) ,COP(Blank_Layer,StackDataQueue[0],1) ,OTU(Bit_Discrete_RFID_AlreadyRead) ,OTU(Bit_PMDiscreteStartup_Req) ,OTU(Bit_Update_Tray_Locations) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTL(s800.Commands.Null_Tool);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

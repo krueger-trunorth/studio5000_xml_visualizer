@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqConveyor_Purge" Type="RLL">
+  <Description><![CDATA[Clear Anode and/or Cathode Conveyor ]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[**** Clear Conveyor ****
+
+Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(SeqClearConveyor.Reset)[CLR(SeqClearConveyor.Step) ,OTU(SeqClearConveyor.On) ,OTU(SeqClearConveyor.Fault) ,CLR(SeqClearConveyor.Fault_Code) ,OTU(SeqClearConveyor.Complete) ,COP(K_Str_Blank,SeqClearConveyor.Status,1) ,OTU(SeqClearConveyor.Reset) ,OTU(Bit_Clear_Anodes) ,OTU(Bit_Clear_Cathodes) ,OTU(Bit_Clear_Cathode_Next) ,OTU(bConvPurge1orAll) ,OTU(bClear1Anode) ,OTU(bClear1Cathode) ,OTU(bClearAnodes) ,OTU(bClearCathodes) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence]]></Comment>
+      <Text><![CDATA[XIO(I_Estop_NOT_OK)XIC(Permissive_Interlocks_OK)XIC(Permissive_Pneumatics_OK)XIC(seqControl.On)XIO(SeqClearConveyor.Fault)XIC(SeqClearConveyor.On)XIC(Permissive_Alarm_OK_Robot)XIO(System.Paused)XIO(System.Pause_IP)OTE(SeqClearConveyor.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(SeqClearConveyor.StepMode)OTU(SeqClearConveyor.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Wait for sequence on, clear stuff]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,0)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.Perm) ][OTU(bClearAnodes) OTU(bClearCathodes) ,OTU(bClearedAnodeLast) OTU(bClearedCathodeLast) ,MOV(20,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Ask User which conveyor to clear or both or cancel
+Added pop up button 5 and 1 or All bit toggle. TKO 10.26.2017]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,20)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.Perm) ][COP(Message_ClearConv[0],SeqClearConveyor.Status,1) ,ONS(onsBits[3].8) [OTU(bClearAnodes) OTU(bClearCathodes) ,OTU(HMI.From_HMI.Msgbox_Button_1) OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.From_HMI.Msgbox_Button_3) OTU(HMI.From_HMI.Msgbox_Button_4) ,OTU(HMI.From_HMI.Msgbox_Button_5) ,COP(Message_ClearConv_Popup[0],HMI.To_HMI.Msgbox_Prompt,1) ,COP(Message_ClearConv_Popup[1],HMI.To_HMI.Msgbox_Button_1,1) COP(Message_ClearConv_Popup[2],HMI.To_HMI.Msgbox_Button_2,1) ,COP(Message_ClearConv_Popup[3],HMI.To_HMI.Msgbox_Button_3,1) COP(Message_ClearConv_Popup[4],HMI.To_HMI.Msgbox_Button_4,1) ,OTL(HMI.To_HMI.Show_MSG_5) ] ,[XIC(HMI.From_HMI.Msgbox_Button_5) XIO(bConvPurge1orAll) OTU(HMI.From_HMI.Msgbox_Button_5) OTL(bConvPurge1orAll) ,XIC(HMI.From_HMI.Msgbox_Button_5) XIC(bConvPurge1orAll) OTU(HMI.From_HMI.Msgbox_Button_5) OTU(bConvPurge1orAll) ,XIC(bConvPurge1orAll) COP(Message_ClearConv_Popup[5],HMI.To_HMI.Msgbox_Button_5,1) ,XIO(bConvPurge1orAll) COP(Message_ClearConv_Popup[6],HMI.To_HMI.Msgbox_Button_5,1) ] ,[XIC(HMI.From_HMI.Msgbox_Button_1) [OTL(bClearAnodes) ,XIC(bConvPurge1orAll) OTL(bClear1Anode) OTL(System.Stopping) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [OTL(bClearCathodes) ,XIC(bConvPurge1orAll) OTL(bClear1Cathode) OTL(System.Stopping) ] ,XIC(HMI.From_HMI.Msgbox_Button_3) [OTL(bClearAnodes) OTL(bClearCathodes) ,XIC(bConvPurge1orAll) OTL(bClear1Anode) OTL(bClear1Cathode) OTL(System.Stopping) ] ] MOV(100,SeqClearConveyor.Step) ,XIC(HMI.From_HMI.Msgbox_Button_4) MOV(9000,SeqClearConveyor.Step) ,[XIC(HMI.From_HMI.Msgbox_Button_1) ,XIC(HMI.From_HMI.Msgbox_Button_2) ,XIC(HMI.From_HMI.Msgbox_Button_3) ,XIC(HMI.From_HMI.Msgbox_Button_4) ] [OTU(HMI.To_HMI.Show_MSG_5) ,OTU(HMI.From_HMI.Msgbox_Button_1) OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.From_HMI.Msgbox_Button_3) OTU(HMI.From_HMI.Msgbox_Button_4) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to abort waypoint to en route to conveyor pick]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,100)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[20],SeqClearConveyor.Status,1) ,ONS(onsBits[3].9) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Abort_Waypoint],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(110,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to abort to intialize robot position]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,110)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[20],SeqClearConveyor.Status,1) ,ONS(onsBits[3].10) [COP(s800.LocationConfig[Loc_Abort],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(120,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[vac check, make sure no part being held already]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,120)XIC(SeqClearConveyor.Perm)[COP(Message_ClearConv[1],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [XIO(I_EOAT_Vac) [MOV(1000,SeqClearConveyor.Step) ,OTL(actRobotVac.ACT.Abort) ] ,XIC(I_EOAT_Vac) [MOV(130,SeqClearConveyor.Step) ,OTL(Bit_Robot_Part_Stuck_Trigger) ,OTL(SeqClearConveyor.Fault) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step : wait for fault to clear]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,130)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[7],SeqClearConveyor.Status,1) ,XIO(SeqClearConveyor.Fault) MOV(120,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[decide which cassette to clear next
+Added examine bit to prevet stopping if clearing 1 part. TKO 10.26.2017]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,1000)XIC(SeqClearConveyor.Perm)[COP(Message_ClearConv[2],SeqClearConveyor.Status,1) ,XIC(Bit_ConvAnode_Available) XIC(bClearAnodes) [XIO(Bit_ConvCathode_Available) ,XIO(bClearCathodes) ] MOV(2000,SeqClearConveyor.Step) ,XIC(Bit_ConvCathode_Available) XIC(bClearCathodes) [XIO(Bit_ConvAnode_Available) ,XIO(bClearAnodes) ] MOV(3000,SeqClearConveyor.Step) ,XIC(Bit_ConvAnode_Available) XIC(bClearAnodes) XIC(Bit_ConvCathode_Available) XIC(bClearCathodes) [XIO(bClearedAnodeLast) XIO(bClearedCathodeLast) MOV(2000,SeqClearConveyor.Step) ,XIC(bClearedAnodeLast) MOV(3000,SeqClearConveyor.Step) ,XIC(bClearedCathodeLast) MOV(2000,SeqClearConveyor.Step) ] ,XIC(System.Stopping) [XIO(bClear1Anode) EQU(seqConveyor_Anode.Step,0) ,XIO(bClearAnodes) ] [XIO(bClear1Cathode) EQU(seqConveyor_Cathode.Step,0) ,XIO(bClearCathodes) ] MOV(9000,SeqClearConveyor.Step) ,NEQ(SeqClearConveyor.Step,1000) OTU(bClearedAnodeLast) OTU(bClearedCathodeLast) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[clearing an anode cassette, initialize index]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2000)[CLR(iAnodeClearIndex) ,MOV(2010,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[loop point between anode cassette indexes
+]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2010)[GEQ(iAnodeClearIndex,3) MOV(2900,SeqClearConveyor.Step) ,LES(iAnodeClearIndex,3) MOV(2100,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to anode index on cassette, go to location based on what recipe was last loaded]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2100)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][[EQU(iAnodeClearIndex,0) COP(Message_ClearConv[4],SeqClearConveyor.Status,1) ,EQU(iAnodeClearIndex,1) COP(Message_ClearConv[14],SeqClearConveyor.Status,1) ,EQU(iAnodeClearIndex,2) COP(Message_ClearConv[9],SeqClearConveyor.Status,1) ] ,ONS(onsBits[3].11) [XIC(Machine_Run_Recipe.Battery_type.Value.0) [EQU(iAnodeClearIndex,0) COP(s800.LocationConfig[Loc_Conv_TAnode_SL],s800.LocationConfig[iLocTemp],1) ,EQU(iAnodeClearIndex,1) COP(s800.LocationConfig[Loc_Conv_BAnode_SL],s800.LocationConfig[iLocTemp],1) ,EQU(iAnodeClearIndex,2) COP(s800.LocationConfig[Loc_Conv_MAnode_SL],s800.LocationConfig[iLocTemp],1) ] ,XIO(Machine_Run_Recipe.Battery_type.Value.0) [EQU(iAnodeClearIndex,0) COP(s800.LocationConfig[Loc_Conv_TAnode_LL],s800.LocationConfig[iLocTemp],1) ,EQU(iAnodeClearIndex,1) COP(s800.LocationConfig[Loc_Conv_BAnode_LL],s800.LocationConfig[iLocTemp],1) ,EQU(iAnodeClearIndex,2) COP(s800.LocationConfig[Loc_Conv_MAnode_LL],s800.LocationConfig[iLocTemp],1) ] ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(2110,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Pick up anode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2110)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][EQU(iAnodeClearIndex,0) COP(Message_ClearConv[5],SeqClearConveyor.Status,1) ,EQU(iAnodeClearIndex,1) COP(Message_ClearConv[15],SeqClearConveyor.Status,1) ,EQU(iAnodeClearIndex,2) COP(Message_ClearConv[10],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(2120,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Move away]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2120)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[6],SeqClearConveyor.Status,1) ,ONS(onsBits[3].14) [COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(2130,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[check vacuum]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2130)XIC(SeqClearConveyor.Perm)[XIC(I_EOAT_Vac) MOV(2150,SeqClearConveyor.Step) ,XIO(I_EOAT_Vac) [MOV(2140,SeqClearConveyor.Step) ,OTL(actRobotVac.ACT.Abort) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(SeqClearConveyor.Fault) ] ,OTU(SeqClearConveyor.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[wait for fault to clear]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2140)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[7],SeqClearConveyor.Status,1) ,XIO(SeqClearConveyor.Fault) MOV(2150,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[signal cassette complete if possible before moving to reject (will help get cassettes in and out more quickly)]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2150)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][GEQ(iAnodeClearIndex,2) OTL(Sig_Robot_Picked_Anodes) ,MOV(2500,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to reject/abort location
+]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2500)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[25],SeqClearConveyor.Status,1) ,ONS(onsBits[3].12) [COP(s800.LocationConfig[Loc_Abort],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(2510,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Dump off parts]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2510)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[26],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Retract_Complete) [MOV(2520,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Vacuum check]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2520)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[27],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [XIC(I_EOAT_Vac) [MOV(2510,SeqClearConveyor.Step) ,OTL(SeqClearConveyor.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ] ,XIO(I_EOAT_Vac) [MOV(2530,SeqClearConveyor.Step) ,OTL(actRobotVac.ACT.Abort) ] ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[increment anode index, loop back to check other indexes]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2530)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][ADD(iAnodeClearIndex,1,iAnodeClearIndex) ,MOV(2010,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[done with anode cassette, signal to conveyor and loop back to check for next cassette to clear]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,2900)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][OTL(bClearedAnodeLast) ,MOV(1000,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[clearing cathode cassette, initialize]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3000)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ]MOV(3100,SeqClearConveyor.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to cathode cassette, go to location based on what recipe was last loaded (cathode doesn't currently have SL vs LL positions)]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3100)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[22],SeqClearConveyor.Status,1) ,ONS(onsBits[3].16) [XIC(Machine_Run_Recipe.Battery_type.Value.0) COP(s800.LocationConfig[Loc_Conv_Cathode],s800.LocationConfig[iLocTemp],1) ,XIO(Machine_Run_Recipe.Battery_type.Value.0) COP(s800.LocationConfig[Loc_Conv_Cathode],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(3110,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Pick up cathode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3110)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[23],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(3120,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Move away]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3120)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[6],SeqClearConveyor.Status,1) ,ONS(onsBits[3].17) [COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(3130,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[check vacuum]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3130)XIC(SeqClearConveyor.Perm)[XIC(I_EOAT_Vac) MOV(3150,SeqClearConveyor.Step) ,XIO(I_EOAT_Vac) [MOV(3140,SeqClearConveyor.Step) ,OTL(actRobotVac.ACT.Abort) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(SeqClearConveyor.Fault) ] ,OTU(SeqClearConveyor.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[wait for fault to clear]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3140)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[7],SeqClearConveyor.Status,1) ,XIO(SeqClearConveyor.Fault) MOV(3150,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[signal cassette complete if possible before moving to reject (will help get cassettes in and out more quickly)]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3150)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][OTL(Sig_Robot_Picked_Cathode) ,MOV(3500,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[move to reject/abort location
+]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3500)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[25],SeqClearConveyor.Status,1) ,ONS(onsBits[3].18) [COP(s800.LocationConfig[Loc_Abort],s800.LocationConfig[iLocTemp],1) ,MOV(s800.Robot.MotionCounter,intMotionCounter) MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(SeqClearConveyor.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(3510,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Dump off parts]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3510)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[26],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Retract_Complete) [MOV(3520,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Vacuum check]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3520)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][COP(Message_ClearConv[27],SeqClearConveyor.Status,1) ,OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [XIC(I_EOAT_Vac) [MOV(3510,SeqClearConveyor.Step) ,OTL(SeqClearConveyor.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ] ,XIO(I_EOAT_Vac) [MOV(3530,SeqClearConveyor.Step) ,OTL(actRobotVac.ACT.Abort) ] ,OTU(SeqClearConveyor.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[place holder for loop in case cathode ever has multiple parts on cassette (like anode)
+increment cathode index, loop back to check other indexes]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3530)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][MOV(3900,SeqClearConveyor.Step) ,OTU(SeqClearConveyor.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[done with cathode cassette, signal to conveyor and loop back to check for next cassette to clear]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,3900)XIC(SeqClearConveyor.Perm)[XIC(System.Auto) ,XIC(SeqClearConveyor.StepNext) ][OTL(bClearedCathodeLast) ,MOV(1000,SeqClearConveyor.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Stopping from conveyor purge.. wait for conveyor sequences to loop to 0 and reset]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,9000)[XIO(seqConveyor_Anode.On) ,XIO(bClearAnodes) ][XIO(seqConveyor_Cathode.On) ,XIO(bClearCathodes) ]MOV(9010,SeqClearConveyor.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Done with Clear Conveyor]]></Comment>
+      <Text><![CDATA[EQU(SeqClearConveyor.Step,9010)[OTL(SeqClearConveyor.Reset) ,OTU(seqConveyor_Anode.On) ,OTU(seqConveyor_Cathode.On) ,OTU(SeqClearConveyor.On) ,OTU(seqControl.On) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

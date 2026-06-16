@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="seqHitchPunch" TagType="Base" DataType="Sequence1" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[8,0,0,0,0,[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="Sequence1">
+      <DataValueMember Name="Perm" DataType="BOOL" Value="0" />
+      <DataValueMember Name="On" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Reset" DataType="BOOL" Value="0" />
+      <DataValueMember Name="StepMode" DataType="BOOL" Value="1" />
+      <DataValueMember Name="StepNext" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Complete" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Fault" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Step" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="Fault_Code" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="PermLostStep" DataType="INT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="State" DataType="DINT" Radix="Decimal" Value="0" />
+      <StructureMember Name="Status" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+      </StructureMember>
+    </Structure>
+  </Data>
+</Tag>

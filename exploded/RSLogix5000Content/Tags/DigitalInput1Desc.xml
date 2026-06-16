@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="DigitalInput1Desc" TagType="Base" DataType="STRING" Dimensions="32" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[21,'Emergency Stop Not OK$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[24,'Maintence Mode Keyswitch$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[17,'Main Air Pressure$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[19,'Main Argon Pressure$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[18,'Main Vacuum Switch$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Front Left Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Front Right Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Rear Left Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Rear Right Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Left Left Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Right Right Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Right Left Door Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Front Left Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Front Right Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Rear Left Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Rear Right Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Left Left Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Right Right Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[22,'Right Left Door Locked$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Robot EOAT Vac Switch$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Transfer Gripper Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[23,'Transfer Gripper Closed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[27,'Fixed Gripper PreDie Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[27,'Fixed Gripper PreDie Closed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Stacking Wings Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[21,'Stacking Wings Closed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[19,'Die Punch Retracted$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[18,'Die Punch Extended$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[28,'Moving Gripper PreDie Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[28,'Moving Gripper PreDie Closed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[28,'Fixed Gripper PostDie Opened$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[28,'Fixed Gripper PostDie Closed$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="STRING" Dimensions="32">
+      <Element Index="[0]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Emergency Stop Not OK']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[1]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="24" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Maintence Mode Keyswitch']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[2]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="17" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Main Air Pressure']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[3]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="19" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Main Argon Pressure']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[4]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="18" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Main Vacuum Switch']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[5]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Front Left Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[6]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Front Right Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[7]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Rear Left Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[8]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Rear Right Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[9]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Left Left Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[10]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Right Right Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[11]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Right Left Door Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[12]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Front Left Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[13]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Front Right Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[14]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Rear Left Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[15]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Rear Right Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[16]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Left Left Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[17]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Right Right Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[18]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="22" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Right Left Door Locked']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[19]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Robot EOAT Vac Switch']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[20]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Transfer Gripper Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[21]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="23" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Transfer Gripper Closed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[22]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="27" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Fixed Gripper PreDie Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[23]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="27" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Fixed Gripper PreDie Closed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[24]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Stacking Wings Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[25]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Stacking Wings Closed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[26]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="19" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Die Punch Retracted']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[27]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="18" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Die Punch Extended']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[28]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="28" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Moving Gripper PreDie Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[29]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="28" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Moving Gripper PreDie Closed']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[30]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="28" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Fixed Gripper PostDie Opened']]></DataValueMember>
+        </Structure>
+      </Element>
+      <Element Index="[31]">
+        <Structure DataType="STRING">
+          <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="28" />
+          <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Fixed Gripper PostDie Closed']]></DataValueMember>
+        </Structure>
+      </Element>
+    </Array>
+  </Data>
+</Tag>

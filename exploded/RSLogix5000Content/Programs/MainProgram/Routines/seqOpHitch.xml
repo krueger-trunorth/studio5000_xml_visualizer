@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqOpHitch" Type="RLL">
+  <Description><![CDATA[Manual Hitching]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(seqOpHitch.Reset)[CLR(seqOpHitch.Step) ,OTU(seqOpHitch.On) ,OTU(seqOpHitch.Fault) ,OTU(seqOpHitch.Complete) ,CLR(seqOpHitch.Fault_Code) ,OTU(seqOpHitch.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[XIC(Permissive_Interlocks_OK)XIC(Permissive_Pneumatics_OK)XIC(seqControl.On)XIO(Dancer_Payout.Fault)XIO(Dancer_Takeup.Fault)XIO(seqOpHitch.Fault)XIC(seqOpHitch.On)XIO(System.Paused)XIO(System.Pause_IP)OTE(seqOpHitch.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(seqOpHitch.On)XIC(seqWebDancer.Fault)XIO(Dancer_Payout.Fault)XIO(Dancer_Takeup.Fault)OTU(seqWebDancer.Fault);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Open All Hitch Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,0)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actFixedHitchPostDie.ACT.Retract_Req) ,OTL(actFixedHitchPreDie.ACT.Retract_Req) ,OTL(actMovingHitch.ACT.Retract_Req) ,[XIC(actFixedHitchPostDie.ACT.Fault) ,XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actMovingHitch.ACT.Fault) ] OTL(seqOpHitch.Fault) ,XIC(actFixedHitchPostDie.ACT.Retract_Complete) XIC(actFixedHitchPreDie.ACT.Retract_Complete) XIC(actMovingHitch.ACT.Retract_Complete) [MOV(5,seqOpHitch.Step) ,OTL(actFixedHitchPostDie.ACT.Abort) ,OTL(actFixedHitchPreDie.ACT.Abort) ,OTL(actMovingHitch.ACT.Abort) ,RES(Machine_Counters[19]) ,OTU(seqOpHitch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Is Loading Done?
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,5)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][COP(Message_Punch_Popup[0],HMI.To_HMI.Msgbox_Prompt,1) ,OTU(HMI.To_HMI.Show_MSG_3) ,COP(Message_Punch_Popup[1],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Punch_Popup[2],HMI.To_HMI.Msgbox_Button_2,1) ,COP(Message_Punch_Popup[6],HMI.To_HMI.Msgbox_Button_3,1) ,OTL(HMI.To_HMI.Show_MSG_2) ,XIC(HMI.From_HMI.Msgbox_Button_1) [MOV(10,seqOpHitch.Step) ,OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.To_HMI.Show_MSG_2) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [MOV(10,seqOpHitch.Step) ,OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.To_HMI.Show_MSG_2) ] ,XIC(HMI.From_HMI.Msgbox_Button_3) [OTL(Bit_Payout_Slack) ,OTU(HMI.From_HMI.Msgbox_Button_3) ,OTU(HMI.To_HMI.Show_MSG_2) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Close Hitch Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,10)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actFixedHitchPostDie.ACT.Extend_Req) ,OTL(actFixedHitchPreDie.ACT.Extend_Req) ,OTL(actMovingHitch.ACT.Extend_Req) ,[XIC(actFixedHitchPostDie.ACT.Fault) ,XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actMovingHitch.ACT.Fault) ] OTL(seqOpHitch.Fault) ,XIC(actFixedHitchPostDie.ACT.Extend_Complete) XIC(actFixedHitchPreDie.ACT.Extend_Complete) XIC(actMovingHitch.ACT.Extend_Complete) [MOV(15,seqOpHitch.Step) ,OTU(seqOpHitch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Retract Die Punch]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,15)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actDiePunch.ACT.Retract_Req) ,XIC(actDiePunch.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actDiePunch.ACT.Retract_Complete) MOV(20,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Close Fixed Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,20)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actFixedHitchPreDie.ACT.Extend_Req) ,OTL(actFixedHitchPostDie.ACT.Extend_Req) ,[XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actFixedHitchPostDie.ACT.Fault) ] OTL(seqOpHitch.Fault) ,XIC(actFixedHitchPreDie.ACT.Extend_Complete) XIC(actFixedHitchPostDie.ACT.Extend_Complete) MOV(25,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Open Moving Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,25)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actMovingHitch.ACT.Retract_Req) ,XIC(actMovingHitch.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actMovingHitch.ACT.Retract_Complete) MOV(30,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Retract Indexer]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,30)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actIndexer.ACT.Retract_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actIndexer.ACT.Retract_Complete) MOV(35,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Close Moving Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,35)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actMovingHitch.ACT.Extend_Req) ,XIC(actMovingHitch.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actMovingHitch.ACT.Extend_Complete) MOV(40,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Open Fixed Hitch Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,40)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actFixedHitchPostDie.ACT.Retract_Req) ,OTL(actFixedHitchPreDie.ACT.Retract_Req) ,[XIC(actFixedHitchPostDie.ACT.Fault) ,XIC(actFixedHitchPreDie.ACT.Fault) ] OTL(seqOpHitch.Fault) ,XIC(actFixedHitchPostDie.ACT.Retract_Complete) XIC(actFixedHitchPreDie.ACT.Retract_Complete) MOV(45,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Wait for dancers to home]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,45)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ]XIC(I_Payout_Home)XIC(I_Takeup_Home)MOV(50,seqOpHitch.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 50:
+Extend Indexer]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,50)XIC(seqOpHitch.Perm)[XIC(System.Auto) ,XIC(seqOpHitch.StepNext) ][OTL(actIndexer.ACT.Extend_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actIndexer.ACT.Extend_Complete) [MOV(60,seqOpHitch.Step) ,CTU(Machine_Counters[19],?,?) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 60:
+Close Fixed Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,60)XIC(seqOpHitch.Perm)[OTL(actFixedHitchPreDie.ACT.Extend_Req) ,OTL(actFixedHitchPostDie.ACT.Extend_Req) ,[XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actFixedHitchPostDie.ACT.Fault) ] OTL(seqOpHitch.Fault) ,XIC(actFixedHitchPreDie.ACT.Extend_Complete) XIC(actFixedHitchPostDie.ACT.Extend_Complete) MOV(80,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 80:
+Open Moving Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,80)XIC(seqOpHitch.Perm)[OTL(actMovingHitch.ACT.Retract_Req) ,XIC(actMovingHitch.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actMovingHitch.ACT.Retract_Complete) MOV(90,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 90: Determine if done]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,90)XIC(seqOpHitch.Perm)[XIO(Machine_Counters[19].DN) MOV(30,seqOpHitch.Step) ,XIC(Machine_Counters[19].DN) MOV(100,seqOpHitch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 100:
+Retract Indexer
+and
+Wait for Dancers to Home]]></Comment>
+      <Text><![CDATA[EQU(seqOpHitch.Step,100)XIC(seqOpHitch.Perm)[OTL(actIndexer.ACT.Retract_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqOpHitch.Fault) ,XIC(actIndexer.ACT.Retract_Complete) XIC(I_Payout_Home) XIC(I_Takeup_Home) [OTU(seqOpHitch.On) ,MOV(0,seqOpHitch.Step) ,OTU(Bit_Spool_Empty) ,OTL(seqOpHitch.Complete) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

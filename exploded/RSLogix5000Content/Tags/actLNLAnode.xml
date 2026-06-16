@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="actLNLAnode" TagType="Base" DataType="ORT_Actuator" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Lift and Locate]]></Description>
+  <Data Format="L5K"><![CDATA[[[-1610604893,0,0,0,4000,4000,0,0,1281,937,[2631573,4000,0],2,1,[2630406,4000,0],[2631573,0,0],[2630406,0,0],[2630602
+		,0,0],[-1606640046,0,34],2],[21,'Anode Lift and Locate$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[5,'Raise$00$00$00$00$00'],[5,'Lower$00$00$00$00$00'],[6,'Raised$00$00$00$00'],[7,'Lowered$00$00$00'
+		],[5,'Abort$00$00$00$00$00']]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_Actuator">
+      <StructureMember Name="ACT" DataType="Actuator">
+        <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+        <DataValueMember Name="EnableOut" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Extend_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_Req" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Extend_Complete" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_Complete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Extend_PX" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_PX" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Fault" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Has_Extend_PX" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Has_Retract_PX" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Has_Extend_SV" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Has_Retract_SV" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Clear_Fault" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Reset" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Abort" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Goto_Center_NoPerm" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Always_Fault" DataType="BOOL" Value="0" />
+        <DataValueMember Name="SVoff_on_Fault" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Extend_Permissive" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_Permissive" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Manual_Mode" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Fault_Code" DataType="SINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="PreExtendDelay" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="PreRetractDelay" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="ExtendTimeout" DataType="DINT" Radix="Decimal" Value="4000" />
+        <DataValueMember Name="RetractTimeout" DataType="DINT" Radix="Decimal" Value="4000" />
+        <DataValueMember Name="PostExtendDelay" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="PostRetractDelay" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="Enable_Vac_Sig_Disp_On_Ext_Sensor" DataType="BOOL" Value="0" />
+        <DataValueMember Name="HMI_Ext_Button" DataType="BOOL" Value="0" />
+        <DataValueMember Name="HMI_Ret_Button" DataType="BOOL" Value="0" />
+        <DataValueMember Name="HMI_Abort_PB" DataType="BOOL" Value="0" />
+        <DataValueMember Name="ExtendTime" DataType="DINT" Radix="Decimal" Value="1281" />
+        <DataValueMember Name="RetractTime" DataType="DINT" Radix="Decimal" Value="937" />
+        <DataValueMember Name="Extend_Was_On_SV" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_Was_On_SV" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Permissive" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Internal_Retract_Complete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="Internal_Extend_Complete" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Retract_Was_On_Request" DataType="BOOL" Value="1" />
+      </StructureMember>
+      <StructureMember Name="Desc" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="21" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Anode Lift and Locate']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Extend_Desc" DataType="String_10">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+        <DataValueMember Name="DATA" DataType="String_10" Radix="ASCII"><![CDATA['Raise']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Retract_Desc" DataType="String_10">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+        <DataValueMember Name="DATA" DataType="String_10" Radix="ASCII"><![CDATA['Lower']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Extended_Desc" DataType="String_10">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="6" />
+        <DataValueMember Name="DATA" DataType="String_10" Radix="ASCII"><![CDATA['Raised']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Retracted_Desc" DataType="String_10">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="7" />
+        <DataValueMember Name="DATA" DataType="String_10" Radix="ASCII"><![CDATA['Lowered']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Abort_Desc" DataType="String_10">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="5" />
+        <DataValueMember Name="DATA" DataType="String_10" Radix="ASCII"><![CDATA['Abort']]></DataValueMember>
+      </StructureMember>
+    </Structure>
+  </Data>
+</Tag>

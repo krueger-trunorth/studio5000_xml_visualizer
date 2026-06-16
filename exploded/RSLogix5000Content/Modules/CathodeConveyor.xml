@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="CathodeConveyor" CatalogNumber="1769-L24ER-QB1B" Vendor="1" ProductType="14" ProductCode="149" Major="30" Minor="1" ParentModule="Local" ParentModPortId="2" Inhibited="false" MajorFault="false">
+  <EKey State="Disabled" />
+  <Ports>
+    <Port Id="1" Type="Compact" Upstream="false">
+      <Bus Size="31" />
+    </Port>
+    <Port Id="2" Address="192.168.1.4" Type="Ethernet" Upstream="true" />
+  </Ports>
+  <ExtendedProperties>
+    <public>
+      <ConfigID>100</ConfigID>
+      <CatNum>1769-L24ER-QB1B</CatNum>
+    </public>
+  </ExtendedProperties>
+</Module>

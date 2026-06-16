@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="MainRoutine" Type="RLL">
+  <Description><![CDATA[Robot Routine]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[This is intended to check interlocks, e-stop, etc
+Handles Robot Power on/off
+If in manual mode, must use high power PB on console]]></Comment>
+      <Text><![CDATA[[XIC(Permissive_Motion_OK) XIC(Bit_Robot_Comms_OK) XIO(Alarms[0].14) [XIO(s800.Robot.statFaulted) XIO(RobotCrashProtection) OTE(Permissive_Robot_Motion) ,XIC(HMI.From_HMI.Enable_Robot_Power) OTL(Bit_Manual_Power_Latch) ,XIC(Permissive_Robot_Motion) [XIC(Bit_Manual_Power_Latch) ,XIC(seqControl.On) ,XIC(seqAbort.On) ,XIC(seqHoming.On) ] OTL(s800.Commands.High_Power_Req) ] ,[XIO(Permissive_Robot_Motion) ,XIC(Alarms[0].10) ] [OTU(Bit_Manual_Power_Latch) ,OTU(s800.Commands.High_Power_Req) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[GRT(s800.World_Current_Value.Y,480)LES(s800.World_Current_Value.X,150)GRT(s800.World_Current_Value.X,-48)OTE(CrashZoneEntered);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(CrashZoneEntered)OTL(RobotCrashProtection);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[This rung handles the automatic robot power on output]]></Comment>
+      <Text><![CDATA[[XIC(s800.Commands.High_Power_Req) XIO(Bit_Manual_Power_Latch) ,XIC(RobotCrashProtection) ][TON(Machine_Timers[2],?,?) ,[XIC(Machine_Timers[2].DN) ,XIC(RobotCrashProtection) ] [TON(Machine_Timers[7],?,?) ,[XIC(Machine_Timers[7].TT) ,XIC(RobotCrashProtection) ] OTE(O_Enable_Robot_Power) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Move during power loss detection]]></Comment>
+      <Text><![CDATA[XIC(s800.Robot.statPower)OTL(Bit_Robot_Power_Was_On);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set Robot Speed Based on Machine Mode and System Settings]]></Comment>
+      <Text><![CDATA[[XIO(System.Manual) MOV(Settings.RobotSpeed.Value,intRobotSpeed) ,XIC(System.Manual) GRT(intRobotSpeed,50) MOV(50,intRobotSpeed) ,LES(intRobotSpeed,1) MOV(1,intRobotSpeed) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[Robot(s800.Robot,ADEPT:I,ADEPT:O,s800.Commands,s800.World_Current_Value,s800.Joint_Current_Value,Message_Robot_Fault,s800.LocationConfig,s800.PalletConfig,s800.HMI_Location_Config_Feedback,0,Permissive_Robot_Motion,System.Manual,100,1,100,1,100,393.9,intRobotSpeed,0,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtAnalogInput,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Made parameter 5 visible. - 08/05/14]]></Comment>
+      <Text><![CDATA[[OTL(s800.ConfigVisible[0]) ,OTU(s800.ConfigVisible[1]) ,OTU(s800.ConfigVisible[2]) ,OTL(s800.ConfigVisible[3]) ,OTU(s800.ConfigVisible[4]) ,OTL(s800.ConfigVisible[5]) ,OTL(s800.ConfigVisible[6]) ,OTU(s800.ConfigVisible[7]) ,OTU(s800.ConfigVisible[8]) ,OTU(s800.ConfigVisible[9]) ,OTU(s800.ConfigVisible[10]) ,OTL(s800.ConfigVisible[11]) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

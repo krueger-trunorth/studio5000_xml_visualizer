@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="I_Die_Type" TagType="Alias" Radix="Decimal" AliasFor="Local:8:I.Data.0" ExternalAccess="Read/Write" />

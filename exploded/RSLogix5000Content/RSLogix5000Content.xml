@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="33.01" TargetName="Springboard2_Stacker" TargetType="Controller" ContainsContext="false" ExportOptions="NoRawData L5KData DecoratedData ForceProtectedEncoding AllProjDocTrans">
+  <Controller Use="Target" Name="Springboard2_Stacker" ProcessorType="1769-L36ERM" MajorRev="33" MinorRev="11" TimeSlice="35" ShareUnusedTimeSlice="0" ProjectCreationDate="Mon Jan 09 13:55:19 2017" SFCExecutionControl="CurrentActive" SFCRestartPosition="MostRecent" SFCLastScan="DontScan" CommPath="AB_ETHIP-1\192.168.1.2" ProjectSN="16#60ee_0d6f" MatchProjectToController="false" CanUseRPIFromProducer="true" InhibitAutomaticFirmwareUpdate="0" PassThroughConfiguration="EnabledWithAppend" DownloadProjectDocumentationAndExtendedProperties="true" DownloadProjectCustomProperties="true" ReportMinorOverflow="false">
+    <Description><![CDATA[Program for Springboard Battery Stacker Line 2]]></Description>
+    <RedundancyInfo Enabled="false" KeepTestEditsOnSwitchOver="false" IOMemoryPadPercentage="90" DataTablePadPercentage="50" />
+    <Security Code="0" ChangesToDetect="16#ffff_ffff_ffff_ffff" />
+    <SafetyInfo />
+    <DataTypes />
+    <Modules />
+    <AddOnInstructionDefinitions />
+    <Tags />
+    <Programs />
+    <Tasks />
+    <CST MasterID="2" />
+    <WallClockTime LocalTimeAdjustment="0" TimeZone="0" />
+    <Trends />
+    <DataLogs />
+    <QuickWatchLists>
+      <QuickWatchList Name="Anode_Conveyor">
+        <WatchTag Specifier="Di_AnodeLaneCassetteOnDeck" Scope="" />
+        <WatchTag Specifier="Di_AnodeReadyforCassettetobePlaced" Scope="" />
+        <WatchTag Specifier="Di_AnodeReceivedCassette" Scope="" />
+        <WatchTag Specifier="Do_AnodeCassettePlaced" Scope="" />
+        <WatchTag Specifier="Do_AnodeConvReadytobePlacedOn" Scope="" />
+        <WatchTag Specifier="Do_AnodeConv_ReadyForPart" Scope="" />
+        <WatchTag Specifier="I_Anode_CassetteReadyforProcessing" Scope="" />
+        <WatchTag Specifier="O_Anode_Pick" Scope="" />
+      </QuickWatchList>
+      <QuickWatchList Name="Cathode_Conveyor">
+        <WatchTag Specifier="Di_CathodeLaneCassetteOnDeck" Scope="" />
+        <WatchTag Specifier="Di_CathodeReadyforCassettetobePlaced" Scope="" />
+        <WatchTag Specifier="Di_CathodeReceivedCassette" Scope="" />
+        <WatchTag Specifier="Do_CathodeCassettePlaced" Scope="" />
+        <WatchTag Specifier="Do_CathodeConvReadytobePlacedOn" Scope="" />
+        <WatchTag Specifier="Do_CathodeConv_ReadyForPart" Scope="" />
+        <WatchTag Specifier="I_Cathode_CassetteReadyforProcessing" Scope="" />
+        <WatchTag Specifier="O_Cathode_Pick" Scope="" />
+        <WatchTag Specifier="O_Machine_Running" Scope="" />
+      </QuickWatchList>
+    </QuickWatchLists>
+    <TimeSynchronize Priority1="128" Priority2="128" PTPEnable="true" />
+    <EthernetPorts>
+      <EthernetPort Port="1" Label="1" PortEnabled="true" />
+      <EthernetPort Port="2" Label="2" PortEnabled="true" />
+    </EthernetPorts>
+    <EthernetNetwork SupervisorModeEnabled="false" SupervisorPrecedence="0" BeaconInterval="400" BeaconTimeout="1960" VLANID="0" />
+  </Controller>
+</RSLogix5000Content>

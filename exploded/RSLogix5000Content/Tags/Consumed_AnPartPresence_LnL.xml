@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Consumed_AnPartPresence_LnL" TagType="Consumed" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+  <ConsumeInfo Producer="AnodeConveyor" RemoteTag="Produced_PartPresent_LnL" RemoteInstance="0" RPI="10" Unicast="true" />
+  <Data Format="L5K"><![CDATA[0]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+  </Data>
+</Tag>

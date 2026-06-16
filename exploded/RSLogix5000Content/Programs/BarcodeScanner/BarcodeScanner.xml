@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Program Name="BarcodeScanner" TestEdits="false" MainRoutineName="rtBarcodeScannerSR751" Disabled="false" UseAsFolder="false">
+  <Description><![CDATA[barcode scanner reading]]></Description>
+  <Tags />
+  <Routines />
+</Program>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="DiscreteDie" TagType="Base" DataType="ORT_Die" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[35,'C:\Stacker\Database\DiscreteDie.xml$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],78066,[11,'LL 25039815$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,[55,'Select new die number. Press OK when done changing die.$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[2,'OK$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[6,'Cancel$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,[11,'LL 25039815$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],77762,0,[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,0,0,9]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_Die">
+      <StructureMember Name="FileLoc" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="35" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['C:\Stacker\Database\DiscreteDie.xml']]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="CurrentCounts" DataType="DINT" Radix="Decimal" Value="78066" />
+      <StructureMember Name="CurrentDieESN" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="11" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['LL 25039815']]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="Notification" DataType="BOOL" Value="0" />
+      <StructureMember Name="Message_Prompt" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="55" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Select new die number. Press OK when done changing die.']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Label_MsgBtn_1" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="2" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['OK']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Label_MsgBtn_2" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="6" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Cancel']]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="Count_Reset_PB" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Show_MsgBtn_1" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Show_MsgBtn_2" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Change_Die_PB" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Change_Die_PB_Viz" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Msgbox_PB_1" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Msgbox_PB_2" DataType="BOOL" Value="0" />
+      <StructureMember Name="NewDieESN" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="11" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['LL 25039815']]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="NewCounts" DataType="DINT" Radix="Decimal" Value="77762" />
+      <DataValueMember Name="Spare_Die_Count1" DataType="DINT" Radix="Decimal" Value="0" />
+      <StructureMember Name="Spare_Die_Count1_Desc" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="Spare_Die_Count2" DataType="DINT" Radix="Decimal" Value="0" />
+      <StructureMember Name="Spare_Die_Count2_Desc" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+      </StructureMember>
+      <DataValueMember Name="Reset_Spare_DieCount1" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Reset_Spare_DieCount2" DataType="BOOL" Value="0" />
+      <DataValueMember Name="Spare_Die_Count1_New" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="Spare_Die_Count2_New" DataType="DINT" Radix="Decimal" Value="0" />
+      <DataValueMember Name="Change_Die_Step" DataType="DINT" Radix="Decimal" Value="9" />
+    </Structure>
+  </Data>
+</Tag>

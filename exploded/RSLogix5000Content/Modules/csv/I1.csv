@@ -1,0 +1,51 @@
+attr_Address,attr_CatalogNumber,attr_CommMethod,attr_ConfigSize,attr_DataType,attr_EventID,attr_ExternalAccess,attr_Format,attr_Id,attr_Inhibited,attr_Major,attr_MajorFault,attr_Minor,attr_Name,attr_Operand,attr_ParentModPortId,attr_ParentModule,attr_ProductCode,attr_ProductType,attr_ProgrammaticallySendEventTrigger,attr_RPI,attr_Radix,attr_State,attr_Type,attr_Unicast,attr_Upstream,attr_Value,attr_Vendor,path,tag,text
+,1769-IQ32/A,,,,,,,,false,3,true,1,I1,,1,Local,68,7,,,,,,,,,1,Module,Module,
+,,,,,,,,,,,,,,,,,,,,,,CompatibleModule,,,,,,Module/EKey,EKey,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/Ports,Ports,
+1,,,,,,,,1,,,,,,,,,,,,,,,Compact,,true,,,Module/Ports/Port,Port,
+,,536870913,,,,,,,,,,,,,,,,,,,,,,,,,,Module/Communications,Communications,
+,,,4,,,,,,,,,,,,,,,,,,,,,,,,,Module/Communications/ConfigData,ConfigData,
+,,,,,,,L5K,,,,,,,,,,,,,,,,,,,,,Module/Communications/ConfigData/Data,Data,"[8,102,1]"
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/Communications/Connections,Connections,
+,,,,,0,,,,,,,,Input,,,,,,false,20000,,,Input,false,,,,Module/Communications/Connections/Connection,Connection,
+,,,,,,Read/Write,,,,,,,,,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag,InputTag,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments,Comments,
+,,,,,,,,,,,,,,.DATA.0,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Emergency Stop OK
+,,,,,,,,,,,,,,.DATA.1,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Maintenance Mode
+,,,,,,,,,,,,,,.DATA.2,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Main Air OK
+,,,,,,,,,,,,,,.DATA.3,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Main Argon OK
+,,,,,,,,,,,,,,.DATA.4,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Main Vac OK
+,,,,,,,,,,,,,,.DATA.5,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Front Left Door Closed
+,,,,,,,,,,,,,,.DATA.6,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Front Right Door Closed
+,,,,,,,,,,,,,,.DATA.7,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Rear Left Door Closed
+,,,,,,,,,,,,,,.DATA.8,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Rear Right Door Closed
+,,,,,,,,,,,,,,.DATA.9,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Left Door Closed
+,,,,,,,,,,,,,,.DATA.10,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Right Right Door Closed
+,,,,,,,,,,,,,,.DATA.11,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Right Left Door Closed
+,,,,,,,,,,,,,,.DATA.12,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Front Left Door Locked
+,,,,,,,,,,,,,,.DATA.13,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Front Right Door Locked
+,,,,,,,,,,,,,,.DATA.14,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Rear Left Door Locked
+,,,,,,,,,,,,,,.DATA.15,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Rear Right Door Locked
+,,,,,,,,,,,,,,.DATA.16,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Left Door Locked
+,,,,,,,,,,,,,,.DATA.17,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Right Right Door Locked
+,,,,,,,,,,,,,,.DATA.18,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Right Left Door Locked
+,,,,,,,,,,,,,,.DATA.19,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Robot EOAT Vac Switch
+,,,,,,,,,,,,,,.DATA.20,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Transfer Gripper Opened
+,,,,,,,,,,,,,,.DATA.21,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Transfer Gripper Closed
+,,,,,,,,,,,,,,.DATA.22,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Fixed Gripper PreDie Opened
+,,,,,,,,,,,,,,.DATA.23,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Fixed Gripper PreDie Closed
+,,,,,,,,,,,,,,.DATA.24,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Stacking Wings Opened
+,,,,,,,,,,,,,,.DATA.25,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Stacking Wings Closed
+,,,,,,,,,,,,,,.DATA.26,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Die Punch Retracted
+,,,,,,,,,,,,,,.DATA.27,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Die Punch Extended
+,,,,,,,,,,,,,,.DATA.28,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Moving  Gripper PreDie Opened
+,,,,,,,,,,,,,,.DATA.29,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Moving  Gripper PreDie Closed
+,,,,,,,,,,,,,,.DATA.30,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Fixed Gripper PostDie Opened
+,,,,,,,,,,,,,,.DATA.31,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Comments/Comment,Comment,Fixed Gripper PostDie Closed
+,,,,,,,Decorated,,,,,,,,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Data,Data,
+,,,,AB:1769_DI32:I:0,,,,,,,,,,,,,,,,,,,,,,,,Module/Communications/Connections/Connection/InputTag/Data/Structure,Structure,
+,,,,DINT,,,,,,,,,Fault,,,,,,,,Binary,,,,,2#0000_0000_0000_0000_0000_0000_0000_0000,,Module/Communications/Connections/Connection/InputTag/Data/Structure/DataValueMember,DataValueMember,
+,,,,DINT,,,,,,,,,Data,,,,,,,,Binary,,,,,2#1001_0101_1001_0000_0000_0000_0001_1101,,Module/Communications/Connections/Connection/InputTag/Data/Structure/DataValueMember,DataValueMember,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/ExtendedProperties,ExtendedProperties,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/ExtendedProperties/public,public,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,Module/ExtendedProperties/public/ConfigID,ConfigID,400

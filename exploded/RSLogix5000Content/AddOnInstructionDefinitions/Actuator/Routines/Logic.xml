@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Logic" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Manual Mode Buttons]]></Comment>
+      <Text><![CDATA[XIC(HMI_Ext_Button)[XIC(Extend_Permissive) XIO(Fault) XIC(Manual_Mode) OTL(Extend_Req) ,OTU(HMI_Ext_Button) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI_Ret_Button)[XIC(Retract_Permissive) XIO(Fault) XIC(Manual_Mode) OTL(Retract_Req) ,OTU(HMI_Ret_Button) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(HMI_Abort_PB)[XIC(Manual_Mode) OTL(Abort) ,OTU(HMI_Abort_PB) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Turn off all outputs]]></Comment>
+      <Text><![CDATA[XIC(Abort)[OTU(Retract_Req) ,OTU(Extend_Req) ,OTU(Retract_SV) ,OTU(Extend_SV) ,OTU(Abort) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Fault
+]]></Comment>
+      <Text><![CDATA[[XIC(Extend_Permissive) ,XIC(Retract_Permissive) ]XIO(Fault)OTE(Permissive);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Permissive)XIO(Fault)XIC(Goto_Center_NoPerm)[XIC(Extend_SV) OTL(Extend_Was_On_SV) ,XIC(Retract_SV) OTL(Retract_Was_On_SV) ,OTU(Extend_SV) ,OTU(Retract_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Goto_Center_NoPerm)[OTU(Extend_Was_On_SV) ,OTU(Retract_Was_On_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Permissive)XIC(Goto_Center_NoPerm)[XIC(Extend_Was_On_SV) OTL(Extend_SV) ,XIC(Retract_Was_On_SV) OTL(Retract_SV) ,OTU(Extend_Was_On_SV) ,OTU(Retract_Was_On_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set Timeouts
+]]></Comment>
+      <Text><![CDATA[MOV(RetractTimeout,Retract_Timer.PRE)MOV(ExtendTimeout,Extend_Timer.PRE)MOV(PreExtendDelay,PreExtendTimer.PRE)MOV(PreRetractDelay,PreRetractTimer.PRE)MOV(PostExtendDelay,PostExtendTimer.PRE)MOV(PostRetractDelay,PostRetractTimer.PRE);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset
+]]></Comment>
+      <Text><![CDATA[[XIC(Reset) ,XIC(Clear_Fault) XIC(Manual_Mode) ][OTU(Extend_Req) ,OTU(Retract_Req) ,OTU(Fault) ,CLR(Fault_Code) ,OTU(Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Clear Fault
+]]></Comment>
+      <Text><![CDATA[XIC(Clear_Fault)[OTU(Fault) ,CLR(Fault_Code) ,OTU(Clear_Fault) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Permissive is false, turn off Req]]></Comment>
+      <Text><![CDATA[XIO(Retract_Permissive)OTU(Retract_Req);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Permissive is false, turn off Req]]></Comment>
+      <Text><![CDATA[XIO(Extend_Permissive)OTU(Extend_Req);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If both requests are on at the same time, turn off the older one so you can change directions.]]></Comment>
+      <Text><![CDATA[XIC(Extend_Req)XIC(Retract_Req)[XIC(Retract_Was_On_Request) OTU(Retract_Req) ,XIO(Retract_Was_On_Request) OTU(Extend_Req) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Time Delay before extending cylinder]]></Comment>
+      <Text><![CDATA[XIC(Extend_Permissive)XIO(Fault)XIC(Extend_Req)XIO(Extend_Complete)TON(PreExtendTimer,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If extend commanded set valves and start timer]]></Comment>
+      <Text><![CDATA[XIC(Extend_Permissive)XIO(Fault)XIC(Extend_Req)XIO(Extend_Complete)[XIC(PreExtendTimer.DN) ,LEQ(PreExtendTimer.PRE,0) ][XIC(Has_Extend_SV) OTL(Extend_SV) ,XIC(Has_Retract_SV) OTU(Retract_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Internal_Extend_Complete)ONS(onsExtendTime)MOV(Extend_Timer.ACC,ExtendTime);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Extend_Permissive)XIO(Fault)[XIC(Always_Fault) [XIC(Extend_SV) ,XIO(Has_Extend_SV) XIO(Retract_SV) [XIC(Has_Extend_PX) XIO(Extend_PX) ,XIO(Has_Extend_PX) XIC(Has_Retract_PX) XIC(Retract_PX) ] ] ,XIC(Extend_Req) [XIC(PreExtendTimer.DN) ,LEQ(PreExtendTimer.PRE,0) ] ]XIO(Extend_Complete)TON(Extend_Timer,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If there is a extend sensor and the timer runs out return fault, Shutdown valves]]></Comment>
+      <Text><![CDATA[[XIC(Has_Extend_PX) ,XIO(Has_Extend_PX) XIC(Has_Retract_PX) XIC(Retract_PX) ][XIC(Extend_Timer.DN) ,LEQ(Extend_Timer.PRE,0) ][OTL(Fault) ,MOV(Fault_Extend_Timeout,Fault_Code) ,XIC(SVoff_on_Fault) OTU(Extend_SV) ,OTU(Retract_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Time Delay before retracting cylinder]]></Comment>
+      <Text><![CDATA[XIC(Retract_Permissive)XIO(Fault)XIC(Retract_Req)XIO(Retract_Complete)TON(PreRetractTimer,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If retract commanded set valves and start timer]]></Comment>
+      <Text><![CDATA[XIC(Retract_Permissive)XIO(Fault)XIC(Retract_Req)XIO(Retract_Complete)[XIC(PreRetractTimer.DN) ,LEQ(PreRetractTimer.PRE,0) ][XIC(Has_Retract_SV) OTL(Retract_SV) ,XIC(Has_Extend_SV) OTU(Extend_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Internal_Retract_Complete)ONS(onsRetractTime)MOV(Retract_Timer.ACC,RetractTime);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If retract commanded set valves and start timer]]></Comment>
+      <Text><![CDATA[XIC(Retract_Permissive)XIO(Fault)[XIC(Always_Fault) [XIC(Retract_SV) ,XIO(Has_Retract_SV) XIO(Extend_SV) [XIC(Has_Retract_PX) XIO(Retract_PX) ,XIO(Has_Retract_PX) XIC(Has_Extend_PX) XIC(Extend_PX) ] ] ,XIC(Retract_Req) [XIC(PreRetractTimer.DN) ,LEQ(PreRetractTimer.PRE,0) ] ]XIO(Retract_Complete)TON(Retract_Timer,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If there is a retract sensor and the timer runs out return fault, Shutdown valves]]></Comment>
+      <Text><![CDATA[[XIC(Has_Retract_PX) ,XIO(Has_Retract_PX) XIC(Has_Extend_PX) XIC(Extend_PX) ][XIC(Retract_Timer.DN) ,LEQ(Retract_Timer.PRE,0) ][OTL(Fault) ,MOV(Fault_Retract_Timeout,Fault_Code) ,OTU(Extend_SV) ,XIC(SVoff_on_Fault) OTU(Retract_SV) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set Extend Complete if everything OK]]></Comment>
+      <Text><![CDATA[[XIC(Extend_SV) ,XIO(Has_Extend_SV) ][XIO(Retract_SV) ,XIO(Has_Retract_SV) ][XIC(Has_Extend_PX) XIC(Extend_PX) ,XIO(Has_Extend_PX) [XIC(Extend_Timer.DN) ,LEQ(Extend_Timer.PRE,0) ,XIC(Extend_Complete) ] ][XIO(Retract_PX) ,XIO(Has_Retract_PX) ]XIO(Fault)OTE(Internal_Extend_Complete);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set Extend Complete once post delay is finished]]></Comment>
+      <Text><![CDATA[XIC(Internal_Extend_Complete)[TON(PostExtendTimer,?,?) ,[XIC(PostExtendTimer.DN) ,LEQ(PostExtendTimer.PRE,0) ] OTE(Extend_Complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Extend Request]]></Comment>
+      <Text><![CDATA[XIC(Extend_Complete)OTU(Extend_Req);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set Retract Complete if everything OK]]></Comment>
+      <Text><![CDATA[[XIC(Retract_SV) ,XIO(Has_Retract_SV) ][XIO(Extend_SV) ,XIO(Has_Extend_SV) ][XIC(Has_Retract_PX) XIC(Retract_PX) ,XIO(Has_Retract_PX) [XIC(Retract_Timer.DN) ,LEQ(Retract_Timer.PRE,0) ,XIC(Retract_Complete) ] ][XIO(Extend_PX) ,XIO(Has_Extend_PX) ]XIO(Fault)OTE(Internal_Retract_Complete);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set RetractComplete once post delay is finished]]></Comment>
+      <Text><![CDATA[XIC(Internal_Retract_Complete)[TON(PostRetractTimer,?,?) ,[XIC(PostRetractTimer.DN) ,LEQ(PostRetractTimer.PRE,0) ] OTE(Retract_Complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Retract Request]]></Comment>
+      <Text><![CDATA[XIC(Retract_Complete)OTU(Retract_Req);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Store the state of the requests for future reference.  Keep this at the end of the routine]]></Comment>
+      <Text><![CDATA[[XIC(Retract_Req) OTL(Retract_Was_On_Request) ,XIC(Extend_Req) OTU(Retract_Was_On_Request) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

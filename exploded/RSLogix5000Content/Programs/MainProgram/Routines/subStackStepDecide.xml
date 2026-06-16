@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subStackStepDecide" Type="RLL">
+  <Description><![CDATA[step decision jumper]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[This routine decides which part to process next (mainly made for readability)
+Robot step is computed here
+
+step 100=bot anode
+step 300 = discrete
+step 400 = cathode
+step 500 = top anode
+]]></Comment>
+      <Text><![CDATA[SBR(Scratch_Layer)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Scratch_Layer,1) MOV(Machine_Run_Recipe.Layer_1_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,2) MOV(Machine_Run_Recipe.Layer_2_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,3) MOV(Machine_Run_Recipe.Layer_3_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,4) MOV(Machine_Run_Recipe.Layer_4_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,5) MOV(Machine_Run_Recipe.Layer_5_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,6) MOV(Machine_Run_Recipe.Layer_6_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,7) MOV(Machine_Run_Recipe.Layer_7_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,8) MOV(Machine_Run_Recipe.Layer_8_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,9) MOV(Machine_Run_Recipe.Layer_9_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,10) MOV(Machine_Run_Recipe.Layer_10_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,11) MOV(Machine_Run_Recipe.Layer_11_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,12) MOV(Machine_Run_Recipe.Layer_12_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,13) MOV(Machine_Run_Recipe.Layer_13_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,14) MOV(Machine_Run_Recipe.Layer_14_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,15) MOV(Machine_Run_Recipe.Layer_15_Type.Value,Scratch_Type) ,EQU(Scratch_Layer,0) MOV(8,Scratch_Type) ,EQU(Scratch_Layer,18) MOV(5,Scratch_Type) ,EQU(Scratch_Layer,17) MOV(6,Scratch_Type) ,EQU(Calc_InsulatorDecide,Scratch_Layer) [MOV(7,Scratch_Type) ,MOV(17,StackData.Current_Stack_Layer) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Scratch_Type,0) [MOV(500,ScratchNew_Step) ,MOV(1,intLayer_Anode_Type) ] ,EQU(Scratch_Type,1) MOV(300,ScratchNew_Step) ,EQU(Scratch_Type,2) MOV(400,ScratchNew_Step) ,EQU(Scratch_Type,3) [MOV(500,ScratchNew_Step) ,MOV(3,intLayer_Anode_Type) ] ,EQU(Scratch_Type,8) MOV(700,ScratchNew_Step) ,EQU(Scratch_Type,5) MOV(750,ScratchNew_Step) ,EQU(Scratch_Type,6) MOV(625,ScratchNew_Step) ,EQU(Scratch_Type,7) MOV(600,ScratchNew_Step) ,EQU(Scratch_Type,4) [MOV(500,ScratchNew_Step) ,MOV(2,intLayer_Anode_Type) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[RET(ScratchNew_Step);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="AI_LoadCell" TagType="Base" DataType="ORT_AnalogInput" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Insertion Load Cell]]></Description>
+  <Data Format="L5K"><![CDATA[[[9,'Load Cell$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[3,'lbf$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[3,-579,-5.53526878e-002,1701,32247,1.75000000e+000,5.09000015e+001,1.75000000e+000,5.09000015e+001
+		,4.91500015e+001,3.05460000e+004,-1.12200000e+003,579]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_AnalogInput">
+      <StructureMember Name="Description" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="9" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['Load Cell']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="Units" DataType="STRING">
+        <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="3" />
+        <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['lbf']]></DataValueMember>
+      </StructureMember>
+      <StructureMember Name="AI" DataType="AnalogInput">
+        <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+        <DataValueMember Name="EnableOut" DataType="BOOL" Value="1" />
+        <DataValueMember Name="RAWInput" DataType="INT" Radix="Decimal" Value="-579" />
+        <DataValueMember Name="ScaledValue" DataType="REAL" Radix="Float" Value="-0.055352688" />
+        <DataValueMember Name="RawMinumum" DataType="INT" Radix="Decimal" Value="1701" />
+        <DataValueMember Name="RawMaximum" DataType="INT" Radix="Decimal" Value="32247" />
+        <DataValueMember Name="EngMinimum" DataType="REAL" Radix="Float" Value="1.75" />
+        <DataValueMember Name="EngMaximum" DataType="REAL" Radix="Float" Value="50.9" />
+        <DataValueMember Name="Cal_Min_PB" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Cal_Max_PB" DataType="BOOL" Value="0" />
+        <DataValueMember Name="Min_Cal_Point" DataType="REAL" Radix="Float" Value="1.75" />
+        <DataValueMember Name="Max_Cal_Point" DataType="REAL" Radix="Float" Value="50.9" />
+      </StructureMember>
+    </Structure>
+  </Data>
+</Tag>

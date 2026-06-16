@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Rfid_Node_02_Write" TagType="Base" DataType="INT" Dimensions="103" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Connected To EMS Gateway]]></Description>
+  <Data Format="L5K"><![CDATA[[109,12,92,-22011,19970,1554,514,6571,12912,29300,15925,12336,13368,14381,12336,13371,15427,21317,29541
+		,28722,27759,29758,12593,14391,12336,12336,12859,0,0,0,0,15427,21317,21588,15921,12849,13881,12849,12336
+		,12347,0,0,0,60,17235,17748,16958,12594,12598,14642,12592,12336,15104,0,0,0,15427,21317,22356,15921,15104
+		,0,0,0,0,60,17235,17743,20553,17470,16708,19785,20027,0,0,0,60,17235,17732,9812,15922,12338,12334,12339,11825
+		,12832,12340,14901,12346,12343,15104,0,0,0,15104,0,0,0,0,0,0,0,0]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="INT" Dimensions="103" Radix="Decimal">
+      <Element Index="[0]" Value="109" />
+      <Element Index="[1]" Value="12" />
+      <Element Index="[2]" Value="92" />
+      <Element Index="[3]" Value="-22011" />
+      <Element Index="[4]" Value="19970" />
+      <Element Index="[5]" Value="1554" />
+      <Element Index="[6]" Value="514" />
+      <Element Index="[7]" Value="6571" />
+      <Element Index="[8]" Value="12912" />
+      <Element Index="[9]" Value="29300" />
+      <Element Index="[10]" Value="15925" />
+      <Element Index="[11]" Value="12336" />
+      <Element Index="[12]" Value="13368" />
+      <Element Index="[13]" Value="14381" />
+      <Element Index="[14]" Value="12336" />
+      <Element Index="[15]" Value="13371" />
+      <Element Index="[16]" Value="15427" />
+      <Element Index="[17]" Value="21317" />
+      <Element Index="[18]" Value="29541" />
+      <Element Index="[19]" Value="28722" />
+      <Element Index="[20]" Value="27759" />
+      <Element Index="[21]" Value="29758" />
+      <Element Index="[22]" Value="12593" />
+      <Element Index="[23]" Value="14391" />
+      <Element Index="[24]" Value="12336" />
+      <Element Index="[25]" Value="12336" />
+      <Element Index="[26]" Value="12859" />
+      <Element Index="[27]" Value="0" />
+      <Element Index="[28]" Value="0" />
+      <Element Index="[29]" Value="0" />
+      <Element Index="[30]" Value="0" />
+      <Element Index="[31]" Value="15427" />
+      <Element Index="[32]" Value="21317" />
+      <Element Index="[33]" Value="21588" />
+      <Element Index="[34]" Value="15921" />
+      <Element Index="[35]" Value="12849" />
+      <Element Index="[36]" Value="13881" />
+      <Element Index="[37]" Value="12849" />
+      <Element Index="[38]" Value="12336" />
+      <Element Index="[39]" Value="12347" />
+      <Element Index="[40]" Value="0" />
+      <Element Index="[41]" Value="0" />
+      <Element Index="[42]" Value="0" />
+      <Element Index="[43]" Value="60" />
+      <Element Index="[44]" Value="17235" />
+      <Element Index="[45]" Value="17748" />
+      <Element Index="[46]" Value="16958" />
+      <Element Index="[47]" Value="12594" />
+      <Element Index="[48]" Value="12598" />
+      <Element Index="[49]" Value="14642" />
+      <Element Index="[50]" Value="12592" />
+      <Element Index="[51]" Value="12336" />
+      <Element Index="[52]" Value="15104" />
+      <Element Index="[53]" Value="0" />
+      <Element Index="[54]" Value="0" />
+      <Element Index="[55]" Value="0" />
+      <Element Index="[56]" Value="15427" />
+      <Element Index="[57]" Value="21317" />
+      <Element Index="[58]" Value="22356" />
+      <Element Index="[59]" Value="15921" />
+      <Element Index="[60]" Value="15104" />
+      <Element Index="[61]" Value="0" />
+      <Element Index="[62]" Value="0" />
+      <Element Index="[63]" Value="0" />
+      <Element Index="[64]" Value="0" />
+      <Element Index="[65]" Value="60" />
+      <Element Index="[66]" Value="17235" />
+      <Element Index="[67]" Value="17743" />
+      <Element Index="[68]" Value="20553" />
+      <Element Index="[69]" Value="17470" />
+      <Element Index="[70]" Value="16708" />
+      <Element Index="[71]" Value="19785" />
+      <Element Index="[72]" Value="20027" />
+      <Element Index="[73]" Value="0" />
+      <Element Index="[74]" Value="0" />
+      <Element Index="[75]" Value="0" />
+      <Element Index="[76]" Value="60" />
+      <Element Index="[77]" Value="17235" />
+      <Element Index="[78]" Value="17732" />
+      <Element Index="[79]" Value="9812" />
+      <Element Index="[80]" Value="15922" />
+      <Element Index="[81]" Value="12338" />
+      <Element Index="[82]" Value="12334" />
+      <Element Index="[83]" Value="12339" />
+      <Element Index="[84]" Value="11825" />
+      <Element Index="[85]" Value="12832" />
+      <Element Index="[86]" Value="12340" />
+      <Element Index="[87]" Value="14901" />
+      <Element Index="[88]" Value="12346" />
+      <Element Index="[89]" Value="12343" />
+      <Element Index="[90]" Value="15104" />
+      <Element Index="[91]" Value="0" />
+      <Element Index="[92]" Value="0" />
+      <Element Index="[93]" Value="0" />
+      <Element Index="[94]" Value="15104" />
+      <Element Index="[95]" Value="0" />
+      <Element Index="[96]" Value="0" />
+      <Element Index="[97]" Value="0" />
+      <Element Index="[98]" Value="0" />
+      <Element Index="[99]" Value="0" />
+      <Element Index="[100]" Value="0" />
+      <Element Index="[101]" Value="0" />
+      <Element Index="[102]" Value="0" />
+    </Array>
+  </Data>
+</Tag>

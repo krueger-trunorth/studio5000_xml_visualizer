@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Logic" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Scale Analogs General Equation:       Eng Units = (A/D Input- A/D Input Min) [(Eng Units Max - Eng Units Min) / (A/D Input Max - A/D Input Min)] + Eng Units Min
+
+Or         Eng Units =  A(C/B) + Eng Unit Min]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ABS(RAWInput,RAWInputABS);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Cal_Min_PB)LEQ(RAWInputABS,RawMaximum)[MOV(RAWInputABS,RawMinumum) ,MOV(Min_Cal_Point,EngMinimum) ,OTU(Cal_Min_PB) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Cal_Max_PB)GRT(RAWInputABS,RawMinumum)[MOV(RAWInputABS,RawMaximum) ,MOV(Max_Cal_Point,EngMaximum) ,OTU(Cal_Max_PB) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CPT(A,RAWInputABS-RawMinumum)CPT(B,RawMaximum-RawMinumum)CPT(C,EngMaximum-EngMinimum);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[IF B <= 0, Force Engineering Units Result to Minimum Value]]></Comment>
+      <Text><![CDATA[LEQ(B,0)MOV(EngMinimum,ScaledValue)JMP(Label_100);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CPT(ScaledValue,(A* (C/ B)) + EngMinimum);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(Label_100)NOP();]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

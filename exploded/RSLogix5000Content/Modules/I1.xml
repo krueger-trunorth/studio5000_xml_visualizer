@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="I1" CatalogNumber="1769-IQ32/A" Vendor="1" ProductType="7" ProductCode="68" Major="3" Minor="1" ParentModule="Local" ParentModPortId="1" Inhibited="false" MajorFault="true">
+  <EKey State="CompatibleModule" />
+  <Ports>
+    <Port Id="1" Address="1" Type="Compact" Upstream="true" />
+  </Ports>
+  <Communications CommMethod="536870913">
+    <ConfigData ConfigSize="4">
+      <Data Format="L5K"><![CDATA[[8,102,1]]]></Data>
+    </ConfigData>
+    <Connections>
+      <Connection Name="Input" RPI="20000" Type="Input" EventID="0" ProgrammaticallySendEventTrigger="false" Unicast="false">
+        <InputTag ExternalAccess="Read/Write">
+          <Comments>
+            <Comment Operand=".DATA.0"><![CDATA[Emergency Stop OK]]></Comment>
+            <Comment Operand=".DATA.1"><![CDATA[Maintenance Mode]]></Comment>
+            <Comment Operand=".DATA.2"><![CDATA[Main Air OK]]></Comment>
+            <Comment Operand=".DATA.3"><![CDATA[Main Argon OK]]></Comment>
+            <Comment Operand=".DATA.4"><![CDATA[Main Vac OK]]></Comment>
+            <Comment Operand=".DATA.5"><![CDATA[Front Left Door Closed]]></Comment>
+            <Comment Operand=".DATA.6"><![CDATA[Front Right Door Closed]]></Comment>
+            <Comment Operand=".DATA.7"><![CDATA[Rear Left Door Closed]]></Comment>
+            <Comment Operand=".DATA.8"><![CDATA[Rear Right Door Closed]]></Comment>
+            <Comment Operand=".DATA.9"><![CDATA[Left Door Closed]]></Comment>
+            <Comment Operand=".DATA.10"><![CDATA[Right Right Door Closed]]></Comment>
+            <Comment Operand=".DATA.11"><![CDATA[Right Left Door Closed]]></Comment>
+            <Comment Operand=".DATA.12"><![CDATA[Front Left Door Locked]]></Comment>
+            <Comment Operand=".DATA.13"><![CDATA[Front Right Door Locked]]></Comment>
+            <Comment Operand=".DATA.14"><![CDATA[Rear Left Door Locked]]></Comment>
+            <Comment Operand=".DATA.15"><![CDATA[Rear Right Door Locked]]></Comment>
+            <Comment Operand=".DATA.16"><![CDATA[Left Door Locked]]></Comment>
+            <Comment Operand=".DATA.17"><![CDATA[Right Right Door Locked]]></Comment>
+            <Comment Operand=".DATA.18"><![CDATA[Right Left Door Locked]]></Comment>
+            <Comment Operand=".DATA.19"><![CDATA[Robot EOAT Vac Switch]]></Comment>
+            <Comment Operand=".DATA.20"><![CDATA[Transfer Gripper Opened]]></Comment>
+            <Comment Operand=".DATA.21"><![CDATA[Transfer Gripper Closed]]></Comment>
+            <Comment Operand=".DATA.22"><![CDATA[Fixed Gripper PreDie Opened]]></Comment>
+            <Comment Operand=".DATA.23"><![CDATA[Fixed Gripper PreDie Closed]]></Comment>
+            <Comment Operand=".DATA.24"><![CDATA[Stacking Wings Opened]]></Comment>
+            <Comment Operand=".DATA.25"><![CDATA[Stacking Wings Closed]]></Comment>
+            <Comment Operand=".DATA.26"><![CDATA[Die Punch Retracted]]></Comment>
+            <Comment Operand=".DATA.27"><![CDATA[Die Punch Extended]]></Comment>
+            <Comment Operand=".DATA.28"><![CDATA[Moving  Gripper PreDie Opened]]></Comment>
+            <Comment Operand=".DATA.29"><![CDATA[Moving  Gripper PreDie Closed]]></Comment>
+            <Comment Operand=".DATA.30"><![CDATA[Fixed Gripper PostDie Opened]]></Comment>
+            <Comment Operand=".DATA.31"><![CDATA[Fixed Gripper PostDie Closed]]></Comment>
+          </Comments>
+          <Data Format="Decorated">
+            <Structure DataType="AB:1769_DI32:I:0">
+              <DataValueMember Name="Fault" DataType="DINT" Radix="Binary" Value="2#0000_0000_0000_0000_0000_0000_0000_0000" />
+              <DataValueMember Name="Data" DataType="DINT" Radix="Binary" Value="2#1001_0101_1001_0000_0000_0000_0001_1101" />
+            </Structure>
+          </Data>
+        </InputTag>
+      </Connection>
+    </Connections>
+  </Communications>
+  <ExtendedProperties>
+    <public>
+      <ConfigID>400</ConfigID>
+    </public>
+  </ExtendedProperties>
+</Module>

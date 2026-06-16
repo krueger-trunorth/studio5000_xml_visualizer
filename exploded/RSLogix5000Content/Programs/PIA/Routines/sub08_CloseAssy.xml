@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="sub08_CloseAssy" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[***************  Lot Traveler and machine reads traveler # ***************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7010)EQU(Pia.From_State,7510)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_01) [CPS(k_blank_data,Pia.TO_PIA.Data,1) ,CPS(k_blank_data,Pia.FROM_PIA.Data,1) ,CPS(k_blank_string_array[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.TO_PIA.Trav_Qty) ,OTU(data_chk_dn) OTU(trav_chk_dn) ] ,JSR(subxx_DataChk,2,k_blank_data,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,k_blank_string_array,Pia.TO_PIA.Trav_Numbers,0,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7020,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7020)EQU(Pia.From_State,7510)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][[ONS(ons_closeassy_02) [OTU(data_chk_dn) ,CPS(Pia.Machine.Data_Trace,Pia.TO_PIA.Data,1) ,CPS(Pia.Machine.Trav_Numbers[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.TO_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7030,Pia.To_State) ] ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7030)EQU(Pia.From_State,7510)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(7040,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7040)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][EQU(Pia.From_State,7540) [ONS(ons_closeassy_03) [OTU(data_chk_dn) ,OTU(trav_chk_dn) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.FROM_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.FROM_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.FROM_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(trav_chk_dn) [XIC(data_chk_ok) XIC(trav_chk_ok) MOV(7050,Pia.To_State) ,[XIO(data_chk_ok) ,XIO(trav_chk_ok) ] [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(18,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7060,Pia.To_State) ] ] ] ,EQU(Pia.From_State,7630) [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(19,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7130,Pia.To_State) ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[***************  Lot Traveler and PIA generates traveler # ***************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7160)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_16) CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ,EQU(Pia.From_State,7660) [ONS(ons_closeassy_04) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.FROM_PIA.Trav_Numbers[0],Pia.Machine.Trav_Numbers[0],20) ,MOV(Pia.FROM_PIA.Trav_Qty,Pia.Machine.Trav_Qty) ,CPS(k_blank_data,Pia.TO_PIA.Data,1) ,CPS(k_blank_data,Pia.FROM_PIA.Data,1) ,MOV(0,Pia.TO_PIA.Trav_Qty) ,CPS(k_blank_string_array[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.FROM_PIA.Trav_Qty) ,CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ] ,JSR(subxx_DataChk,2,k_blank_data,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,k_blank_string_array,Pia.TO_PIA.Trav_Numbers,0,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) [CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ,MOV(7170,Pia.To_State) ] ] ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7160)EQU(Pia.From_State,7720)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(21,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7220,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7160)EQU(Pia.From_State,7810)[MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(22,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7310,Pia.To_State) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7170)EQU(Pia.From_State,7660)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][[ONS(ons_closeassy_05) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.Machine.Data_Trace,Pia.TO_PIA.Data,1) ,CPS(Pia.Machine.Trav_Numbers[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.TO_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7180,Pia.To_State) ] ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7180)EQU(Pia.From_State,7660)MOV(7190,Pia.To_State);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7190)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]EQU(Pia.From_State,7690)[ONS(ons_closeassy_06) OTU(data_chk_dn) OTU(trav_chk_dn) ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.FROM_PIA.Data) ,JSR(subxx_TravChk,4,Pia.FROM_PIA.Trav_Numbers,Pia.Machine.Trav_Numbers,Pia.FROM_PIA.Trav_Qty,Pia.Machine.Trav_Qty) ,XIC(data_chk_dn) XIC(trav_chk_dn) [XIC(data_chk_ok) XIC(trav_chk_ok) MOV(7200,Pia.To_State) ,[XIO(data_chk_ok) ,XIO(trav_chk_ok) ] [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(20,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7210,Pia.To_State) ] ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[***************  Serial Traveler and MC reads traveler # ***************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7340)EQU(Pia.From_State,7840)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_07) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(k_blank_data,Pia.TO_PIA.Data,1) ,MOV(0,Pia.TO_PIA.Trav_Qty) ,CPS(k_blank_data,Pia.FROM_PIA.Data,1) ,CPS(k_blank_string_array[0],Pia.TO_PIA.Trav_Numbers[0],20) ] ,JSR(subxx_DataChk,2,k_blank_data,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,k_blank_string_array,Pia.TO_PIA.Trav_Numbers,0,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7350,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7350)EQU(Pia.From_State,7840)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][[ONS(ons_closeassy_08) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.Machine.Data_Trace,Pia.TO_PIA.Data,1) ,CPS(Pia.Machine.Trav_Numbers[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.TO_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7360,Pia.To_State) ] ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7360)EQU(Pia.From_State,7840)MOV(7370,Pia.To_State);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7370)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]EQU(Pia.From_State,7870)[ONS(ons_closeassy_09) OTU(data_chk_dn) OTU(trav_chk_dn) ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.FROM_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.FROM_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.FROM_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(trav_chk_dn) [XIC(data_chk_ok) XIC(trav_chk_ok) MOV(7380,Pia.To_State) ,[XIO(data_chk_ok) ,XIO(trav_chk_ok) ] [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(23,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7390,Pia.To_State) ] ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7380)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][EQU(Pia.From_State,7965) [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(24,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(7460,Pia.To_State) ] ,EQU(Pia.From_State,7960) MOV(7465,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[***************  Serial Traveler and PIA generates traveler # ***************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7490)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_17) [CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.FROM_PIA.Trav_Qty) ] ,EQU(Pia.From_State,7990) [ONS(ons_closeassy_10) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.FROM_PIA.Trav_Numbers[0],Pia.Machine.Trav_Numbers[0],20) ,MOV(Pia.FROM_PIA.Trav_Qty,Pia.Machine.Trav_Qty) ,CPS(k_blank_data,Pia.TO_PIA.Data,1) ,CPS(k_blank_data,Pia.FROM_PIA.Data,1) ,CPS(k_blank_string_array[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.TO_PIA.Trav_Qty) ,CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.FROM_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,k_blank_data,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,k_blank_string_array,Pia.TO_PIA.Trav_Numbers,0,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7510,Pia.To_State) ,OTU(debug_next_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7490)EQU(Pia.From_State,8500)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(26,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8030,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7490)EQU(Pia.From_State,8630)[MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(27,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8120,Pia.To_State) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7510)EQU(Pia.From_State,7990)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_11) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.Machine.Data_Trace,Pia.TO_PIA.Data,1) ,CPS(Pia.Machine.Trav_Numbers[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.TO_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(7530,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7530)EQU(Pia.From_State,7990)MOV(7590,Pia.To_State);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7590)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]EQU(Pia.From_State,8510)[ONS(ons_closeassy_12) OTU(data_chk_dn) OTU(trav_chk_dn) ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.FROM_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.FROM_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.FROM_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(trav_chk_dn) [XIC(data_chk_ok) XIC(trav_chk_ok) MOV(7900,Pia.To_State) ,[XIO(data_chk_ok) ,XIO(trav_chk_ok) ] [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(25,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8000,Pia.To_State) ] ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,7900)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][EQU(Pia.From_State,8512) [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(35,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8040,Pia.To_State) ] ,EQU(Pia.From_State,8513) MOV(8050,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[***************  Lot Traveler and PIA generates traveler # and PIA requests the event ***************
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,100)XIC(Pia.Trig.Close_Rqst)XIC(Pia.Machine.Perm_Close_Rqst)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][CPS(k_blank_string_array[0],Pia.FROM_PIA.Trav_Numbers[0],20) ,MOV(0,Pia.FROM_PIA.Trav_Qty) ,MOV(8150,Pia.To_State) ]OTU(Pia.Trig.Close_Rqst)OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,100)XIC(Pia.Trig.Close_Rqst)XIO(Pia.Machine.Perm_Close_Rqst)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]MOV(8155,Pia.To_State)OTU(Pia.Trig.Close_Rqst)OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8150)EQU(Pia.From_State,8650)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_13) [CPS(k_blank_data,Pia.TO_PIA.Data,1) ,CPS(k_blank_data,Pia.FROM_PIA.Data,1) ] ,MOV(8160,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8155)EQU(Pia.From_State,8700)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(29,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8210,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8160)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][ONS(ons_closeassy_14) [OTU(data_chk_dn) OTU(trav_chk_dn) ,CPS(Pia.Machine.Data_Trace,Pia.TO_PIA.Data,1) ,CPS(Pia.Machine.Trav_Numbers[0],Pia.TO_PIA.Trav_Numbers[0],20) ,MOV(Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ] ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.TO_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.TO_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.TO_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(data_chk_ok) XIC(trav_chk_dn) XIC(trav_chk_ok) MOV(8170,Pia.To_State) ,OTU(debug_next_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8170)MOV(8180,Pia.To_State);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8180)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ]EQU(Pia.From_State,8690)[ONS(ons_closeassy_15) OTU(data_chk_dn) OTU(trav_chk_dn) ,JSR(subxx_DataChk,2,Pia.Machine.Data_Trace,Pia.FROM_PIA.Data) ,JSR(subxx_TravChk,4,Pia.Machine.Trav_Numbers,Pia.FROM_PIA.Trav_Numbers,Pia.Machine.Trav_Qty,Pia.FROM_PIA.Trav_Qty) ,XIC(data_chk_dn) XIC(trav_chk_dn) [XIC(data_chk_ok) XIC(trav_chk_ok) MOV(8190,Pia.To_State) ,[XIO(data_chk_ok) ,XIO(trav_chk_ok) ] [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(28,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8200,Pia.To_State) ] ] ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Pia.To_State,8190)[XIC(debug_mode) XIC(debug_next_step) ,XIO(debug_mode) ][EQU(Pia.From_State,8710) [MOV(Pia.To_State,Pia.Machine.Alarm_Mc_State) ,MOV(Pia.From_State,Pia.Machine.Alarm_Pia_State) ,MOV(36,Pia.Machine.Alarm_Message_Trigger) ,COP(k_pia_alarm_messages[Pia.Machine.Alarm_Message_Trigger],Pia.Machine.Alarm_Message,1) ,MOV(8220,Pia.To_State) ] ,EQU(Pia.From_State,8715) MOV(8195,Pia.To_State) ]OTU(debug_next_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********************************* RETURN TO IDLE *********************************]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Pia.To_State,7050) ,EQU(Pia.To_State,7060) ,EQU(Pia.To_State,7130) ,EQU(Pia.To_State,7200) ,EQU(Pia.To_State,7210) ,EQU(Pia.To_State,7220) ,EQU(Pia.To_State,7310) ,EQU(Pia.To_State,7380) ,EQU(Pia.To_State,7390) ,EQU(Pia.To_State,7460) ,EQU(Pia.To_State,7465) ,EQU(Pia.To_State,7900) ,EQU(Pia.To_State,8000) ,EQU(Pia.To_State,8030) ,EQU(Pia.To_State,8040) ,EQU(Pia.To_State,8050) ,EQU(Pia.To_State,8120) ,EQU(Pia.To_State,8190) ,EQU(Pia.To_State,8195) ,EQU(Pia.To_State,8200) ,EQU(Pia.To_State,8210) ,EQU(Pia.To_State,8220) ]EQU(Pia.From_State,100)[MOV(100,Pia.To_State) ,MOV(0,Pia.Command) ,OTE(closeassy_complete) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

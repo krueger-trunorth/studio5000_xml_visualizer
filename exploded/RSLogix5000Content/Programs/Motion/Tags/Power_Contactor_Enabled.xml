@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Power_Contactor_Enabled" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Software bit signifying that the hardware is turning on the power contactor]]></Description>
+  <Data Format="L5K"><![CDATA[1]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="BOOL" Radix="Decimal" Value="1" />
+  </Data>
+</Tag>

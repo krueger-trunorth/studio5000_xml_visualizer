@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_ClearAnodes" Type="RLL">
+  <Description><![CDATA[step 580 = clear anodes]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[**** Clear Anodes ****
+
+Remove remaining anodes in cassette and signal conveyor that cassette is empty (loads another cassette)
+the return to main routine to restart the layer
+
+
+Step 580: if TOP anode is not picked then pick it and dump it]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,580)XIC(seqRobot.Perm)CONCAT(Message_Robot[58],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][XIO(Bit_TAnode_Picked) MOV(581,seqRobot.Step) ,XIC(Bit_TAnode_Picked) MOV(585,seqRobot.Step) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 582: go to and pick TOP anode from conveyor]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,581)XIC(seqRobot.Perm)CONCAT(Message_Robot[59],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].1) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_TAnode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(582,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 584: Pick up top anode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,582)XIC(seqRobot.Perm)CONCAT(Message_Robot[60],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(583,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: Move to top anode approach and check vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,583)XIC(seqRobot.Perm)CONCAT(Message_Robot[61],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].2) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [XIC(I_EOAT_Vac) [MOV(584,seqRobot.Step) ,OTL(Bit_TAnode_Picked) ] ,XIO(I_EOAT_Vac) [MOV(585,Robot_Next_Step) ,MOV(820,seqRobot.Step) ,OTL(Sig_Robot_mispickAnode) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.4) ,OTL(actRobotVac.ACT.Abort) ,OTL(seqRobot.Fault) ] ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: set next step and go to clear anode cassette reject (step = ???)]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,584)XIC(seqRobot.Perm)CONCAT(Message_Robot[62],K_Str_Blank,seqRobot.Status)[MOV(585,Robot_Next_Step) ,MOV(800,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[----------------------  Middle Anode ----------------------
+
+Step 582: if MIDDLE anode is not picked then pick it and dump it]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,585)XIC(seqRobot.Perm)CONCAT(Message_Robot[63],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][XIO(Bit_MAnode_Picked) MOV(586,seqRobot.Step) ,XIC(Bit_MAnode_Picked) MOV(590,seqRobot.Step) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+
+
+Step 582: go to and pick MIDDLE anode from conveyor]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,586)XIC(seqRobot.Perm)CONCAT(Message_Robot[64],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].3) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_MAnode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(587,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 524: Pick up middle anode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,587)XIC(seqRobot.Perm)CONCAT(Message_Robot[65],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(588,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: Move to anode approach and check vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,588)XIC(seqRobot.Perm)CONCAT(Message_Robot[66],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].4) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [XIC(I_EOAT_Vac) [MOV(589,seqRobot.Step) ,OTL(Bit_MAnode_Picked) ] ,XIO(I_EOAT_Vac) [MOV(590,Robot_Next_Step) ,MOV(820,seqRobot.Step) ,OTL(Sig_Robot_mispickAnode) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.5) ,OTL(actRobotVac.ACT.Abort) ,OTL(seqRobot.Fault) ] ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: set next step and go to clear anode cassette reject (step = ???)]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,589)XIC(seqRobot.Perm)CONCAT(Message_Robot[67],K_Str_Blank,seqRobot.Status)[MOV(590,Robot_Next_Step) ,MOV(800,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[---------------------  Bottom Anode -------------------
+
+Step 582: if BOTTOM anode is not picked then pick it and dump it]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,590)XIC(seqRobot.Perm)CONCAT(Message_Robot[68],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][XIO(Bit_BAnode_Picked) MOV(591,seqRobot.Step) ,XIC(Bit_BAnode_Picked) MOV(595,seqRobot.Step) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+
+
+Step 582: go to and pick BOTTOM anode from conveyor]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,591)XIC(seqRobot.Perm)CONCAT(Message_Robot[69],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].5) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_BAnode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(592,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 524: Pick up bottom anode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,592)XIC(seqRobot.Perm)CONCAT(Message_Robot[70],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(593,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: Move to anode approach and check vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,593)XIC(seqRobot.Perm)CONCAT(Message_Robot[71],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[10].6) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [XIC(I_EOAT_Vac) [MOV(594,seqRobot.Step) ,OTL(Bit_BAnode_Picked) ] ,XIO(I_EOAT_Vac) [MOV(595,Robot_Next_Step) ,MOV(820,seqRobot.Step) ,OTL(Sig_Robot_mispickAnode) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.6) ,OTL(actRobotVac.ACT.Abort) ,OTL(seqRobot.Fault) ] ,MOV(0,s800.Commands.Approach_Height) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 594: set next step and go to  reject]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,594)XIC(seqRobot.Perm)CONCAT(Message_Robot[72],K_Str_Blank,seqRobot.Status)[MOV(595,Robot_Next_Step) ,MOV(800,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 595: jump back to main routine ]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,595)XIC(seqRobot.Perm)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][MOV(9,seqRobot.Step) ,OTL(Sig_Robot_Picked_Anodes) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

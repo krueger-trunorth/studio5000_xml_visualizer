@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Alarms" TagType="Base" DataType="DINT" Dimensions="5" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Comments>
+    <Comment Operand="[0].0"><![CDATA[E-Stop]]></Comment>
+    <Comment Operand="[0].1"><![CDATA[Main Air Pressure]]></Comment>
+    <Comment Operand="[0].2"><![CDATA[Main Argon Pressure]]></Comment>
+    <Comment Operand="[0].3"><![CDATA[Main Vacuum Pressure]]></Comment>
+    <Comment Operand="[0].4"><![CDATA[Front Left Door Lock]]></Comment>
+    <Comment Operand="[0].5"><![CDATA[Front Left Door Closed]]></Comment>
+    <Comment Operand="[0].6"><![CDATA[Front Right Door Lock]]></Comment>
+    <Comment Operand="[0].7"><![CDATA[Front Right Door Closed]]></Comment>
+    <Comment Operand="[0].8"><![CDATA[Camera Lost]]></Comment>
+    <Comment Operand="[0].9"><![CDATA[Adept Lost]]></Comment>
+    <Comment Operand="[0].10"><![CDATA[High Power Timeout]]></Comment>
+    <Comment Operand="[0].11"><![CDATA[Robot Moved]]></Comment>
+    <Comment Operand="[0].12"><![CDATA[Rear Left Door Lock]]></Comment>
+    <Comment Operand="[0].13"><![CDATA[Rear Left Door Closed]]></Comment>
+    <Comment Operand="[0].14"><![CDATA[Robot in Lefty Configuration]]></Comment>
+    <Comment Operand="[0].15"><![CDATA[Rear Right Door Lock]]></Comment>
+    <Comment Operand="[0].16"><![CDATA[Rear Right Door Closed]]></Comment>
+    <Comment Operand="[0].17"><![CDATA[Left Left Door Lock]]></Comment>
+    <Comment Operand="[0].18"><![CDATA[Left Left Door Closed]]></Comment>
+    <Comment Operand="[0].19"><![CDATA[Right Right Door Lock]]></Comment>
+    <Comment Operand="[0].20"><![CDATA[Right Right Door Closed]]></Comment>
+    <Comment Operand="[0].21"><![CDATA[Right Left Door Lock]]></Comment>
+    <Comment Operand="[0].22"><![CDATA[Right Left Door Closed]]></Comment>
+    <Comment Operand="[0].23"><![CDATA[Can Alarm]]></Comment>
+    <Comment Operand="[0].24"><![CDATA[Insulator Alarm]]></Comment>
+    <Comment Operand="[0].25"><![CDATA[PM Alarm]]></Comment>
+    <Comment Operand="[0].26"><![CDATA[Anode Cass Stuck]]></Comment>
+    <Comment Operand="[0].27"><![CDATA[Cathode Cass Stuck]]></Comment>
+    <Comment Operand="[0].28"><![CDATA[HMI Alarm]]></Comment>
+    <Comment Operand="[0].29"><![CDATA[Can Platform Configuration Mismatch]]></Comment>
+    <Comment Operand="[1].0"><![CDATA[Transfer Rotary Gripper Axis]]></Comment>
+    <Comment Operand="[1].1"><![CDATA[Can Insert Axis]]></Comment>
+    <Comment Operand="[1].2"><![CDATA[Robot]]></Comment>
+    <Comment Operand="[1].3"><![CDATA[Can Insert EOT]]></Comment>
+    <Comment Operand="[1].4"><![CDATA[Transfer Gripper Rotary EOT]]></Comment>
+    <Comment Operand="[1].5"><![CDATA[Can Insert Homing]]></Comment>
+    <Comment Operand="[1].6"><![CDATA[Transfer Gripper Rotary Homing]]></Comment>
+    <Comment Operand="[1].7"><![CDATA[Shutdown]]></Comment>
+    <Comment Operand="[1].8"><![CDATA[Transfer Linear Gripper Axis]]></Comment>
+    <Comment Operand="[1].9"><![CDATA[Positions Moved]]></Comment>
+    <Comment Operand="[1].10"><![CDATA[Transfer Gripper Linear EOT]]></Comment>
+    <Comment Operand="[1].11"><![CDATA[Transfer Gripper Linear Homing]]></Comment>
+    <Comment Operand="[1].12"><![CDATA[Anode Conv]]></Comment>
+    <Comment Operand="[1].13"><![CDATA[Cath Conv]]></Comment>
+    <Comment Operand="[2].0"><![CDATA[Insulator Cyl]]></Comment>
+    <Comment Operand="[2].1"><![CDATA[Can Squeeze Cyl]]></Comment>
+    <Comment Operand="[2].2"><![CDATA[Die Punch]]></Comment>
+    <Comment Operand="[2].3"><![CDATA[Flipper]]></Comment>
+    <Comment Operand="[2].4"><![CDATA[Fixed]]></Comment>
+    <Comment Operand="[2].5"><![CDATA[Moving]]></Comment>
+    <Comment Operand="[2].6"><![CDATA[Stack Wings]]></Comment>
+    <Comment Operand="[2].7"><![CDATA[stack pressure]]></Comment>
+    <Comment Operand="[2].8"><![CDATA[Gripper]]></Comment>
+    <Comment Operand="[2].9"><![CDATA[Insulator Vac]]></Comment>
+    <Comment Operand="[2].10"><![CDATA[Can Vac]]></Comment>
+    <Comment Operand="[2].11"><![CDATA[Die Vac]]></Comment>
+    <Comment Operand="[2].12"><![CDATA[Flipper Table Vac]]></Comment>
+    <Comment Operand="[2].13"><![CDATA[Flipper Vac]]></Comment>
+    <Comment Operand="[2].14"><![CDATA[Robot Vac]]></Comment>
+    <Comment Operand="[2].15"><![CDATA[fixture vac]]></Comment>
+    <Comment Operand="[2].16"><![CDATA[Index]]></Comment>
+    <Comment Operand="[2].17"><![CDATA[Finger]]></Comment>
+    <Comment Operand="[2].18"><![CDATA[Mispick]]></Comment>
+    <Comment Operand="[2].19"><![CDATA[R Insul Lock]]></Comment>
+    <Comment Operand="[2].20"><![CDATA[R Can Lock]]></Comment>
+    <Comment Operand="[2].21"><![CDATA[PM Vac]]></Comment>
+    <Comment Operand="[2].22"><![CDATA[PM Lock]]></Comment>
+    <Comment Operand="[2].23"><![CDATA[RHS Mylar]]></Comment>
+    <Comment Operand="[2].24"><![CDATA[LHS Mylar]]></Comment>
+    <Comment Operand="[2].25"><![CDATA[Cathode LNL]]></Comment>
+    <Comment Operand="[2].26"><![CDATA[Anode LNL]]></Comment>
+    <Comment Operand="[2].27"><![CDATA[L Insul Lock]]></Comment>
+    <Comment Operand="[2].28"><![CDATA[L Can Lock]]></Comment>
+    <Comment Operand="[2].29"><![CDATA[Anode LnL Gripper]]></Comment>
+    <Comment Operand="[2].30"><![CDATA[Cathode LnL Gripper]]></Comment>
+    <Comment Operand="[3].0"><![CDATA[Recipe]]></Comment>
+    <Comment Operand="[3].1"><![CDATA[Discrete empty]]></Comment>
+    <Comment Operand="[3].2"><![CDATA[Web OOB]]></Comment>
+    <Comment Operand="[3].3"><![CDATA[Vision Failure]]></Comment>
+    <Comment Operand="[3].4"><![CDATA[Setting]]></Comment>
+    <Comment Operand="[3].6"><![CDATA[Stack Pressure]]></Comment>
+    <Comment Operand="[3].7"><![CDATA[Payout Web Break]]></Comment>
+    <Comment Operand="[3].8"><![CDATA[Payout Web Stuck]]></Comment>
+    <Comment Operand="[3].9"><![CDATA[Takeup Web Break]]></Comment>
+    <Comment Operand="[3].10"><![CDATA[Takeup Web Stuck]]></Comment>
+    <Comment Operand="[3].12"><![CDATA[Barcode Unreadable]]></Comment>
+    <Comment Operand="[3].13"><![CDATA[Datalog]]></Comment>
+    <Comment Operand="[3].14"><![CDATA[Insert]]></Comment>
+    <Comment Operand="[3].15"><![CDATA[Analog Alarm]]></Comment>
+    <Comment Operand="[3].16"><![CDATA[RFID 1]]></Comment>
+    <Comment Operand="[3].17"><![CDATA[RFID 2]]></Comment>
+    <Comment Operand="[3].18"><![CDATA[RFID 3]]></Comment>
+    <Comment Operand="[3].19"><![CDATA[RFID 4]]></Comment>
+    <Comment Operand="[3].20"><![CDATA[Load Recipe]]></Comment>
+    <Comment Operand="[3].21"><![CDATA[Load Settings]]></Comment>
+    <Comment Operand="[3].22"><![CDATA[Cal Fault]]></Comment>
+    <Comment Operand="[3].23"><![CDATA[Fault Camera]]></Comment>
+    <Comment Operand="[3].24"><![CDATA[Discrete PM]]></Comment>
+    <Comment Operand="[3].25"><![CDATA[Can PM]]></Comment>
+    <Comment Operand="[3].26"><![CDATA[Place Error]]></Comment>
+    <Comment Operand="[3].27"><![CDATA[PM Alarm]]></Comment>
+    <Comment Operand="[3].28"><![CDATA[Discrete Data]]></Comment>
+    <Comment Operand="[3].29"><![CDATA[PIA]]></Comment>
+    <Comment Operand="[3].30"><![CDATA[PIA]]></Comment>
+    <Comment Operand="[4].0"><![CDATA[Left Right Door Lock]]></Comment>
+    <Comment Operand="[4].1"><![CDATA[Left Right Door Closed]]></Comment>
+    <Comment Operand="[4].2"><![CDATA[Anode Cassette Type Fault]]></Comment>
+    <Comment Operand="[4].3"><![CDATA[Cathode Cassette Type Fault]]></Comment>
+    <Comment Operand="[4].4"><![CDATA[Historian HeartBeat]]></Comment>
+    <Comment Operand="[4].5"><![CDATA[HMI Load Loc]]></Comment>
+    <Comment Operand="[4].6"><![CDATA[robot load loc comm]]></Comment>
+  </Comments>
+  <Data Format="L5K"><![CDATA[[5243009,4,0,0,0]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="DINT" Dimensions="5" Radix="Decimal">
+      <Element Index="[0]" Value="5243009" />
+      <Element Index="[1]" Value="4" />
+      <Element Index="[2]" Value="0" />
+      <Element Index="[3]" Value="0" />
+      <Element Index="[4]" Value="0" />
+    </Array>
+  </Data>
+</Tag>

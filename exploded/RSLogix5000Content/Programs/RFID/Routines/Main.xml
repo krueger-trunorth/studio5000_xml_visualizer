@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Main" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Node 1 - Anode - Inside Conveyor]]></Comment>
+      <Text><![CDATA[AOI_RFID(RFID_Node1_Anode_Conv.AOI,1,736,RFID_Node1_Anode_Conv.Command,RFID_Node1_Anode_Conv.Reset,RFID_Node1_Anode_Conv.Clear_Fault,RFID_Node1_Anode_Conv.TagID,RFID_Node1_Anode_Conv.cfgRead,RFID_Node1_Anode_Conv.cfgReturn,RFID_Node1_Anode_Conv.cfgWrite,Rfid_Node_01_Write,Rfid_Node_01_Read,RFID_Node1_Anode_Conv.FaultCode,RFID_Node1_EntireRead);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Node 2 - Cathode - Outside Conveyor]]></Comment>
+      <Text><![CDATA[AOI_RFID(RFID_Node2_Cathode_Conv.AOI,2,736,RFID_Node2_Cathode_Conv.Command,RFID_Node2_Cathode_Conv.Reset,RFID_Node2_Cathode_Conv.Clear_Fault,RFID_Node2_Cathode_Conv.TagID,RFID_Node2_Cathode_Conv.cfgRead,RFID_Node2_Cathode_Conv.cfgReturn,RFID_Node2_Cathode_Conv.cfgWrite,Rfid_Node_02_Write,Rfid_Node_02_Read,RFID_Node2_Cathode_Conv.FaultCode,RFID_Node2_EntireRead);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

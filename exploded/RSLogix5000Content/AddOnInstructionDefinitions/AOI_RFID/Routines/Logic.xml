@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Logic" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[********        GENERAL        ********
+
+The constants for data reads, writes, fills, and commads are set in PRESCAN. Refer to EMS documentation for details.
+
+Fault Codes:
+0 = OK, 1 = General Comms Related Read Fault, 2 = General Comms Related Write Fault, 3 = General Comms Related Get tag ID, 
+4 = First Character Of Read Data Not As Expected, 5 = TagID's read do not match config, 6 = General Comms Error with filling tag,  
+7 = Bad data returned during a read after a write command, 8 = Start and length config invalid, 9 = General Comms Error with Empty Check Fault, 10 = Tag Presence detection failure]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[On a RFID fault RFID step is written to zero, if the status is not healthy, go into the node health status command sequence.
+]]></Comment>
+      <Text><![CDATA[[XIC(sts_fault) ,XIC(cmd_reset) ][CLR(sts_seq_step) ,XIO(sts_node_healthy) MOV(800,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[This timer is used to inhibit ONLY commands; logic that accepts data from the Gateway & all configured Nodes should be available at all times.]]></Comment>
+      <Text><![CDATA[XIC(sts_node_healthy)TON(r_w_f_delay_tmr,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset]]></Comment>
+      <Text><![CDATA[[XIC(cmd_clear_fault) ,XIC(local_clear_fault) ,XIC(S:FS) ][OTU(node_no_response) OTU(node_response_error) OTU(node_notification) OTU(node_cmd_latch) OTU(node_cmd_read) OTU(node_cmd_write) ,OTU(node_cmd_fill) OTU(node_cmd_tagid) OTU(node_cmd_tag_presence) OTU(node_cmd_controller_stat) OTU(sts_complete) OTU(cmd_clear_fault) ,OTU(sts_fault) OTU(local_clear_fault) MOV(0,sts_fault_code) MOV(0,cmd_command) ,XIC(cmd_clear_fault) XIO(sts_node_healthy) MOV(0,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Fault Setting]]></Comment>
+      <Text><![CDATA[XIC(sts_node_healthy)[XIC(node_no_response) ,XIC(node_response_error) ,XIC(node_notification) ][TON(node_response_tmr,?,?) ,XIC(node_response_tmr.DN) [EQU(cmd_command,1) EQU(sts_fault_code,0) MOV(1,sts_fault_code) ,EQU(cmd_command,2) EQU(sts_fault_code,0) MOV(2,sts_fault_code) ,EQU(cmd_command,3) EQU(sts_fault_code,0) MOV(6,sts_fault_code) ,EQU(cmd_command,4) EQU(sts_fault_code,0) MOV(9,sts_fault_code) ,EQU(cmd_command,5) EQU(sts_fault_code,0) MOV(3,sts_fault_code) ,EQU(cmd_command,8) EQU(sts_fault_code,0) MOV(1,sts_fault_code) ,EQU(cmd_command,9) EQU(sts_fault_code,0) MOV(2,sts_fault_code) ,MOV(0,sts_seq_step) MOV(0,cmd_command) OTL(sts_complete) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If there is a fault code, set the fault bit.
+]]></Comment>
+      <Text><![CDATA[GRT(sts_fault_code,0)OTL(sts_fault);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Since the command is reset to zero after it's completed this rung will keep track of the last command for debugging purposes only.
+]]></Comment>
+      <Text><![CDATA[XIC(sts_complete)ONS(ons_rfid.0)[MOV(0,cmd_command) ,MOV(0,sts_command_ip) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Commands and node number are embedded into an integer tag.
+Commands are as follows:
+Read = 1, Write = 2, Fill = 3, Empty Check = 4, TagID = 5, Tag Presence = 6, Controller Status= 7, Read and parse entire tag contents = 8,  Append data to tag = 9,
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Start the read sequencing.
+]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,1)ONS(ons_rfid.1)[MOV(5,sts_seq_step) ,MOV(0,max_array_elem_read) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Start the write sequence.
+]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,2)ONS(ons_rfid.2)[DIV(cfg_tag_total_bytes,188,cfg_calc_full_blocks) MOV(105,sts_seq_step) ,MOV(0,max_array_elem_write) MOV(0,max_array_elem_read) ,CPT(cfg_calc_rem_bytes,cfg_tag_total_bytes - (cfg_calc_full_blocks*188)) ,GRT(cfg_calc_rem_bytes,0) ADD(cfg_calc_full_blocks,1,max_array_elem_write) ,EQU(cfg_calc_rem_bytes,0) MOV(cfg_calc_full_blocks,max_array_elem_write) ,SUB(max_array_elem_write,1,max_array_elem_write) ,MOV(max_array_elem_write,max_array_elem_read) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the fill command.]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,3)ONS(ons_rfid.3)MOV(405,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the empty check command.]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,4)ONS(ons_rfid.4)MOV(300,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the TagID read command.]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,5)ONS(ons_rfid.5)MOV(215,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the Tag Presence detect command.
+]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)[EQU(cmd_command,6) ONS(ons_rfid.6) ,ONS(ons_rfid.7) ]MOV(600,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the Controller Status command.
+]]></Comment>
+      <Text><![CDATA[EQU(cmd_command,7)ONS(ons_rfid.8)MOV(800,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the Tag Presence detect command.
+]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,8)ONS(ons_rfid.9)MOV(1000,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Set the RFID sequencer to begin the Tag Presence detect command.
+]]></Comment>
+      <Text><![CDATA[XIC(r_w_f_delay_tmr.DN)EQU(cmd_command,9)ONS(ons_rfid.10)MOV(1200,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(cfg_node,cmd_data_read[2])MOV(cfg_node,cmd_data_tagid[2])MOV(cfg_node,cmd_data_write[2]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(cfg_node,cmd_data_fill[2])MOV(cfg_node,cmd_data_tag_presence[2])MOV(cfg_node,cmd_data_contr_status[2]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(5,sts_seq_step,100)MOV(1,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status
+]]></Comment>
+      <Text><![CDATA[LIM(100,sts_seq_step,200)MOV(2,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(210,sts_seq_step,250)MOV(5,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(300,sts_seq_step,350)MOV(4,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(400,sts_seq_step,500)MOV(3,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(600,sts_seq_step,700)MOV(6,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(800,sts_seq_step,900)MOV(7,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(1000,sts_seq_step,1100)MOV(8,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID Status]]></Comment>
+      <Text><![CDATA[LIM(1200,sts_seq_step,1400)MOV(9,sts_command_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[GRT(sts_seq_step,0)OTE(sts_ip);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        READ        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ INIT
+This rung waits for read initialization step number.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,5)[MOV(20,sts_seq_step) ,CPS(k_blank_string_array[0],temp_string_from_tag[0],20) CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,MOV(0,cycle_count1) DIV(cfg_tag_total_bytes,188,cfg_calc_full_blocks) ,CPT(cfg_calc_rem_bytes,cfg_tag_total_bytes - (cfg_calc_full_blocks*188)) ,GRT(cfg_calc_rem_bytes,0) ADD(cfg_calc_full_blocks,1,max_array_elem_read) ,EQU(cfg_calc_rem_bytes,0) MOV(cfg_calc_full_blocks,max_array_elem_read) ,SUB(max_array_elem_read,1,max_array_elem_read) ,OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send correct start and length to read command
+read each zone as it gets there]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,20)[[MUL(cycle_count1,188,temp_data_read_start) ,CMP((temp_data_read_start + 188) <= (cfg_tag_total_bytes-1)) MOV(188,temp_data_read_length) ,CMP((temp_data_read_start + 188) > (cfg_tag_total_bytes-1)) CPT(temp_data_read_length,(cfg_tag_total_bytes-1)-(temp_data_read_start)) ] ,MOV(temp_data_read_start,cmd_data_read[4]) MOV(temp_data_read_length,cmd_data_read[5]) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,MOV(30,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,30)[ONS(ons_rfid.11) OTL(node_cmd_read) ,MOV(40,sts_seq_step) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage
+copy appropriate read location start and length to storage]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,40)XIO(node_cmd_latch)XIO(node_cmd_read)[MOV(50,sts_seq_step) ,OTL(temp_step_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy node temp data to verly large temp sint array.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,50)XIO(temp_step_latch)[CPS(node_tempdataok[0],temp_rfid_sint_read_array[temp_data_read_start],temp_data_read_length) ,MOV(80,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determine if another read cycle is required.  Increment cycle counter.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,80)[GEQ(cycle_count1,max_array_elem_read) MOV(85,sts_seq_step) ,LES(cycle_count1,max_array_elem_read) MOV(20,sts_seq_step) ,ADD(cycle_count1,1,cycle_count1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,85)[OTU(aoi_data_sort_write_03.data_read_sort_complete) OTU(aoi_data_sort_write_03.data_error) ,AOI_RFID_Data_Sort(aoi_data_sort_write_03,temp_rfid_data_write_sorted,cfg_read,temp_rfid_sint_write_array,3,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIO(node_response_error) XIC(aoi_data_sort_write_03.data_read_sort_complete) [OTL(sts_complete) ,MOV(0,sts_seq_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        WRITE        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[WRITE INIT
+This rung waits for write initialization step number.]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,105)[ONS(testing_ons) [MOV(0,cycle_count1) ,CPS(k_empty_sint_array[0],temp_rfid_sint_write_array[0],736) CPS(k_empty_sint_array[0],temp_rfid_sint_read_array[0],736) CPS(k_blank_string_array[0],temp_string_from_tag[0],20) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,CPS(k_tag_data_blank,sts_read_return,1) ] ,OTU(aoi_data_sort_write_01.data_write_sort_complete) ,AOI_RFID_Data_Sort(aoi_data_sort_write_01,temp_rfid_data_write_sorted,cfg_write,temp_rfid_sint_write_array,2,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIC(aoi_data_sort_write_01.data_write_sort_complete) MOV(110,sts_seq_step) ,OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[OUTGOING PRODUCT WRITE
+Each tag id will get written one at a time by using the cycle counter.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,110)[CPS(blank[0],node_tempdataok[0],188) CPS(k_blank_string,temp_data_string,1) ,TON(step_dly_tmr_02,?,?) ,XIC(step_dly_tmr_02.DN) MOV(112,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[OUTGOING PRODUCT WRITE]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,112)[MUL(cycle_count1,188,temp_data_write_start) ,CMP((temp_data_write_start + 188) <= (cfg_tag_total_bytes-1)) MOV(188,temp_data_write_length) ,CMP((temp_data_write_start + 188) > (cfg_tag_total_bytes-1)) CPT(temp_data_write_length,(cfg_tag_total_bytes-1)-(temp_data_write_start)) ,CPS(temp_rfid_sint_write_array[temp_data_write_start],node_tempdataok[0],temp_data_write_length) ,MOV(115,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy data to write into the data write array to be sent to the gateway.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,115)[MOV(temp_data_write_length,cmd_data_write[5]) MOV(temp_data_write_start,cmd_data_write[4]) ,ONS(ons_rfid.12) MOV(1,operation) JMP(data_convert) ,MOV(120,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID WRITE Command]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,120)[CPS(cmd_data_write[0],ctrl_node_read[2],100) ,MOV(125,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(sts_seq_step,125)[TON(step_dly_tmr_08,?,?) ,XIC(step_dly_tmr_08.DN) [ONS(ons_rfid.13) OTL(node_cmd_write) ,OTL(node_cmd_latch) ,MOV(130,sts_seq_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[ELEMENT WRITTEN TO RFID
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,130)XIO(node_cmd_latch)XIO(node_cmd_write)MOV(140,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ INIT
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,140)[OTL(temp_step_latch) ,MOV(145,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send correct start and length to read command
+read each zone as it gets there
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,145)XIO(temp_step_latch)[MOV(temp_data_write_start,cmd_data_read[4]) MOV(temp_data_write_length,cmd_data_read[5]) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,MOV(150,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,150)[ONS(ons_rfid.14) OTL(node_cmd_read) ,MOV(155,sts_seq_step) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage
+copy appropriate read location start and length to storage
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,155)XIO(node_cmd_latch)XIO(node_cmd_read)[CPS(node_tempdataok[0],temp_rfid_sint_read_array[temp_data_write_start],temp_data_write_length) ,TON(step_dly_tmr_03,?,?) ,XIC(step_dly_tmr_03.DN) MOV(170,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determine if another cycle is needed.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,170)[TON(step_dly_tmr_01,?,?) ,XIC(step_dly_tmr_01.DN) [GEQ(cycle_count1,max_array_elem_write) MOV(190,sts_seq_step) ,LES(cycle_count1,max_array_elem_write) MOV(110,sts_seq_step) ,ADD(cycle_count1,1,cycle_count1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID WRITE COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,190)[OTU(aoi_data_sort_write_02.data_read_sort_complete) OTU(aoi_data_sort_write_02.data_error) ,AOI_RFID_Data_Sort(aoi_data_sort_write_02,temp_rfid_data_write_sorted,cfg_write,temp_rfid_sint_write_array,1,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIO(node_response_error) XIC(aoi_data_sort_write_02.data_read_sort_complete) [OTL(sts_complete) ,MOV(0,sts_seq_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        READ TAGID        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INCOMING PRODUCT TagID
+Trigger the TagID bit
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,215)[ONS(ons_rfid.15) OTL(node_cmd_tagid) ,CPS(cmd_data_tagid[0],ctrl_node_read[2],100) MOV(220,sts_seq_step) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,OTL(node_cmd_latch) ,OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[copy read data to tag ID]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,220)XIO(node_cmd_latch)XIO(node_cmd_tagid)CPS(node_tempdataok[0],tagid_data_from_tag[0],82)MOV(230,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Populate strings, TagID COMPLETE
+this transfers the SINT strings read from the tag into regular string data type]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,230)[COP(tagid_data_from_tag[0],temp_tagid.DATA[0],8) ,MOV(8,temp_tagid.LEN) ,AOI_HexStrToStr(tagid_conv_01,temp_tagid,sts_tagid) ,[MOV(0,sts_seq_step) ,XIO(node_response_error) OTL(sts_complete) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        BLANK CHECK        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Initiate the RFID blank tag check.]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,300)[MOV(305,sts_seq_step) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,MOV(0,blank_chk_index) DIV(cfg_tag_total_bytes,82,cfg_calc_full_strings) ,CPT(cfg_calc_rem_bytes,cfg_tag_total_bytes - (cfg_calc_full_strings*82)) ,MOV(82,k_string_characters[7].LEN) ,OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[sends correct start and length to read command
+This checks against all memory registers (bytes) in the tag as defined by the input parameter to the AOI.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,305)[LES(blank_chk_index,cfg_calc_full_strings) CPT(cmd_data_read[4],blank_chk_index*82) MOV(82,cmd_data_read[5]) ,GEQ(blank_chk_index,cfg_calc_full_strings) CPT(cmd_data_read[4],blank_chk_index*82) CPT(cmd_data_read[5],(cfg_tag_total_bytes)-(cfg_calc_full_strings * 82)) ,MOV(310,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit, also clear string for data to be written to
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,310)[ONS(ons_rfid.16) OTL(node_cmd_read) ,MOV(320,sts_seq_step) ,FLL(blank[0],node_tempdataok[0],188) ,FLL(blank[0],node_tempdata[0],94) ,CPS(k_blank_string_array[0].DATA[0],temp_string_from_tag[0].DATA[0],82) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage (converts SINT to STRING)]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,320)XIO(node_cmd_latch)XIO(node_cmd_read)[CPS(node_tempdataok[0],temp_string_from_tag[0].DATA[0],82) ,MOV(82,temp_string_from_tag[0].LEN) ,MOV(330,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Verify format of data (all data is blank)
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,330)[NEQ(temp_string_from_tag[0],k_string_characters[7]) [EQU(sts_fault_code,0) MOV(4,sts_fault_code) ,MOV(340,sts_seq_step) ] ,EQU(temp_string_from_tag[0],k_string_characters[7]) [LES(blank_chk_index,cfg_calc_full_strings) MOV(305,sts_seq_step) ,GEQ(blank_chk_index,cfg_calc_full_strings) MOV(340,sts_seq_step) ,ADD(blank_chk_index,1,blank_chk_index) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[CHECK COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,340)[MOV(0,sts_seq_step) ,XIO(node_response_error) OTL(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        FILL TAG        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[SET FILL COMMAND
+sends correct start and length and fill data
+(clears entire tag)]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,405)MOV(0,cmd_data_fill[4])MOV(0,cmd_data_fill[5])MOV(0,cmd_data_fill[6])MOV(410,sts_seq_step)OTU(sts_complete);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID FILL
+Trigger the fill bit and copy the command data to the node read tag.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,410)[ONS(ons_rfid.17) OTL(node_cmd_fill) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,MOV(420,sts_seq_step) CPS(cmd_data_fill[0],ctrl_node_read[2],100) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[FILL COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,420)XIO(node_cmd_latch)XIO(node_cmd_fill)[MOV(0,sts_seq_step) ,XIO(node_response_error) OTL(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        TAG PRESENCE        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[SET TagPresence COMMAND
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,600)[MOV(0,cmd_data_tag_presence[4]) MOV(0,cmd_data_tag_presence[5]) MOV(127,tag_presence_results) ,FLL(blank[0],node_tempdataok[0],188) MOV(610,sts_seq_step) OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Copy the command data to the node read tag.
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,610)[CPS(cmd_data_tag_presence[0],ctrl_node_read[2],6) MOV(615,sts_seq_step) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,OTL(temp_step_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Copy the command data to the node read tag.
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,615)XIO(temp_step_latch)[ONS(ons_rfid.18) OTL(node_cmd_tag_presence) ,MOV(620,sts_seq_step) ,OTL(temp_step_latch) OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Tag Presence Command Complete
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,620)[XIO(node_cmd_latch) XIO(node_cmd_tag_presence) XIO(temp_step_latch) MOV(630,sts_seq_step) ,[XIC(node_response_error) ,XIC(node_no_response) ] [EQU(sts_fault_code,0) MOV(10,sts_fault_code) ,MOV(0,sts_seq_step) ] OTL(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Tag Presence COMPLETE
+If the response is = 0 then there is a tag present, if it is = 7 then no tag is present.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,630)[MOV(0,sts_seq_step) OTL(sts_complete) ,XIO(node_response_error) EQU(tag_presence_results,0) OTL(sts_tag_present) ,[XIO(node_response_error) EQU(tag_presence_results,7) ,NEQ(tag_presence_results,0) NEQ(tag_presence_results,7) EQU(sts_fault_code,0) MOV(10,sts_fault_code) ] OTU(sts_tag_present) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        CONTROLLER STATUS        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[SET Controller Status COMMAND
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,800)[MOV(0,cmd_data_contr_status[4]) MOV(0,cmd_data_contr_status[5]) MOV(0,controller_status_results) ,FLL(blank[0],node_tempdataok[0],188) OTU(sts_complete) OTL(temp_step_latch) OTU(sts_node_healthy) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,MOV(810,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[
+Copy the command data to the node read tag.
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,810)XIO(temp_step_latch)[ONS(ons_rfid.19) OTL(node_cmd_controller_stat) ,CPS(cmd_data_contr_status[0],ctrl_node_read[2],6) ,OTL(node_cmd_latch) ,MOV(820,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Controller status Command Complete. Copy status info.
+OR
+No response errors.]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,820)[XIO(node_cmd_latch) XIO(node_cmd_controller_stat) ,XIC(node_no_response) ,XIC(node_response_error) ][BTD(ctrl_node_write[8],8,controller_status_results,0,8) ,OTL(temp_step_latch) MOV(825,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(sts_seq_step,825)XIO(temp_step_latch)MOV(830,sts_seq_step)OTU(step_next);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Controller status complete or repeat command if status is not healthy.
+If the response is = 4 then the controller is healthy, anything else and it's not healthy.
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,830)[XIO(node_response_error) XIO(node_no_response) EQU(controller_status_results,4) [OTL(sts_node_healthy) ,OTL(sts_complete) ,MOV(0,sts_seq_step) ] ,[NEQ(controller_status_results,4) ,XIC(node_response_error) ,XIC(node_no_response) ] MOV(850,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Generate local clear fault request.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,850)MOV(855,sts_seq_step)OTL(local_clear_fault);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Wait for the clear fault bit to turn off.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,855)XIO(local_clear_fault)MOV(860,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Wait before going back to the beginning of this command.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,860)[TON(tmr_retry_controller_stat,?,?) ,XIC(tmr_retry_controller_stat.DN) MOV(800,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        READ AND PARSE ENTIRE TAG     ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ INIT
+This rung waits for read initialization step number.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1000)[CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) CPS(k_blank_string,sts_tagid,1) ,CPS(k_blank_string_array[0],temp_string_from_tag[0],20) MOV(0,cycle_count1) DIV(cfg_tag_total_bytes,188,cfg_calc_full_blocks) ,CPT(cfg_calc_rem_bytes,cfg_tag_total_bytes - (cfg_calc_full_blocks*188)) ,GRT(cfg_calc_rem_bytes,0) ADD(cfg_calc_full_blocks,1,max_array_elem_read) ,EQU(cfg_calc_rem_bytes,0) MOV(cfg_calc_full_blocks,max_array_elem_read) ,SUB(max_array_elem_read,1,max_array_elem_read) ,MOV(1020,sts_seq_step) OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send correct start and length to read command
+read each zone as it gets there]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1020)[[MUL(cycle_count1,188,temp_data_read_start) ,CMP((temp_data_read_start + 188) <= (cfg_tag_total_bytes-1)) MOV(188,temp_data_read_length) ,CMP((temp_data_read_start + 188) > (cfg_tag_total_bytes-1)) CPT(temp_data_read_length,(cfg_tag_total_bytes-1)-(temp_data_read_start)) ] ,MOV(temp_data_read_start,cmd_data_read[4]) MOV(temp_data_read_length,cmd_data_read[5]) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,MOV(1030,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1030)[ONS(ons_rfid.20) OTL(node_cmd_read) ,MOV(1040,sts_seq_step) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage
+copy appropriate read location start and length to storage]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1040)XIO(node_cmd_latch)XIO(node_cmd_read)MOV(1050,sts_seq_step)OTL(temp_step_latch);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy node temp data into very large SINT read array.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1050)XIO(temp_step_latch)CPS(node_tempdataok[0],temp_rfid_sint_read_array[temp_data_read_start],temp_data_read_length)MOV(1080,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determine if another read cycle is required.  Increment cycle counter.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1080)[GEQ(cycle_count1,max_array_elem_read) MOV(1085,sts_seq_step) ,LES(cycle_count1,max_array_elem_read) MOV(1020,sts_seq_step) ,ADD(cycle_count1,1,cycle_count1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1085)[OTU(aoi_data_sort_write_04.data_read_sort_complete) OTU(aoi_data_sort_write_04.data_error) ,AOI_RFID_Data_Sort(aoi_data_sort_write_04,temp_rfid_data_write_sorted,cfg_read,temp_rfid_sint_write_array,4,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIO(node_response_error) XIC(aoi_data_sort_write_04.data_read_sort_complete) [OTL(sts_complete) ,MOV(0,sts_seq_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        APPEND DATA TO TAG     ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ INIT
+This rung waits for read initialization step number.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1200)[CPS(k_blank_string_array[0],temp_string_from_tag[0],20) CPS(k_tag_data_blank,sts_read_return,1) ,CPS(k_tag_data_blank,sts_read_return,1) CPS(k_blank_string,sts_tagid,1) CPS(k_blank_string_array[0],sts_entire_read_rtn[0],25) ,MOV(0,cycle_count1) DIV(cfg_tag_total_bytes,188,cfg_calc_full_blocks) ,CPT(cfg_calc_rem_bytes,cfg_tag_total_bytes - (cfg_calc_full_blocks*188)) ,GRT(cfg_calc_rem_bytes,0) ADD(cfg_calc_full_blocks,1,max_array_elem_read) ,EQU(cfg_calc_rem_bytes,0) MOV(cfg_calc_full_blocks,max_array_elem_read) ,SUB(max_array_elem_read,1,max_array_elem_read) ,MOV(1210,sts_seq_step) OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send correct start and length to read command
+read each zone as it gets there]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1210)[[MUL(cycle_count1,188,temp_data_read_start) ,CMP((temp_data_read_start + 188) <= (cfg_tag_total_bytes-1)) MOV(188,temp_data_read_length) ,CMP((temp_data_read_start + 188) > (cfg_tag_total_bytes-1)) CPT(temp_data_read_length,(cfg_tag_total_bytes-1)-(temp_data_read_start)) ] ,MOV(temp_data_read_start,cmd_data_read[4]) MOV(temp_data_read_length,cmd_data_read[5]) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,MOV(1220,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1220)[ONS(ons_rfid.21) OTL(node_cmd_read) ,MOV(1230,sts_seq_step) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage
+copy appropriate read location start and length to storage]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1230)XIO(node_cmd_latch)XIO(node_cmd_read)[MOV(1240,sts_seq_step) ,OTL(temp_step_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy temp node data into very large SINT array.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1240)XIO(temp_step_latch)[CPS(node_tempdataok[0],temp_rfid_sint_read_array[temp_data_read_start],temp_data_read_length) ,MOV(1250,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determine if another read cycle is required.  Increment cycle counter.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1250)[GEQ(cycle_count1,max_array_elem_read) MOV(1260,sts_seq_step) ,LES(cycle_count1,max_array_elem_read) MOV(1210,sts_seq_step) ,ADD(cycle_count1,1,cycle_count1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[READ COMPLETE
+
+***BEGIN APPEND***
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1260)[ONS(testing_ons2) [MOV(0,cycle_count1) ,CPS(temp_rfid_sint_read_array[0],temp_rfid_sint_write_array[0],736) ,CPS(k_blank_string_array[0],temp_string_from_tag[0],20) ,CPS(k_tag_data_blank,sts_read_return,1) ] ,OTU(aoi_data_sort_write_05.data_write_sort_complete) ,AOI_RFID_Data_Sort(aoi_data_sort_write_05,temp_rfid_data_write_sorted,cfg_write,temp_rfid_sint_write_array,2,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIC(aoi_data_sort_write_05.data_write_sort_complete) MOV(1270,sts_seq_step) ,OTU(sts_complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[OUTGOING PRODUCT WRITE
+Each tag id will get written one at a time by using the cycle counter.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1270)[CPS(blank[0],node_tempdataok[0],188) CPS(k_blank_string,temp_data_string,1) ,TON(step_dly_tmr_05,?,?) ,XIC(step_dly_tmr_05.DN) MOV(1275,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[OUTGOING PRODUCT WRITE]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1275)[MUL(cycle_count1,188,temp_data_write_start) ,CMP((temp_data_write_start + 188) <= (cfg_tag_total_bytes-1)) MOV(188,temp_data_write_length) ,CMP((temp_data_write_start + 188) > (cfg_tag_total_bytes-1)) CPT(temp_data_write_length,(cfg_tag_total_bytes-1)-(temp_data_write_start)) ,CPS(temp_rfid_sint_write_array[temp_data_write_start],node_tempdataok[0],temp_data_write_length) MOV(1280,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy data to write into the data write array to be sent to the gateway.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1280)[MOV(temp_data_write_length,cmd_data_write[5]) MOV(temp_data_write_start,cmd_data_write[4]) ,ONS(ons_rfid.22) MOV(1,operation) JMP(data_convert) ,MOV(1285,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID WRITE Command]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1285)[ONS(ons_rfid.23) OTL(node_cmd_write) ,MOV(1290,sts_seq_step) ,CPS(cmd_data_write[0],ctrl_node_read[2],100) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[ELEMENT WRITTEN TO RFID
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1290)XIO(node_cmd_latch)XIO(node_cmd_write)OTL(temp_step_latch)MOV(1310,sts_seq_step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send correct start and length to read command
+read each zone as it gets there
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1310)XIO(temp_step_latch)[MOV(temp_data_write_start,cmd_data_read[4]) MOV(temp_data_write_length,cmd_data_read[5]) ,CPS(cmd_data_read[0],ctrl_node_read[2],100) ,MOV(1320,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Trigger the read bit
+
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1320)[ONS(ons_rfid.24) OTL(node_cmd_read) ,MOV(1330,sts_seq_step) ,OTL(node_cmd_latch) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[INITIATE INCOMING DATA STRING PARSE
+copy read data from tag into storage
+copy appropriate read location start and length to storage
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1330)XIO(node_cmd_latch)XIO(node_cmd_read)[CPS(node_tempdataok[0],temp_rfid_sint_read_array[temp_data_write_start],temp_data_write_length) ,TON(step_dly_tmr_06,?,?) ,XIC(step_dly_tmr_06.DN) MOV(1340,sts_seq_step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Determine if another cycle is needed.
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1340)[TON(step_dly_tmr_07,?,?) ,XIC(step_dly_tmr_07.DN) [GEQ(cycle_count1,max_array_elem_write) MOV(1350,sts_seq_step) ,LES(cycle_count1,max_array_elem_write) MOV(1270,sts_seq_step) ,ADD(cycle_count1,1,cycle_count1) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[RFID APPEND COMPLETE
+]]></Comment>
+      <Text><![CDATA[EQU(sts_seq_step,1350)[OTU(aoi_data_sort_write_06.data_read_sort_complete) OTU(aoi_data_sort_write_06.data_error) ,AOI_RFID_Data_Sort(aoi_data_sort_write_06,temp_rfid_data_write_sorted,cfg_write,temp_rfid_sint_write_array,4,temp_rfid_sint_read_array,element_list,total_elements,sts_read_return,k_string_characters[2],sts_fault_code,cfg_tag_total_bytes,sts_entire_read_rtn) ,XIO(node_response_error) XIC(aoi_data_sort_write_06.data_read_sort_complete) [OTL(sts_complete) ,MOV(0,sts_seq_step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        DATA CONVERT        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(operation,999)JMP(data_convert_end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(data_convert)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Clear indexes]]></Comment>
+      <Text><![CDATA[[EQU(operation,0) ,EQU(operation,1) ]CLR(node_convert_index1)CLR(node_convert_index2)SIZE(node_tempdata[0],0,node_array_length)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Transfer 2 byte data array to 1 byte data array]]></Comment>
+      <Text><![CDATA[LBL(distribute)SWPB(node_tempdata[node_convert_index1],REVERSE,node_tempswap[node_convert_index1])ADD(1,node_convert_index1,node_convert_index1)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Transfer 1 byte data array to 2 byte data array]]></Comment>
+      <Text><![CDATA[LBL(distribute2)BTD(node_tempdataok[node_convert_index2],0,node_tempdata[node_convert_index1],8,8)ADD(1,node_convert_index2,node_convert_index2)BTD(node_tempdataok[node_convert_index2],0,node_tempdata[node_convert_index1],0,8)ADD(1,node_convert_index1,node_convert_index1)ADD(1,node_convert_index2,node_convert_index2)JMP(end);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Loop until all arrays are filled]]></Comment>
+      <Text><![CDATA[LBL(end)LES(node_convert_index1,node_array_length)[EQU(operation,0) JMP(distribute) ,EQU(operation,1) JMP(distribute2) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(operation,1)EQU(node_convert_index1,node_array_length)CPS(node_tempdata[0],cmd_data_write[6],node_array_length);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(operation,0)[XIC(node_cmd_fill) OTU(node_cmd_fill) OTU(node_cmd_latch) ,XIC(node_cmd_write) OTU(node_cmd_write) OTU(node_cmd_latch) ,XIC(node_cmd_read) OTU(node_cmd_read) OTU(node_cmd_latch) ,XIC(node_cmd_tagid) OTU(node_cmd_tagid) OTU(node_cmd_latch) ,XIC(node_cmd_tag_presence) OTU(node_cmd_tag_presence) OTU(node_cmd_latch) ,XIC(node_cmd_controller_stat) OTU(node_cmd_controller_stat) OTU(node_cmd_latch) ,MUL(2,node_convert_index1,node_convert_index2) CPS(node_tempswap[0],node_tempdataok[0],node_convert_index2) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(999,operation);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LBL(data_convert_end)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********        GATEWAY DATA HANDSHAKE        ********
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(node_cmd_latch)ONS(ons_rfid.25)[LES(ctrl_node_read[1],250) ADD(ctrl_node_read[1],1,ctrl_node_read[1]) ,GEQ(ctrl_node_read[1],250) MOV(1,ctrl_node_read[1]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Complete Handshake]]></Comment>
+      <Text><![CDATA[NEQ(ctrl_node_write[1],ctrl_node_read[0])[[XIO(node_cmd_tag_presence) MEQ(ctrl_node_write[3],-256,ctrl_node_read[3]) ,XIC(node_cmd_tag_presence) [EQU(ctrl_node_write[3],ctrl_node_read[3]) BTD(ctrl_node_write[7],0,tag_presence_results,0,8) ,EQU(ctrl_node_write[3],-1) BTD(ctrl_node_write[8],8,tag_presence_results,0,8) ] ] OTL(node_response_ok) ,MEQ(ctrl_node_write[3],-256,-256) OTL(node_response_error) ,MEQ(ctrl_node_write[3],-256,-512) [MVM(ctrl_node_write[3],255,gwy_notification_codes[1]) ,OTL(node_notification) ] ,MOV(ctrl_node_write[1],ctrl_node_read[0]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Delay to ensure receipt of data before copying and converting data.  ]]></Comment>
+      <Text><![CDATA[[XIC(node_response_ok) ONS(ons_rfid.26) OTL(node_write_txfr_delay) ,XIO(node_response_error) XIO(node_write_txfr_delay) ONS(ons_rfid.27) [CPS(ctrl_node_write[8],node_tempdata[0],94) ,MOV(0,operation) JMP(data_convert) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Delay the write copy one scan.
+]]></Comment>
+      <Text><![CDATA[XIC(node_write_txfr_delay)[TON(node_write_trx_dly_tmr,?,?) ,XIC(node_write_trx_dly_tmr.DN) OTU(node_write_txfr_delay) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Error & Notification Codes and Response latches, if necessary, from the last transaction.   
+]]></Comment>
+      <Text><![CDATA[XIC(node_cmd_latch)ONS(ons_rfid.28)[CLR(gwy_notification_codes[1]) ,OTU(node_response_ok) OTU(node_no_response) ,OTU(node_response_error) OTU(node_notification) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[protect against a No Response condition (e.g., broken ethernet cable) with a timer.  The timer preset must be longer than the timeout value embedded in the command (RFID_Node1_Read[5]).
+
+]]></Comment>
+      <Text><![CDATA[XIC(node_cmd_latch)XIO(step_mode)[CPT(node_no_response_timer.PRE,ctrl_node_read[5]+4000) ,TON(node_no_response_timer,?,?) ,XIC(node_no_response_timer.DN) OTL(node_no_response) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(temp_step_latch)OTU(temp_step_latch);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

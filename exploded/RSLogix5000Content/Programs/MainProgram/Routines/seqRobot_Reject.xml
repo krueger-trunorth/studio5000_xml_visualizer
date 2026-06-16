@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_Reject" Type="RLL">
+  <Description><![CDATA[step 800 = reject ]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 800:
+Reject Blind Step, move to abort location
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,800)XIC(seqRobot.Perm)CONCAT(Message_Robot[115],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTU(Bit_Working_On_Queue_Battery) ,ONS(Machine_Oneshots[4].17) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Abort],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(805,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 805:
+Dump off parts]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,805)XIC(seqRobot.Perm)CONCAT(Message_Robot[116],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Retract_Complete) [MOV(810,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 810:
+Vacuum check]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,810)XIC(seqRobot.Perm)CONCAT(Message_Robot[25],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [XIC(I_EOAT_Vac) [MOV(805,seqRobot.Step) ,OTL(seqRobot.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ,OTU(seqRobot.StepNext) ] ,XIO(I_EOAT_Vac) [MOV(815,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 815:
+Move Home, go back to main
+if need more anodes then clear anode cassette before going back to main routine
+if robot_next_step > 500 then return  to clear anode routine]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,815)XIC(seqRobot.Perm)CONCAT(Message_Robot[117],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[4].18) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [LES(Robot_Next_Step,500) MOV(9,seqRobot.Step) ,GRT(Robot_Next_Step,500) MOV(Robot_Next_Step,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 820:
+Anode not picked]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,820)XIC(seqRobot.Perm)CONCAT(Message_Robot[118],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]MOV(800,seqRobot.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 825:
+Manually remove completed battery]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,825)XIC(seqRobot.Perm)CONCAT(Message_Robot[119],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][COP(Message_Robot_Popup[7],HMI.To_HMI.Msgbox_Prompt,1) ,COP(Message_Robot_Popup[5],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Robot_Popup[6],HMI.To_HMI.Msgbox_Button_2,1) ,OTL(HMI.To_HMI.Show_MSG_2) ,XIC(HMI.From_HMI.Msgbox_Button_1) [MOV(800,seqRobot.Step) ,OTL(Bit_Clear_WIP) ,OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.To_HMI.Show_MSG_2) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.To_HMI.Show_MSG_2) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

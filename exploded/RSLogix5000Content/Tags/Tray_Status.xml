@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Tray_Status" TagType="Base" DataType="Tray_Status" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0
+		,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,2,2,0,0,2,2,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],1,1,1]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="Tray_Status">
+      <ArrayMember Name="LeftInsulator_Rear" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="LeftInsulator_Front" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="RightInsulator_Rear" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="RightInsulator_Front" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="1" />
+        <Element Index="[5]" Value="1" />
+        <Element Index="[6]" Value="1" />
+        <Element Index="[7]" Value="1" />
+        <Element Index="[8]" Value="1" />
+        <Element Index="[9]" Value="1" />
+        <Element Index="[10]" Value="1" />
+        <Element Index="[11]" Value="1" />
+        <Element Index="[12]" Value="1" />
+        <Element Index="[13]" Value="1" />
+        <Element Index="[14]" Value="1" />
+      </ArrayMember>
+      <ArrayMember Name="LeftCan_Rear" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="LeftCan_Front" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="RightCan_Rear" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="RightCan_Front" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="2" />
+        <Element Index="[2]" Value="2" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="2" />
+        <Element Index="[6]" Value="2" />
+        <Element Index="[7]" Value="1" />
+        <Element Index="[8]" Value="1" />
+        <Element Index="[9]" Value="1" />
+        <Element Index="[10]" Value="1" />
+        <Element Index="[11]" Value="1" />
+        <Element Index="[12]" Value="1" />
+        <Element Index="[13]" Value="1" />
+        <Element Index="[14]" Value="1" />
+      </ArrayMember>
+      <ArrayMember Name="PM_Tray_Discrete" DataType="DINT" Dimensions="10" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+      </ArrayMember>
+      <ArrayMember Name="PM_Tray_Can" DataType="DINT" Dimensions="15" Radix="Decimal">
+        <Element Index="[0]" Value="0" />
+        <Element Index="[1]" Value="0" />
+        <Element Index="[2]" Value="0" />
+        <Element Index="[3]" Value="0" />
+        <Element Index="[4]" Value="0" />
+        <Element Index="[5]" Value="0" />
+        <Element Index="[6]" Value="0" />
+        <Element Index="[7]" Value="0" />
+        <Element Index="[8]" Value="0" />
+        <Element Index="[9]" Value="0" />
+        <Element Index="[10]" Value="0" />
+        <Element Index="[11]" Value="0" />
+        <Element Index="[12]" Value="0" />
+        <Element Index="[13]" Value="0" />
+        <Element Index="[14]" Value="0" />
+      </ArrayMember>
+      <DataValueMember Name="PM_TAnode" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="PM_BAnode" DataType="DINT" Radix="Decimal" Value="1" />
+      <DataValueMember Name="PM_Cathode" DataType="DINT" Radix="Decimal" Value="1" />
+    </Structure>
+  </Data>
+</Tag>

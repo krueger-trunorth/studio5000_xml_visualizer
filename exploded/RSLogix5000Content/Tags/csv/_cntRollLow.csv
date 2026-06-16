@@ -1,0 +1,12 @@
+attr_Constant,attr_DataType,attr_ExternalAccess,attr_Format,attr_Name,attr_Radix,attr_TagType,attr_Value,path,tag,text
+false,COUNTER,Read/Write,,_cntRollLow,,Base,,Tag,Tag,
+,,,L5K,,,,,Tag/Data,Data,"[0,999999,15]"
+,,,Decorated,,,,,Tag/Data,Data,
+,COUNTER,,,,,,,Tag/Data/Structure,Structure,
+,DINT,,,PRE,Decimal,,999999,Tag/Data/Structure/DataValueMember,DataValueMember,
+,DINT,,,ACC,Decimal,,15,Tag/Data/Structure/DataValueMember,DataValueMember,
+,BOOL,,,CU,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,
+,BOOL,,,CD,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,
+,BOOL,,,DN,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,
+,BOOL,,,OV,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,
+,BOOL,,,UN,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,

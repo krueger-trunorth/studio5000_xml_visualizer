@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Settings" Family="NoFamily" Class="User">
+  <Description><![CDATA[ESN]]></Description>
+  <Members>
+    <Member Name="Folder" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="ZZZZZZZZZZSettings1" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Saved" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZSettings1" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Bit to indicate Settings Saved]]></Description>
+    </Member>
+    <Member Name="Pages" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="CanInsert_AccelDecel" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RotaryTransferGripper_AccelDecel" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="CanInsert_Speed_Default" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RotaryTransferGripper_Speed_Full" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RotaryTransferGripper_Speed_Empty" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Default_Alarm_Trigger_Count" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LinearTransferGripper_AccelDecel" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LinearTransferGripper_Speed_Full" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LinearTransferGripper_Speed_Empty" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Barcode_Read_Retry_Limit" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Use_PIA" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="MachineESN" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[ESN]]></Description>
+    </Member>
+    <Member Name="RobotSpeed" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_X_Nom" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_X_Max" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_X_Min" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Y_Nom" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Y_Max" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Y_Min" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Pixels_Nom" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Pixels_Max" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Calib_Pixels_Min" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Verif_X_Min" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Verif_X_Max" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Verif_Y_Min" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Vision_Verif_Y_Max" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Software_Revision" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="WaitForUserDelay" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="WaitForProcDelay" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="SystemName" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Software_Change_Date" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Hist_ByPass" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Cycle_Time" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="EnableBatteryQueue" DataType="ORT_SettingParam_DINT" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="SL_Recipe_Name" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[recipe name for SL products]]></Description>
+    </Member>
+    <Member Name="LL_Recipe_Name" DataType="ORT_SettingParam_String" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[recipe name for LL products]]></Description>
+    </Member>
+    <Member Name="Tray_CanLeft_Angle" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[angle relative to robot]]></Description>
+    </Member>
+    <Member Name="Tray_CanRight_Angle" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[angle relative to robot]]></Description>
+    </Member>
+    <Member Name="Tray_InsLeft_Angle" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[angle relative to robot]]></Description>
+    </Member>
+    <Member Name="Tray_InsRight_Angle" DataType="ORT_SettingParam_Float" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[angle relative to robot]]></Description>
+    </Member>
+  </Members>
+</DataType>

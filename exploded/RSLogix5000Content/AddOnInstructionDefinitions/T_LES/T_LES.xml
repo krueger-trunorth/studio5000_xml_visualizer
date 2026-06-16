@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AddOnInstructionDefinition Name="T_LES" Revision="1.0" RevisionExtension="Example" Vendor="Rockwell Automation" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="true" CreatedDate="2006-07-27T19:19:22.981Z" CreatedBy="NA\dereed" EditedDate="2008-07-02T16:35:13.565Z" EditedBy="NA\dereed" SoftwareRevision="v16.03">
+  <Description><![CDATA[DateTime < DateTime?]]></Description>
+  <RevisionNote><![CDATA[Release for V17 CD as Date/Time Examples]]></RevisionNote>
+  <AdditionalHelpText><![CDATA[This instruction compares two Date-and-Time-of-Day (DateTime)
+variables.
+
+If DT1 is less than (before) DT2, EnableOut and Out are set to true (1).
+Otherwise EnableOut and Out are cleared to false (0).
+
+This instruction may be used in Ladder Diagram, Structured Text
+or Function Block Routines just like the LES instruction
+is used for integers and floating point numbers.  However,
+because it has InOut Parameters (tag references to user-defined
+types), it is NOT left-justified on ladder rungs!
+
+On a False rung in LD, or in FBD with EnableIn cleared to 0, Out is cleared to 0.
+
+***** NOTE: THIS INSTRUCTION IS DEPENDENT ON THE
+USER-DEFINED TYPE  (EXTERNAL TO THIS ADD-ON
+INSTRUCTION DEFINITION)!  
+
+ IS DEFINED AS:
+
+  Yr : DINT  (year)
+  Mo : DINT  (month)
+  Da : DINT  (day)
+  Hr : DINT  (hour)
+  Min : DINT  (minute)
+  Sec : DINT  (second)
+  uSec : DINT  (microsecond)]]></AdditionalHelpText>
+  <Parameters>
+    <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Input - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Output - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_DT1" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Date and Time input #1]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_DT2" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Date and Time input #2]]></Description>
+    </Parameter>
+    <Parameter Name="Out" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+      <Description><![CDATA[Result: 1 if DT1 is Less Than DT2]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </Parameter>
+  </Parameters>
+  <LocalTags>
+    <LocalTag Name="Wrk_Out" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Work Register: internal Output]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_Null" DataType="DateTime" ExternalAccess="Read/Write">
+      <Description><![CDATA[Null Date and Time (amount of time = 0)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="DateTime">
+          <DataValueMember Name="Yr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Mo" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Da" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Hr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Min" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Sec" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="uSec" DataType="DINT" Radix="Decimal" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DT2" DataType="DateTime" ExternalAccess="Read/Write">
+      <Description><![CDATA[Result of Ref_DT2 + T_Now]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="DateTime">
+          <DataValueMember Name="Yr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Mo" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Da" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Hr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Min" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Sec" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="uSec" DataType="DINT" Radix="Decimal" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DT1" DataType="DateTime" ExternalAccess="Read/Write">
+      <Description><![CDATA[Result of Ref_DT1 + T_Now]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="DateTime">
+          <DataValueMember Name="Yr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Mo" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Da" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Hr" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Min" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="Sec" DataType="DINT" Radix="Decimal" Value="0" />
+          <DataValueMember Name="uSec" DataType="DINT" Radix="Decimal" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_TADD_DT2" DataType="T_ADD" ExternalAccess="Read/Write">
+      <Description><![CDATA[Backing tag for T_ADD for DT2]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[1,0,0,0,0,0,0,0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="T_ADD">
+          <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+          <DataValueMember Name="EnableOut" DataType="BOOL" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_TADD_DT1" DataType="T_ADD" ExternalAccess="Read/Write">
+      <Description><![CDATA[Backing tag for T_ADD for DT1]]></Description>
+      <DefaultData Format="L5K"><![CDATA[[1,0,0,0,0,0,0,0,0,0,0,0,0,0]]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <Structure DataType="T_ADD">
+          <DataValueMember Name="EnableIn" DataType="BOOL" Value="1" />
+          <DataValueMember Name="EnableOut" DataType="BOOL" Value="0" />
+        </Structure>
+      </DefaultData>
+    </LocalTag>
+  </LocalTags>
+  <Routines />
+</AddOnInstructionDefinition>

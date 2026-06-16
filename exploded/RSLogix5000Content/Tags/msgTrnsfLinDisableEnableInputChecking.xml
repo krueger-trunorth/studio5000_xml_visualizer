@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="msgTrnsfLinDisableEnableInputChecking" TagType="Base" DataType="MESSAGE" ExternalAccess="Read/Write">
+  <Data Format="Message">
+    <MessageParameters MessageType="CIP Generic" RequestedLength="1" ConnectedFlag="2" ConnectionPath="Transfer_Linear" CommTypeCode="0" ServiceCode="16#0010" ObjectType="16#0042" TargetObject="1" AttributeNumber="16#02e0" LocalIndex="0" LocalElement="iGlobalMessageTrnsfrLin" LargePacketUsage="false" />
+  </Data>
+</Tag>

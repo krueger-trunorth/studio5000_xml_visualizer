@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Servo" Type="RLL">
+  <Description><![CDATA[Updates Servo Status and Commands]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[This is intended to check interlocks, e-stop, etc]]></Comment>
+      <Text><![CDATA[XIC(Enable_Drives_Requested)XIO(Estop_Complete)XIC(Motion_System.GroupSynced)XIC(Permissive_Motion_OK)OTE(Permissive_Servo_Motion);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[TON(Timer_Drives_On,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Add Servo for all axes below]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LES(srvTransferGripperLinearAxis.Servo.statActualPosition,5)OTE(Permissive_Rotary_Motion);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Safety against jogging fast into something]]></Comment>
+      <Text><![CDATA[XIC(System.Manual)ONS(Machine_Oneshots[6].13)[MOV(5,srvCanInsertAxis.Command.Speed) ,MOV(5,srvTransferGripperLinearAxis.Command.Speed) ,MOV(5,srvTransferRotaryGripperAxis.Command.Speed) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(srvTransferRotaryGripperAxis.Command.Accel,srvTransferRotaryGripperAxis.Command.Decel)MOV(srvTransferGripperLinearAxis.Command.Accel,srvTransferGripperLinearAxis.Command.Decel)MOV(srvCanInsertAxis.Command.Accel,srvCanInsertAxis.Command.Decel);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Timer_Drives_On.DN)Servo_CIP(srvTransferRotaryGripperAxis.Servo,drvTransferRotary,srvTransferRotaryGripperAxis.Command,srvTransferRotaryGripperAxis.Locations,srvTransferRotaryGripperAxis.LocationsPrev,System.Manual,0.1,-190,5,10,10,5,Permissive_Servo_Motion,Permissive_Servo_Motion,0,1,1,msgTrsnfrRotDisableEOT,msgTrnsfRotDisableEnableInputChecking,iGlobalMessageTrnsfrRot,Transfer_Rotary);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Timer_Drives_On.DN)Servo_CIP(srvTransferGripperLinearAxis.Servo,drvTransferLinear,srvTransferGripperLinearAxis.Command,srvTransferGripperLinearAxis.Locations,srvTransferGripperLinearAxis.LocationsPrev,System.Manual,0.1,-1,57,10,10,5,Permissive_Servo_Motion,Permissive_Servo_Motion,0,1,1,msgTrnsfLinDisableEOT,msgTrnsfLinDisableEnableInputChecking,iGlobalMessageTrnsfrLin,Transfer_Linear);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Timer_Drives_On.DN)Servo_CIP(srvCanInsertAxis.Servo,drvCanInsert,srvCanInsertAxis.Command,srvCanInsertAxis.Locations,srvCanInsertAxis.LocationsPrev,System.Manual,0.1,-100,100,10,10,5,Permissive_Servo_Motion,Permissive_Servo_Motion,0,1,1,msgCanDisableEOT,msgCanDisableEnableInputChecking,iGlobalMessageCan,Can_Insert);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

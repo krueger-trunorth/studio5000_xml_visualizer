@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="Can_Insert" CatalogNumber="2097-V33PR1-LM" Vendor="1" ProductType="37" ProductCode="32" Major="2" Minor="1" ParentModule="Local" ParentModPortId="2" Inhibited="false" MajorFault="false">
+  <EKey State="CompatibleModule" />
+  <Ports>
+    <Port Id="2" Address="192.168.1.31" Type="Ethernet" Upstream="true" />
+  </Ports>
+  <Communications>
+    <ConfigData ConfigSize="220">
+      <Data Format="L5K"><![CDATA[[224,1,257,32,37,0,10000,16908292,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8192005,8192125,67305985
+		,5,0,0,0,0,0,0]]]></Data>
+    </ConfigData>
+    <Connections>
+      <Connection Name="MotionDiagnostics" RPI="1000" Type="DiagnosticInput" EventID="0" ProgrammaticallySendEventTrigger="false">
+        <InputTag ExternalAccess="Read/Write">
+          <Data Format="Decorated">
+            <Structure DataType="AB:Motion_Diagnostics:S:1">
+              <DataValueMember Name="LostControllerToDriveTransmissions" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="LateControllerToDriveTransmissions" DataType="INT" Radix="Decimal" Value="317" />
+              <DataValueMember Name="LostDriveToControllerTransmissions" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="LateDriveToControllerTransmissions" DataType="INT" Radix="Decimal" Value="13559" />
+              <DataValueMember Name="LastControllerToDriveTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="AverageControllerToDriveTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="MaximumControllerToDriveTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="LastDriveToControllerTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="AverageDriveToControllerTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="MaximumDriveToControllerTime" DataType="INT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="LastSystemClockJitter" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="AverageSystemClockJitter" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="MaximumSystemClockJitter" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="TimingStatisticsEnabled" DataType="SINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="ControllerToDriveConnectionSize" DataType="INT" Radix="Decimal" Value="44" />
+              <DataValueMember Name="DriveToControllerConnectionSize" DataType="INT" Radix="Decimal" Value="36" />
+              <DataValueMember Name="NominalControllerToDriveTime" DataType="INT" Radix="Decimal" Value="666" />
+              <DataValueMember Name="NominalDriveToControllerTime" DataType="INT" Radix="Decimal" Value="666" />
+              <DataValueMember Name="CoarseUpdatePeriod" DataType="INT" Radix="Decimal" Value="2000" />
+            </Structure>
+          </Data>
+        </InputTag>
+      </Connection>
+      <Connection Name="MotionSync" RPI="2000" Type="MotionSync" EventID="0" ProgrammaticallySendEventTrigger="false" />
+    </Connections>
+  </Communications>
+  <ExtendedProperties>
+    <public>
+      <Vendor>Rockwell Automation/Allen-Bradley</Vendor>
+      <CatNum>2097-V33PR1-LM</CatNum>
+      <FeedbackDevice1>1</FeedbackDevice1>
+      <ConfigID>101</ConfigID>
+    </public>
+  </ExtendedProperties>
+</Module>

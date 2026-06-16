@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Main" Type="RLL">
+  <Description><![CDATA[Main]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Use this program to shift around the tray indexes.  This alleviates the need for manual teaching.]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Teach_Configs)[FOR(subConfigs,Index,1,200,1) ,OTU(Bit_Teach_Configs) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Edit_Tray_Approaches)[FOR(subApproach,Index,80,199,1) ,OTU(Bit_Edit_Tray_Approaches) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Update_Tray_Locations)[EQU(Machine_Run_Recipe.Battery_type.Value,0) OTL(Bit_Part_Type_LL) ,NEQ(Machine_Run_Recipe.Battery_type.Value,0) OTU(Bit_Part_Type_LL) ,JSR(subCheckTrayPoints,0) ,OTU(Bit_Update_Tray_Locations) ,OTL(Bit_Update_Tray_Points) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Update_Tray_Points)[XIC(Bit_Part_Type_LL) [MOV(Loc_Conv_BAnode_LL,Loc_Conv_BAnode) MOV(Loc_Conv_TAnode_LL,Loc_Conv_TAnode) ,MOV(Loc_Conv_MAnode_LL,Loc_Conv_MAnode) ] ,XIO(Bit_Part_Type_LL) [MOV(Loc_Conv_BAnode_SL,Loc_Conv_BAnode) MOV(Loc_Conv_TAnode_SL,Loc_Conv_TAnode) ,MOV(Loc_Conv_MAnode_SL,Loc_Conv_MAnode) ] ,OTU(Bit_Update_Tray_Points) ,OTL(Bit_Update_Trays) ,OTU(DownLoadDelay) ,OTU(Bit_Update_Tray_Locations_Done) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Left Rear Can Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog1Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcCanTrays,4,80,Settings.Tray_CanLeft_Angle.Value,s800.LocationConfig[39].Coordinate,s800.LocationConfig[47].Coordinate) ,OTU(Bit_Prog1Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Left Front Can Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog2Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcCanTrays,4,95,Settings.Tray_CanLeft_Angle.Value,s800.LocationConfig[40].Coordinate,s800.LocationConfig[48].Coordinate) ,OTU(Bit_Prog2Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Right Rear Can Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog3Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcCanTrays,4,110,Settings.Tray_CanRight_Angle.Value,s800.LocationConfig[41].Coordinate,s800.LocationConfig[49].Coordinate) ,OTU(Bit_Prog3Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Right Front Can Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog4Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcCanTrays,4,125,Settings.Tray_CanRight_Angle.Value,s800.LocationConfig[42].Coordinate,s800.LocationConfig[50].Coordinate) ,OTU(Bit_Prog4Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Left Rear Ins Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog5Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcInsTrays,4,140,Settings.Tray_InsLeft_Angle.Value,s800.LocationConfig[43].Coordinate,s800.LocationConfig[51].Coordinate) ,OTU(Bit_Prog5Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Left Front Ins Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog6Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcInsTrays,4,155,Settings.Tray_InsLeft_Angle.Value,s800.LocationConfig[44].Coordinate,s800.LocationConfig[52].Coordinate) ,OTU(Bit_Prog6Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Right Rear Ins Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog7Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcInsTrays,4,170,Settings.Tray_InsRight_Angle.Value,s800.LocationConfig[45].Coordinate,s800.LocationConfig[53].Coordinate) ,OTU(Bit_Prog7Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Right Front Ins Tray]]></Comment>
+      <Text><![CDATA[[XIC(Bit_Prog8Toggle) ,XIC(Bit_Update_Trays) ][JSR(subCalcInsTrays,4,185,Settings.Tray_InsRight_Angle.Value,s800.LocationConfig[46].Coordinate,s800.LocationConfig[54].Coordinate) ,OTU(Bit_Prog8Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(Bit_Prog9Toggle) ,XIC(Bit_Update_Trays) ][JSR(subPMCanTray,4,s800.World_Current_Value.X,s800.World_Current_Value.Y,s800.World_Current_Value.Z,s800.World_Current_Value.Roll) ,OTU(Bit_Prog9Toggle) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(Bit_Update_Trays)TON(Timer1,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[added save all robot locations so VB program doesnt get mad all the tray locations just changed]]></Comment>
+      <Text><![CDATA[XIC(Timer1.DN)[OTU(Bit_Update_Trays) ,OTL(DownLoadDelay) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(DownLoadDelay)TON(DownLoadDelayTmr,?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(DownLoadDelayTmr.DN) ,XIC(Bit_Skip_Update_Trays) ][OTL(Bit_Update_Tray_Locations_Done) ,OTU(DownLoadDelay) ,OTU(NeedToRecalc) ,OTU(Bit_Skip_Update_Trays) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

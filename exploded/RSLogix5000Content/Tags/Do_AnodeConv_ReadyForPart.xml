@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Do_AnodeConv_ReadyForPart" TagType="Alias" Radix="Decimal" AliasFor="Local:7:O.Data.1" ExternalAccess="Read/Write" />

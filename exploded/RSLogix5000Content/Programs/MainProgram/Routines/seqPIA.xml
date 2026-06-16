@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqPIA" Type="RLL">
+  <Description><![CDATA[PIA interface]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[On PLC start send init command to PIA]]></Comment>
+      <Text><![CDATA[XIC(S:FS)MOV(1,Pia.Command);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[ESN]]></Comment>
+      <Text><![CDATA[COP(Settings.MachineESN.Value,Pia.Machine.Data_Setup.Value[0],1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Settings.Use_PIA.Value,1)OTL(seqPIA.On);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Settings.Use_PIA.Value,0)ONS(Machine_Oneshots[8].1)OTL(seqPIA.Reset);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqPIA.Reset)[CLR(seqPIA.Step) ,OTU(seqPIA.On) ,OTU(seqPIA.Fault) ,CLR(seqPIA.Fault_Code) ,OTU(seqPIA.Complete) ,OTU(bitPIA_Signoff_Pass) ,OTU(bitPIA_Signoff_Fail) ,OTU(Pia.Machine.Signoff_Complete) ,CLR(Pia.Command) ,COP(K_Str_Blank,seqPIA.Status,1) ,COP(Blank_Database,Pia.Machine.Data_Trace,1) ,COP(K_Str_Blank,strPIAFaultMessage,1) ,OTU(seqPIA.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(bitSettingsCheckOK)[XIC(System.Running) ,XIC(seqAbort.On) XIO(System.Paused) ]XIO(seqControl.Fault)XIO(System.Manual)OTE(permAlarm_OK_Seq);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence]]></Comment>
+      <Text><![CDATA[XIC(permAlarm_OK_Seq)XIO(Alarms[3].29)XIO(Alarms[3].30)XIO(seqPIA.Fault)XIC(seqPIA.On)GRT(System.Access_Level,0)OTE(seqPIA.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check for Abort
+]]></Comment>
+      <Text><![CDATA[LIM(10,seqPIA.Step,500)XIC(seqAbort.On)OTL(seqPIA.Reset);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Latch Step Next]]></Comment>
+      <Text><![CDATA[OTL(seqPIA.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check for Process Start
+]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,0)XIC(seqPIA.Perm)EQU(seqRobot.Step,740)[OTU(bitPIA_Signoff_Pass) ,OTU(bitPIA_Signoff_Fail) ,COP(Blank_Database,Pia.Machine.Data_Trace,1) ,OTU(Pia.Machine.Signoff_Pass) ,OTU(Pia.Machine.Signoff_Fail) ,OTU(Pia.Machine.Signoff_Rwk_Pass) ,OTU(Pia.Machine.Signoff_Complete) ,OTU(Pia.Machine.PPC_Fail) ,OTU(Pia.Machine.PPC_Pass) ,OTU(Pia.Machine.MatlArrived_Complete) ,MOV(200,seqPIA.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqPIA.Step,200)XIC(seqPIA.Perm)MOV(210,seqPIA.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqPIA.Step,210)XIC(seqPIA.Perm)MOV(300,seqPIA.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send permissive for preprocess check]]></Comment>
+      <Text><![CDATA[LIM(300,seqPIA.Step,400)OTE(Pia.Machine.Perm_Precheck_Rqst);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Material Arrived
+]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,300)XIC(seqPIA.Perm)[NEQ(StackData.Can_Layer.Placed_Layer_Trace_Data,K_Str_Blank) GRT(seqCanInsert.Step,70) ONS(MachineONS[3].0) [MOV(1,Pia.Machine.Trav_Qty) ,COP(StackData.Can_Layer.Placed_Layer_Trace_Data,strTraveler,1) ,COP(strTraveler,Pia.Machine.Trav_Numbers[0],1) ,OTU(Pia.Machine.MatlArrived_Complete) ,MOV(5,Pia.Command) ,OTL(Bit_Hist_Matl_Arrived) ] ,EQU(Pia.Command,0) XIC(Pia.Machine.MatlArrived_Complete) GRT(seqCanInsert.Step,70) EQU(StackData.Can_Layer.Placed_Layer_Trace_Data,strTraveler) XIO(Pia.Alarm) [MOV(400,seqPIA.Step) ,OTU(Pia.Machine.MatlArrived_Complete) ] ,OTU(Pia.Machine.PPC_Complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Pre-Process Check
+Wait for check complete from PIA]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,400)[XIC(Pia.Alarm) [COP(Message_Robot[10],strPIAFaultMessage,1) ,MOV(200,seqPIA.Step) ] ,XIC(seqPIA.Perm) XIC(Pia.Machine.PPC_Complete) [XIC(Pia.Machine.PPC_Fail) [OTL(bitPIA_Alarm) ,COP(Message_Robot[11],strPIAFaultMessage,1) ,OTU(Pia.Machine.PPC_Fail) ,MOV(200,seqPIA.Step) ,OTL(HMI.From_HMI.Abort_PB) ] ,XIC(Pia.Machine.PPC_Pass) [COP(K_Str_Blank,strPIAFaultMessage,1) ,OTU(Pia.Machine.PPC_Pass) ,MOV(410,seqPIA.Step) ] ,OTU(Pia.Machine.PPC_Complete) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(test_clear_ppc_times) [FLL(test_clear_ppc_times_array[0],test_ppc_times[0],50) ,MOV(0,test_ppc_index) ,OTU(test_clear_ppc_times) ] ,GEQ(seqPIA.Step,300) LES(seqPIA.Step,410) RTO(test_ppc_timer,?,?) ,GEQ(seqPIA.Step,410) ONS(test_delete_ons5) [MOV(test_ppc_timer.ACC,test_ppc_times[test_ppc_index]) ,GEQ(test_ppc_index,49) MOV(0,test_ppc_index) OTE(test_ppc_index_reset) ,XIO(test_ppc_index_reset) ADD(test_ppc_index,1,test_ppc_index) ,RES(test_ppc_timer) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqPIA.Step,410)XIC(seqPIA.Perm)[COP(Machine_Run_Recipe.RecipeName,Pia.Machine.Data_Setup.Value[1],1) ,OTU(bitPIA_Process_Start) ,OTU(seqPIA.StepNext) ,MOV(420,seqPIA.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Start Assembly
+]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,420)XIC(seqPIA.Perm)XIC(seqPIA.StepNext)[XIC(seqAbort.On) MOV(500,seqPIA.Step) ,XIC(bitRecipeCheck_OK) MOV(600,seqPIA.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Cancel Start Assembly]]></Comment>
+      <Text><![CDATA[[EQU(seqPIA.Step,500) ,GRT(seqPIA.Step,420) XIC(seqAbort.On) ]XIC(seqPIA.Perm)[OTL(Bit_Signoff_Failed_Message) ,EQU(Pia.Command,0) [MOV(0,seqPIA.Step) ,OTU(bitPIA_Send_Signoff) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Start Assembly]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,600)XIC(seqPIA.Perm)[ONS(Machine_Oneshots[8].7) MOV(6,Pia.Command) ,EQU(Pia.Command,0) [OTE(bitPIA_Process_Ready) OTU(bitPIA_Send_Signoff) ,XIC(bitPIA_Process_Start) [OTU(bitPIA_Process_Start) ,MOV(700,seqPIA.Step) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Ingenio 2 - removed OpCerts]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,700)XIC(seqPIA.Perm)XIO(seqAbort.On)XIC(bitPIA_Send_Signoff)[MOV(705,seqPIA.Step) ,JSR(subRFIDtoPIA,1,1) ,MOV(1,Pia.Machine.Trav_Qty) ,COP(strTraveler,Pia.Machine.Trav_Numbers[0],1) ,OTU(Pia.Machine.Signoff_Complete) ,OTU(bitPIA_Send_Signoff) ,MOV(13,Pia.Command) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(test_clear_close_assy_times) [FLL(test_clear_close_assy_times_array[0],test_close_assy_times[0],50) ,MOV(0,test_close_assy_index) ,OTU(test_clear_close_assy_times) ] ,GEQ(seqPIA.Step,705) NEQ(seqPIA.Step,0) RTO(test_close_assy_timer,?,?) ,LES(seqPIA.Step,705) ONS(test_delete_ons) [MOV(test_close_assy_timer.ACC,test_close_assy_times[test_close_assy_index]) ,GEQ(test_close_assy_index,49) MOV(0,test_close_assy_index) OTE(test_close_assy_index_reset) ,XIO(test_close_assy_index_reset) ADD(test_close_assy_index,1,test_close_assy_index) ,RES(test_close_assy_timer) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Close Assembly
+5 layers plus insulator]]></Comment>
+      <Text><![CDATA[EQU(seqPIA.Step,705)XIC(seqPIA.Perm)XIO(seqAbort.On)EQU(Pia.Command,0)XIO(Pia.Alarm)MOV(710,seqPIA.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqPIA.Step,710)XIC(seqPIA.Perm)XIC(Pia.Machine.Signoff_Complete)[XIC(Pia.Machine.Signoff_Pass) [OTL(bitPIA_Signoff_Pass) ,COP(K_Str_Blank,strPIAFaultMessage,1) ,OTU(Pia.Machine.Signoff_Pass) ,MOV(0,seqPIA.Step) ] ,XIC(Pia.Machine.Signoff_Rwk_Pass) [OTL(bitPIA_Alarm) ,COP(Message_Robot[13],strPIAFaultMessage,1) ,OTL(bitPIA_Signoff_Fail) ,OTU(Pia.Machine.Signoff_Rwk_Pass) ,MOV(0,seqPIA.Step) ] ,XIC(Pia.Machine.Signoff_Fail) [OTL(bitPIA_Alarm) ,COP(Message_Robot[12],strPIAFaultMessage,1) ,OTL(bitPIA_Signoff_Fail) ,OTU(Pia.Machine.Signoff_Fail) ,MOV(0,seqPIA.Step) ] ,[OTL(Bit_Hist_Part_Complete) ,[XIC(Pia.Machine.Signoff_Fail) ,XIC(Pia.Machine.Signoff_Rwk_Pass) ] OTL(Bit_Hist_Part_Fail) ,XIC(Pia.Machine.Signoff_Pass) OTL(Bit_Hist_Part_Pass) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

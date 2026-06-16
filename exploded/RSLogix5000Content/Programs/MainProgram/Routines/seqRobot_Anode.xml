@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_Anode" Type="RLL">
+  <Description><![CDATA[step 500 = anode]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 500:
+***** NEW ANODE ROUTINE *****
+Anode Component Start
+EOAT Vac check]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,500)XIC(seqRobot.Perm)CONCAT(Message_Robot[50],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][[OTL(actRobotVac.ACT.Extend_Req) ,CLR(Robot_Next_Step) ] ,XIC(actRobotVac.ACT.Extend_Complete) [XIO(I_EOAT_Vac) [MOV(505,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ] ,XIC(I_EOAT_Vac) [MOV(800,seqRobot.Step) ,OTL(seqRobot.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ] ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[take dummy picture while waiting for or picking.. point grey issue when running back to back inspections with different exposures]]></Comment>
+      <Text><![CDATA[LIM(505,seqRobot.Step,550)[OTE(iInhibitInspFault.1) ,OTU(vbVisionPro.Cameras[0].Requests.bSave1) OTU(vbVisionPro.Cameras[0].Requests.bSave2) ,XIC(Bit_Part_Type_LL) MOV(ivisAnodeLL,Camera.intInspection) ,XIO(Bit_Part_Type_LL) MOV(ivisAnodeSL,Camera.intInspection) ,ONS(Machine_Oneshots[8].14) [OTU(Camera.bitErrorInspection) OTU(Camera.bitComplete) OTL(Camera.bitRun_Request) ,RES(ctuAnodeVisionRetries) ] ,[XIC(Camera.bitErrorInspection) ,XIC(Camera.bitComplete) ,XIC(bAnDummyImageComplete) ] OTU(Camera.bitErrorInspection) OTE(bAnDummyImageComplete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 524: Wait for anode cassette to be in place
+ select which anode is being used for this layer - bottom, middle, top]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,505)XIC(seqRobot.Perm)CONCAT(Message_Robot[51],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIC(Bit_ConvAnode_Available)[[EQU(intLayer_Anode_Type,1) MOV(Loc_Conv_BAnode,temp_Anode_Loc) ,EQU(intLayer_Anode_Type,2) MOV(Loc_Conv_MAnode,temp_Anode_Loc) ,EQU(intLayer_Anode_Type,3) MOV(Loc_Conv_TAnode,temp_Anode_Loc) ] ,[MOV(515,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 522: go to and pick top anode from conveyor]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,515)XIC(seqRobot.Perm)CONCAT(Message_Robot[52],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[5].18) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[temp_Anode_Loc],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(524,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 524: Pick up anode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,524)XIC(seqRobot.Perm)CONCAT(Message_Robot[53],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [TON(Timer_anode_pick_delay,?,?) ,XIC(Timer_anode_pick_delay.DN) [MOV(526,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 526: Move to anode approach and check vacuum
+if vac ok then continue else dump the part; clear the cassette and restart the layer
+
+JEO - Changed location to vision from conveyor wait. - 05/15/15]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,526)XIC(seqRobot.Perm)CONCAT(Message_Robot[55],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[7].13) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Vision_Anode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [[EQU(intLayer_Anode_Type,1) OTL(Bit_BAnode_Picked) ,EQU(intLayer_Anode_Type,2) OTL(Bit_MAnode_Picked) ,EQU(intLayer_Anode_Type,3) OTL(Bit_TAnode_Picked) ] ,XIC(I_EOAT_Vac) MOV(550,seqRobot.Step) ,XIO(I_EOAT_Vac) [MOV(580,Robot_Next_Step) ,MOV(800,seqRobot.Step) ,OTL(Sig_Robot_mispickAnode) ,OTL(actRobotVac.ACT.Abort) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.0) ,OTL(Bit_Need_More_Anodes) ,OTL(seqRobot.Fault) ] ,MOV(0,s800.Commands.Approach_Height) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[make sure we are done with the dummy image before allowing the actual inspection to occur]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,550)XIC(bAnDummyImageComplete)[MOV(551,seqRobot.Step) ,OTU(Camera.bitErrorInspection) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 552:
+Register part on EOAT
+need to save with bit/path 2 after vision upgrade so that an image is saved in the display folder]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,551)XIC(seqRobot.Perm)CONCAT(Message_Robot[56],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][[TON(Machine_Timers[6],?,?) ,OTL(O_Vision_Light_On) ] ,XIC(Machine_Timers[6].DN) [[OTU(vbVisionPro.Cameras[0].Requests.bSave1) OTL(vbVisionPro.Cameras[0].Requests.bSave2) ,XIC(Bit_Part_Type_LL) MOV(ivisAnodeLL,Camera.intInspection) MOV(ivisAnodeLL,HMI.To_HMI.MainDisplayIndex) ,XIO(Bit_Part_Type_LL) MOV(ivisAnodeSL,Camera.intInspection) MOV(ivisAnodeSL,HMI.To_HMI.MainDisplayIndex) ] ,ONS(Machine_Oneshots[8].13) [CONCAT(strImageFolderPath,strImageDisplay,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strBackSlash,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strImage,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,DTOS(Camera.intInspection,strTemp) CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strTemp,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strDotBMP,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,OTU(Camera.bitErrorInspection) OTU(Camera.bitComplete) OTL(Camera.bitRun_Request) ] ,[XIC(Camera.bitError) ,XIC(Camera.bitErrorInspection) ] [MOV(552,seqRobot.Step) ,XIC(ctuAnodeVisionRetries.DN) [OTL(Bit_Vision_Error) ,OTL(HMI.To_HMI.ChangeMainImage) ,MOV(553,seqRobot.Step) ] ,OTU(seqRobot.StepNext) ] ,XIO(Camera.bitRun_Request) XIC(Camera.bitComplete) [MOV(553,seqRobot.Step) ,OTL(HMI.To_HMI.ChangeMainImage) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqRobot.Step,552)[CTU(ctuAnodeVisionRetries,?,?) ,TON(tmrAnodeVisionRetry,?,?) ,XIC(tmrAnodeVisionRetry.DN) MOV(551,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 553:
+Decide if Vision Passed
+if vision does not pass then dump the part in the reject bin and then clear the rest of the anodes on the cassette and signal need more anodes - will continue with the same layer since it has not be incremented
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,553)XIC(seqRobot.Perm)CONCAT(Message_Robot[57],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTU(O_Vision_Light_On) ,XIO(Debug_Disable_Vision) [NEG(vbVisionPro.Cameras[0].Results.dblResults[0],s800_Vision_Offset.X) ,NEG(vbVisionPro.Cameras[0].Results.dblResults[1],s800_Vision_Offset.Y) ,MUL(vbVisionPro.Cameras[0].Results.dblResults[2],57.3,s800_Vision_Offset.Roll) ] ,XIC(Debug_Disable_Vision) [MOV(0,s800_Vision_Offset.X) ,MOV(0,s800_Vision_Offset.Y) ,MOV(0,s800_Vision_Offset.Roll) ] ,[XIO(Bit_Vision_Error) [LIM(Vision_Score_LSL,vbVisionPro.Cameras[0].Results.dblResults[3],1) ,XIC(Debug_Disable_Vision) ] LIM(Vision_AnodeX_LSL,s800_Vision_Offset.X,Vision_AnodeX_USL) LIM(Vision_AnodeY_LSL,s800_Vision_Offset.Y,Vision_AnodeY_USL) LIM(Vision_AnodeR_LSL,s800_Vision_Offset.Roll,Vision_AnodeR_USL) [MOV(200,seqRobot.Step) ,EQU(intLayer_Anode_Type,1) RES(Machine_Counters[2]) ,EQU(intLayer_Anode_Type,2) RES(Machine_Counters[5]) ,EQU(intLayer_Anode_Type,3) RES(Machine_Counters[6]) ,XIC(Bit_BAnode_Picked) XIC(Bit_MAnode_Picked) XIC(Bit_TAnode_Picked) OTL(Sig_Robot_Picked_Anodes) ] ,[GRT(s800_Vision_Offset.X,Vision_AnodeX_USL) ,LES(s800_Vision_Offset.X,Vision_AnodeX_LSL) ,GRT(s800_Vision_Offset.Y,Vision_AnodeY_USL) ,LES(s800_Vision_Offset.Y,Vision_AnodeY_LSL) ,GRT(s800_Vision_Offset.Roll,Vision_AnodeR_USL) ,LES(s800_Vision_Offset.Roll,Vision_AnodeR_LSL) CTU(_cntRollLow,?,?) ,XIO(Debug_Disable_Vision) LES(vbVisionPro.Cameras[0].Results.dblResults[3],Vision_Score_LSL) ,XIC(Bit_Vision_Error) ] [[MOV(Settings.Default_Alarm_Trigger_Count.Value,Machine_Counters[2].PRE) ,MOV(Settings.Default_Alarm_Trigger_Count.Value,Machine_Counters[5].PRE) ,MOV(Settings.Default_Alarm_Trigger_Count.Value,Machine_Counters[6].PRE) ] ,EQU(intLayer_Anode_Type,1) [CTU(Machine_Counters[2],?,?) ,XIC(Machine_Counters[2].DN) [OTL(Bit_VisionFailed) ,OTL(seqRobot.Fault) ,RES(Machine_Counters[2]) ] ] ,EQU(intLayer_Anode_Type,2) [CTU(Machine_Counters[5],?,?) ,XIC(Machine_Counters[5].DN) [OTL(Bit_VisionFailed) ,OTL(seqRobot.Fault) ,RES(Machine_Counters[5]) ] ] ,EQU(intLayer_Anode_Type,3) [CTU(Machine_Counters[6],?,?) ,XIC(Machine_Counters[6].DN) [OTL(Bit_VisionFailed) ,OTL(seqRobot.Fault) ,RES(Machine_Counters[6]) ] ] ,[XIO(Bit_BAnode_Picked) ,XIO(Bit_MAnode_Picked) ,XIO(Bit_TAnode_Picked) ] MOV(580,Robot_Next_Step) ,XIC(Bit_BAnode_Picked) XIC(Bit_MAnode_Picked) XIC(Bit_TAnode_Picked) [MOV(0,Robot_Next_Step) ,OTL(Sig_Robot_Picked_Anodes) ] ,MOV(800,seqRobot.Step) ,OTL(Bit_Need_More_Anodes) ,OTU(Bit_Vision_Error) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

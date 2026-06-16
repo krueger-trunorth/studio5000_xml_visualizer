@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="trav_chk_dn" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Traveler Data Check Subroutine Complete Status
+(On = Complete)]]></Description>
+  <Data Format="L5K"><![CDATA[1]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="BOOL" Radix="Decimal" Value="1" />
+  </Data>
+</Tag>

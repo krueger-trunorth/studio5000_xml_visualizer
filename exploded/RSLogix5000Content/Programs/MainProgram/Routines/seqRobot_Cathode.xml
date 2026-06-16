@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_Cathode" Type="RLL">
+  <Description><![CDATA[step 400 = cathode]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 400:
+Cathode Component Start
+EOAT Vac check
+
+JEO - Added decision to move to conv wait only if cathode isn't available. - 10/11/14
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,400)XIC(seqRobot.Perm)CONCAT(Message_Robot[40],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,[XIC(actRobotVac.ACT.Extend_Complete) ,XIC(Speed_Up_Cycle_Time) ] [XIO(I_EOAT_Vac) [XIO(Bit_ConvCathode_Available) MOV(412,seqRobot.Step) ,XIC(Bit_ConvCathode_Available) MOV(414,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ] ,XIC(I_EOAT_Vac) [MOV(800,seqRobot.Step) ,OTL(seqRobot.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ] ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[take dummy picture while waiting for or picking.. point grey issue when running back to back inspections with different exposures]]></Comment>
+      <Text><![CDATA[LIM(412,seqRobot.Step,420)[OTE(iInhibitInspFault.2) ,OTU(vbVisionPro.Cameras[0].Requests.bSave1) OTU(vbVisionPro.Cameras[0].Requests.bSave2) ,XIC(Bit_Part_Type_LL) MOV(ivisCathodeLL,Camera.intInspection) ,XIO(Bit_Part_Type_LL) MOV(ivisCathodeSL,Camera.intInspection) ,ONS(Machine_Oneshots[8].15) [OTU(Camera.bitErrorInspection) OTU(Camera.bitComplete) OTL(Camera.bitRun_Request) ,RES(ctuCathodeVisionRetries) ] ,[XIC(Camera.bitErrorInspection) ,XIC(Camera.bitComplete) ,XIC(bCathDummyImageComplete) ] OTU(Camera.bitErrorInspection) OTE(bCathDummyImageComplete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 412:
+move to location with approach to efficiently wait for cathode]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,412)XIC(seqRobot.Perm)CONCAT(Message_Robot[41],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[7].23) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_Wait],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(414,seqRobot.Step) ,MOV(0,s800.Commands.Approach_Height) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 414: wait for cathode to be in location,
+travel to location when ready]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,414)XIC(seqRobot.Perm)CONCAT(Message_Robot[42],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIC(Bit_ConvCathode_Available)[ONS(Machine_Oneshots[5].7) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Conv_Cathode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(416,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 416: Pick up cathode with vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,416)XIC(seqRobot.Perm)CONCAT(Message_Robot[43],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(418,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 418: Move to cathode approach and check vacuum
+
+JEO - Updated with hardcoded speed/accel/decel because Loc_Conv_Wait is a shared location and only needs to be slow for this move. - 08/07/14
+
+JEO - Updated to move only a little bit in the z-axis at this slow speed to try and improve cycle time.  Changed from a Jump to a Move.  - 05/15/15
+
+JEO - Updated to go to step 20 rather than 9 if working on stack in queue. - 10/22/15
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,418)XIC(seqRobot.Perm)CONCAT(Message_Robot[44],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[5].14) [[COP(s800.LocationConfig[Loc_Conv_Cathode],s800.LocationConfig[iLocTemp],1) ,ADD(s800.World_Current_Value.Z,10,s800.LocationConfig[iLocTemp].Coordinate.Z) ,MOV(45,s800.LocationConfig[iLocTemp].Speed) ,MOV(5,s800.LocationConfig[iLocTemp].Acceleration) ,MOV(60,s800.LocationConfig[iLocTemp].Deceleration) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ] ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [XIC(I_EOAT_Vac) [MOV(419,seqRobot.Step) ,RES(Machine_Counters[25]) ,OTL(Sig_Robot_Picked_Cathode) ] ,XIO(I_EOAT_Vac) [CTU(Machine_Counters[25],?,?) ,XIO(Machine_Counters[25].DN) MOV(414,seqRobot.Step) ,XIC(Machine_Counters[25].DN) [XIO(Bit_Working_On_Queue_Battery) MOV(9,seqRobot.Step) ,XIC(Bit_Working_On_Queue_Battery) MOV(20,seqRobot.Step) ,RES(Machine_Counters[25]) ,OTL(Sig_Robot_mispickCathode) OTL(Sig_Robot_Picked_Cathode) ] ,OTL(actRobotVac.ACT.Abort) ,OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.3) ,OTL(seqRobot.Fault) ] ,MOV(0,s800.Commands.Approach_Height) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 419: Move to cathode approach.
+
+JEO - Added - 05/15/15
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,419)XIC(seqRobot.Perm)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[5].17) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Vision_Cathode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(420,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[make sure we are done with the dummy image before allowing the actual inspection to occur]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,420)XIC(bCathDummyImageComplete)[MOV(424,seqRobot.Step) ,OTU(Camera.bitErrorInspection) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 425:
+Register part on EOAT
+need to save with bit/path 2 after vision upgrade so that an image is saved in the display folder]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,424)XIC(seqRobot.Perm)CONCAT(Message_Robot[47],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][[TON(Machine_Timers[5],?,?) ,OTL(O_Vision_Light_On) ] ,XIC(Machine_Timers[5].DN) [[OTU(vbVisionPro.Cameras[0].Requests.bSave1) OTL(vbVisionPro.Cameras[0].Requests.bSave2) ,XIC(Bit_Part_Type_LL) MOV(ivisCathodeLL,Camera.intInspection) MOV(ivisCathodeLL,HMI.To_HMI.MainDisplayIndex) ,XIO(Bit_Part_Type_LL) MOV(ivisCathodeSL,Camera.intInspection) MOV(ivisCathodeSL,HMI.To_HMI.MainDisplayIndex) ] ,ONS(Machine_Oneshots[1].14) [CONCAT(strImageFolderPath,strImageDisplay,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strBackSlash,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strImage,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,DTOS(Camera.intInspection,strTemp) CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strTemp,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strDotBMP,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,OTU(Camera.bitErrorInspection) OTU(Camera.bitComplete) OTL(Camera.bitRun_Request) ] ,[XIC(Camera.bitError) ,XIC(Camera.bitErrorInspection) ] [MOV(425,seqRobot.Step) ,XIC(ctuCathodeVisionRetries.DN) [OTL(Bit_Vision_Error) ,OTL(HMI.To_HMI.ChangeMainImage) ,MOV(426,seqRobot.Step) ] ,OTU(seqRobot.StepNext) ] ,XIO(Camera.bitRun_Request) XIC(Camera.bitComplete) [MOV(426,seqRobot.Step) ,OTL(HMI.To_HMI.ChangeMainImage) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqRobot.Step,425)[CTU(ctuCathodeVisionRetries,?,?) ,TON(tmrCathodeVisionRetry,?,?) ,XIC(tmrCathodeVisionRetry.DN) MOV(424,seqRobot.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 426:
+Decide if Vision Passed]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,426)XIC(seqRobot.Perm)CONCAT(Message_Robot[48],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTU(O_Vision_Light_On) ,XIO(Debug_Disable_Vision) [NEG(vbVisionPro.Cameras[0].Results.dblResults[0],s800_Vision_Offset.X) ,NEG(vbVisionPro.Cameras[0].Results.dblResults[1],s800_Vision_Offset.Y) ,MUL(vbVisionPro.Cameras[0].Results.dblResults[2],57.3,s800_Vision_Offset.Roll) ] ,XIC(Debug_Disable_Vision) [MOV(0,s800_Vision_Offset.X) ,MOV(0,s800_Vision_Offset.Y) ,MOV(0,s800_Vision_Offset.Roll) ] ,[XIO(Bit_Vision_Error) [LIM(Vision_Score_LSL,vbVisionPro.Cameras[0].Results.dblResults[3],1) ,XIC(Debug_Disable_Vision) ] LIM(Vision_CathodeX_LSL,s800_Vision_Offset.X,Vision_CathodeX_USL) LIM(Vision_CathodeY_LSL,s800_Vision_Offset.Y,Vision_CathodeY_USL) LIM(Vision_CathodeR_LSL,s800_Vision_Offset.Roll,Vision_CathodeR_USL) [MOV(200,seqRobot.Step) ,RES(Machine_Counters[4]) ] ,[GRT(s800_Vision_Offset.X,Vision_CathodeX_USL) ,LES(s800_Vision_Offset.X,Vision_CathodeX_LSL) ,GRT(s800_Vision_Offset.Y,Vision_CathodeY_USL) ,LES(s800_Vision_Offset.Y,Vision_CathodeY_LSL) ,GRT(s800_Vision_Offset.Roll,Vision_CathodeR_USL) ,LES(s800_Vision_Offset.Roll,Vision_CathodeR_LSL) ,XIO(Debug_Disable_Vision) LES(vbVisionPro.Cameras[0].Results.dblResults[3],Vision_Score_LSL) ,XIC(Bit_Vision_Error) ] [MOV(Settings.Default_Alarm_Trigger_Count.Value,Machine_Counters[4].PRE) ,CTU(Machine_Counters[4],?,?) ,XIC(Machine_Counters[4].DN) [OTL(Bit_VisionFailed) ,OTL(seqRobot.Fault) ,RES(Machine_Counters[4]) ] ,MOV(800,seqRobot.Step) ,OTU(Bit_Vision_Error) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

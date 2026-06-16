@@ -1,0 +1,42 @@
+attr_BitNumber,attr_Class,attr_DataType,attr_Dimension,attr_ExternalAccess,attr_Family,attr_Hidden,attr_Name,attr_Radix,attr_Target,path,tag,text
+,User,,,,NoFamily,,Adept_Location,,,DataType,DataType,
+,,,,,,,,,,DataType/Members,Members,
+,,STRING_30,0,Read/Write,,false,Description,NullType,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Description
+,,SINT,0,Read/Write,,false,Location_Number,Decimal,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Location number to be defined (1-999)
+,,Adept_Coordinates,0,Read/Write,,false,Coordinate,NullType,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"X, Y, Z, Y, P, R"
+,,SINT,0,Read/Write,,true,ZZZZZZZZZZAdept_Loca3,Decimal,,DataType/Members/Member,Member,
+0,,BIT,0,Read/Write,,false,Relative_Move,Decimal,ZZZZZZZZZZAdept_Loca3,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Absolute location, 1 = Relation location"
+,,INT,0,Read/Write,,false,Speed,Decimal,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Speed %
+,,INT,0,Read/Write,,false,Acceleration,Decimal,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Acceleration %
+,,INT,0,Read/Write,,false,Deceleration,Decimal,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Deceleration %
+,,INT,0,Read/Write,,false,acceleration_profile,Decimal,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Acceleration profile
+,,REAL,0,Read/Write,,false,Approach_Height,Float,,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,Approach distance (set if absolute/relative approach)
+,,SINT,0,Read/Write,,true,ZZZZZZZZZZAdept_Loca10,Decimal,,DataType/Members/Member,Member,
+0,,BIT,0,Read/Write,,false,Approach_Absolute,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Relative, 1 = Absolute"
+1,,BIT,0,Read/Write,,false,Coarse_Nulling,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Fine nulling, 1 = Coarse nulling (applies if Stop_After_Motion (Null) is OFF)"
+2,,BIT,0,Read/Write,,false,Continuous_Motion,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,0=Null at end of motion 1=No null at end of motion
+3,,BIT,0,Read/Write,,false,Straightline_Move,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Joint Interpolate Motion, 1 = Straightline Motion"
+4,,BIT,0,Read/Write,,false,Coordinate_in_Joints,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Coordinates in Cartesian, 1 = Coordinates in Joints (AIM equivalent: 0 = Line/ 1 = Joint)"
+5,,BIT,0,Read/Write,,false,Single_Turn,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Multiple turns, 1 = Single turn"
+6,,BIT,0,Read/Write,,false,Righty,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Lefty, 1 = Righty"
+7,,BIT,0,Read/Write,,false,Below,Decimal,ZZZZZZZZZZAdept_Loca10,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = Above, 1 = Below"
+,,SINT,0,Read/Write,,true,ZZZZZZZZZZAdept_Loca19,Decimal,,DataType/Members/Member,Member,
+0,,BIT,0,Read/Write,,false,Flip,Decimal,ZZZZZZZZZZAdept_Loca19,DataType/Members/Member,Member,
+,,,,,,,,,,DataType/Members/Member/Description,Description,"0 = No flip, 1 = Flip"

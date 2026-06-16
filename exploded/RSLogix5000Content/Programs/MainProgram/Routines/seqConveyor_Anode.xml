@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqConveyor_Anode" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[conveyors have been separated into their own routines for easier monitoring/troubleshooting!  This was driven by seqConveyor, but they have been modified to be stand-alone
+
+Originally needed to keep in sync with conveyor handshakes..
+robot: need cass --> conv: cass ready --> robot: cass picked --> (do stuff) --> robot: need to place --> conv: ok to place --> robot: cass placed --> loop
+Conveyor code has been modified to allow us to request a cassette even if we are holding one (so we can pass thru empty's)
+
+if we raise the pallet, we hold it in the grippers and release the conveyor
+if there is an issue with rfid or cassette type etc, will be kicked to decision steps that will request control of conveyor back]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Produced_AnConvResetAll,Produced_AnConvResetAlarm)EQU(Consumed_AnConvResetAllAck,Consumed_AnConvResetAlarmAck)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[debounce the signal from conveyor in case it flickers while cassette travels]]></Comment>
+      <Text><![CDATA[[EQU(Consumed_AnPartPresence_OnDeck,1) TON(tmrAnCassOnDeck_OnDelay,?,?) ,EQU(Consumed_AnPartPresence_OnDeck,0) TON(tmrAnCassOnDeck_OffDelay,?,?) ,EQU(Consumed_AnPartPresence_LnL,1) TON(tmrAnCassLnL_OnDelay,?,?) ,EQU(Consumed_AnPartPresence_LnL,0) TON(tmrAnCassLnL_OffDelay,?,?) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If conveyor says that a cassette is ready, and it is not registering on the LnL sensor after a certain time period.. trigger and alarm or send reset to the conveyor.. TBD]]></Comment>
+      <Text><![CDATA[XIC(I_AnodeLane_Running)XIC(I_Anode_CassetteReadyforProcessing)XIO(tmrAnCassLnL_OnDelay.DN)[TON(tmrAnLnL_ExpectingCass,?,?) ,XIC(tmrAnLnL_ExpectingCass.DN) [ONS(onsBits[3].21) OTL(Anode_Conv_ExpectingCassette) ,OTE(iSigToAnodeConv_CassettePicked.10) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[cassette on deck detected with debounce, slight delay to read the part presence sensor in case the cassette bounces against the stop]]></Comment>
+      <Text><![CDATA[XIC(tmrAnCassOnDeck_OnDelay.DN)[TON(tmrAnCassOnDeck_SettleDelay,?,?) ,XIC(tmrAnCassOnDeck_SettleDelay.DN) ONS(onsBits[0].8) [MOV(0,AnodeCassetteOnDeckPartPresent) ,XIC(Di_AnodePartInCassetteSensor) MOV(1,AnodeCassetteOnDeckPartPresent) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[every time the OnDeck sensor transitions off.. pull the part present status into a storage dint and clear the on deck status]]></Comment>
+      <Text><![CDATA[XIC(tmrAnCassOnDeck_OffDelay.DN)ONS(onsBits[0].10)MOV(AnodeCassetteOnDeckPartPresent,AnodeCassetteOnDeckPartQueue)MOV(0,AnodeCassetteOnDeckPartPresent);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[every time the LnL sensor transitions on.. pull the part present status from the storage dint and transfer it into the LnL]]></Comment>
+      <Text><![CDATA[XIC(tmrAnCassLnL_OnDelay.DN)ONS(onsBits[0].12)MOV(AnodeCassetteOnDeckPartQueue,AnodeCassetteLNLPartPresent)MOV(0,AnodeCassetteOnDeckPartQueue);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqConveyor_Anode.Reset)[CLR(seqConveyor_Anode.Step) ,OTU(Anode_Cassette_Type_Fault) ,OTU(seqConveyor_Anode.On) OTU(seqConveyor_Anode.Fault) OTU(seqConveyor_Anode.Complete) ,OTU(seqConveyor_Anode.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[[XIC(System.Running) ,XIC(System.Manual) XIO(System.Auto) ]XIC(System.Homed)XIO(seqConveyor_Anode.Fault)XIO(System.Pause_IP)XIC(seqConveyor_Anode.On)XIO(System.Paused)OTE(seqConveyor_Anode.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[[XIO(seqConveyor_Anode.StepMode) OTU(seqConveyor_Anode.StepNext) ,XIC(seqConveyor_Anode.StepMode) OTL(seqConveyor_Anode.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Main Decision Step
+If cassette present on startup, go to re-read RFID and check cassette type, then tell robot ready
+If cassette ready and flagged as empty, go to steps that eject cassette
+Addeed bit Clear 1 Anode to Stopping rung due to Stopping being triggered early when clearing 1 anode. TKO 10.26.2017]]></Comment>
+      <Text><![CDATA[EQU(seqConveyor_Anode.Step,0)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][XIO(SeqClearConveyor.Perm) ,XIC(bClearAnodes) ][XIC(System.Stopping) XIO(Bit_WIP_InMachine) XIO(seqRobot.On) XIO(bClear1Anode) MOV(5,seqConveyor_Anode.Step) ,XIC(I_AnodeLane_Running) [XIO(I_Anode_CassetteReadyforProcessing) [[XIO(actAnodeLNLGripper.ACT.Extend_Complete) ,XIO(I_AnodeCassette_DetectedRaised) ] EQU(seqConveyor_Anode.Step,0) OTE(iSigToAnodeConv_ReadyForPart.0) ,XIC(actAnodeLNLGripper.ACT.Extend_Complete) XIC(I_AnodeCassette_DetectedRaised) MOV(60,seqConveyor_Anode.Step) ] ,XIC(I_Anode_CassetteReadyforProcessing) XIC(tmrAnCassLnL_OnDelay.DN) [GRT(AnodeCassetteLNLPartPresent,0) [MOV(10,seqConveyor_Anode.Step) ,RES(ctuAnodeRFID_ReadRetry) ] ,EQU(AnodeCassetteLNLPartPresent,0) MOV(500,seqConveyor_Anode.Step) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If stopping, coming to this step will turn off the request for a part.. delay and make sure the conveyor wasn't in the middle of providing a cassette
+if it was, loop back to 0, raise it, read it then complete]]></Comment>
+      <Text><![CDATA[EQU(seqConveyor_Anode.Step,5)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][TON(tmrAnConvStopping,?,?) ,XIC(I_Anode_CassetteReadyforProcessing) MOV(0,seqConveyor_Anode.Step) ,XIO(I_Anode_CassetteReadyforProcessing) XIC(tmrAnConvStopping.DN) MOV(9000,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Raise Lift and Locate]]></Comment>
+      <Text><![CDATA[EQU(10,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actLNLAnode.ACT.Extend_Req) ,[XIC(actLNLAnode.ACT.Fault) MOV(20,seqConveyor_Anode.Step) ,XIC(actLNLAnode.ACT.Extend_Complete) XIO(I_AnodeCassette_DetectedRaised) OTL(Bit_Anode_CassetteStuck) OTL(actLNLAnode.ACT.Retract_Req) ] OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Extend_Complete) XIC(I_AnodeCassette_DetectedRaised) MOV(30,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Lower Lift and Locate after faulting on raise
+may need future attention]]></Comment>
+      <Text><![CDATA[EQU(20,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actLNLAnode.ACT.Retract_Req) ,XIC(actLNLAnode.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Retract_Complete) MOV(0,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[close pallet retaining gripper at LnL
+RFID read will also start at this step in parallel and be evaluated at step 70]]></Comment>
+      <Text><![CDATA[EQU(30,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[OTL(actAnodeLNLGripper.ACT.Extend_Req) ,XIC(actAnodeLNLGripper.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actAnodeLNLGripper.ACT.Extend_Complete) MOV(40,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[lower lift and locate]]></Comment>
+      <Text><![CDATA[EQU(40,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[OTL(actLNLAnode.ACT.Retract_Req) ,XIC(actLNLAnode.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Retract_Complete) MOV(50,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[then tell conveyor cassette was picked and wait for cassette ready signal to turn off]]></Comment>
+      <Text><![CDATA[EQU(50,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[XIC(I_Anode_CassetteReadyforProcessing) OTE(iSigToAnodeConv_CassettePicked.1) ,XIO(I_Anode_CassetteReadyforProcessing) MOV(60,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[check to make sure correct type of cassette is loaded
+this is a delayed fault because we need to stay in sync with the conveyor
+this will be looped back to if choosing to retry after incorrect type detected..
+in which case the grippers will be closed and the LnL will be lowered, but the logic should be ok to loop back through]]></Comment>
+      <Text><![CDATA[EQU(60,seqConveyor_Anode.Step)[TON(tmrAnode_Cassette_Settle,?,?) ,XIC(tmrAnode_Cassette_Settle.DN) [OTU(AnCassetteTypeFault_Delayed) ,[XIC(Bit_Part_Type_LL) XIC(I_Anode_Cassette_Type) ,XIO(Bit_Part_Type_LL) XIO(I_Anode_Cassette_Type) ] OTL(AnCassetteTypeFault_Delayed) ,MOV(70,seqConveyor_Anode.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Read RFID
+start reading in parallel when step gets to 30, don't move on until step is current
+if cassette type is wrong, or debug has read disabled.. don't bother triggering read
+this will fault out for rfid read though if there is not valid data in the temp variable
+
+hold here if the other rfid is reading, might be issues with the gateway if this happens simultaneously]]></Comment>
+      <Text><![CDATA[LIM(30,seqConveyor_Anode.Step,70)LIM(70,seqConveyor_Cathode.Step,30)XIC(seqConveyor_Anode.Perm)[EQU(ctuAnodeRFID_ReadRetry.ACC,0) OTE(iBlockAnodeRFIDFault.0) ,ONS(Machine_Oneshots[1].18) XIO(Debug_Disable_Anode_RFID_Read) XIO(AnCassetteTypeFault_Delayed) [CPS(Rfid_Anode_Cfg,RFID_Node1_Anode_Conv.cfgRead,1) ,CPS(Rfid_Anode_Cfg.TagIDs[0],RFID_Node1_Anode_Conv.cfgWrite.TagIDs[0],25) ,CPS(Rfid_Anode_Cfg.Start[0],RFID_Node1_Anode_Conv.cfgWrite.Start[0],25) ,CPS(Rfid_Anode_Cfg.Length[0],RFID_Node1_Anode_Conv.cfgWrite.Length[0],25) ,MOV(1,RFID_Node1_Anode_Conv.Command) ] ,EQU(70,seqConveyor_Anode.Step) [XIC(RFID_Node1_Anode_Conv.AOI.sts_fault) [MOV(75,seqConveyor_Anode.Step) ,GRT(ctuAnodeRFID_ReadRetry.ACC,0) [MOV(110,seqConveyor_Anode.Step) ,OTL(seqConveyor_Anode.Fault) ] ] ,[XIO(RFID_Node1_Anode_Conv.AOI.sts_fault) EQU(RFID_Node1_Anode_Conv.Command,0) XIC(RFID_Node1_Anode_Conv.AOI.sts_complete) ,XIC(Debug_Disable_Anode_RFID_Read) ,XIC(AnCassetteTypeFault_Delayed) ] [COP(RFID_Node1_Anode_Conv.cfgReturn,Temp_Anode_Data,1) ,MOV(80,seqConveyor_Anode.Step) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[rfid faults for general comm sometimes.. but then works on retry
+do a retry once before faulting]]></Comment>
+      <Text><![CDATA[EQU(75,seqConveyor_Anode.Step)[CTU(ctuAnodeRFID_ReadRetry,?,?) ,XIO(RFID_Node1_Anode_Conv.AOI.sts_fault) [TON(tmrAnodeRFID_ReadRetry,?,?) ,LIM(1000,tmrAnodeRFID_ReadRetry.ACC,2000) OTE(iClearAnRFIDFault.1) ,XIC(tmrAnodeRFID_ReadRetry.DN) MOV(70,seqConveyor_Anode.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[decision step, check age, data and cassette type and decide if ok to proceed]]></Comment>
+      <Text><![CDATA[EQU(80,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[OTU(Bit_Anode_Old) ,JSR(subTimeDifference,1,Temp_Anode_Data.Data[20],Anode_Age) ,GRT(Anode_Age,96) OTL(Bit_Anode_Old) ,OTU(Anode_Cassette_Type_Fault) ,XIC(AnCassetteTypeFault_Delayed) OTL(Anode_Cassette_Type_Fault) ,JSR(rtCheckAnodeData,0) ,MOV(90,seqConveyor_Anode.Step) ,[XIC(Anode_Cassette_Type_Fault) ,XIC(Bit_Anode_Old) ,XIO(bit_AnodeDataOK) ] MOV(110,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[cassette is ready - clear request bits]]></Comment>
+      <Text><![CDATA[EQU(90,seqConveyor_Anode.Step)[MOV(100,seqConveyor_Anode.Step) ,OTU(Bit_Need_More_Anodes) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Indicate to robot that the cassette is ready
+Wait for Robot to pick parts and signal complete or mispick
+Copy data as soon as part is picked
+
+make sure conveyor sub sequence is idle before moving on]]></Comment>
+      <Text><![CDATA[EQU(100,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][[XIC(Bit_BAnode_Picked) ,XIC(Bit_MAnode_Picked) ,XIC(Bit_TAnode_Picked) ] ONS(MachineONS[3].2) [COP(Temp_Anode_Data,StackData.Anode_Data_from_RFID,1) ,OTU(ConveyorPickedAnode) ] ,XIO(Sig_Robot_Picked_Anodes) OTE(Bit_ConvAnode_Available) ,EQU(seqConveyor_Anode_sub.Step,0) [XIC(Sig_Robot_Picked_Anodes) [XIO(Sig_Robot_mispickAnode) MOV(140,seqConveyor_Anode.Step) ,XIC(Sig_Robot_mispickAnode) MOV(110,seqConveyor_Anode.Step) ,OTU(Bit_BAnode_Picked) OTU(Bit_MAnode_Picked) OTU(Bit_TAnode_Picked) ,OTU(Sig_Robot_Picked_Anodes) ] ,XIC(System.Stopping) XIO(Bit_WIP_InMachine) XIO(seqRobot.On) XIO(SeqClearConveyor.On) MOV(9000,seqConveyor_Anode.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[bad RFID data, RFID faulted on read, wrong cassette type, age or robot mispick
+Notification Lockout]]></Comment>
+      <Text><![CDATA[EQU(110,seqConveyor_Anode.Step)XIO(HMI.To_HMI.Notification)[XIO(Sig_Robot_mispickAnode) MOV(120,seqConveyor_Anode.Step) ,XIC(Sig_Robot_mispickAnode) MOV(130,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[prompt for operator decision (RFID read/data issue, age issue, cassette type issue)
+if operator chooses to retry, check if it was a cassette type issue and send further back in the loop]]></Comment>
+      <Text><![CDATA[EQU(120,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][COP(Message_Conveyor[0],HMI.To_HMI.Msgbox_Prompt,1) COP(Message_Conveyor[2],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Conveyor[3],HMI.To_HMI.Msgbox_Button_2,1) COP(Message_Abort_Popup[9],HMI.To_HMI.Msgbox_Button_3,1) ,OTL(HMI.To_HMI.Show_MSG_3) ,XIC(HMI.From_HMI.Msgbox_Button_1) [MOV(70,seqConveyor_Anode.Step) ,XIC(AnCassetteTypeFault_Delayed) MOV(40,seqConveyor_Anode.Step) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) MOV(200,seqConveyor_Anode.Step) ,XIC(HMI.From_HMI.Msgbox_Button_3) MOV(140,seqConveyor_Anode.Step) ,[XIC(HMI.From_HMI.Msgbox_Button_1) ,XIC(HMI.From_HMI.Msgbox_Button_2) ,XIC(HMI.From_HMI.Msgbox_Button_3) ] [OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.From_HMI.Msgbox_Button_3) ,OTU(HMI.To_HMI.Show_MSG_3) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[prompt for operator decision (robot mis pick)]]></Comment>
+      <Text><![CDATA[EQU(130,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][COP(String_Anode_Mispick,HMI.To_HMI.Msgbox_Prompt,1) COP(Message_Conveyor[2],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Conveyor[3],HMI.To_HMI.Msgbox_Button_2,1) COP(Message_Abort_Popup[9],HMI.To_HMI.Msgbox_Button_3,1) ,OTL(HMI.To_HMI.Show_MSG_3) ,XIC(HMI.From_HMI.Msgbox_Button_1) MOV(100,seqConveyor_Anode.Step) ,XIC(HMI.From_HMI.Msgbox_Button_2) MOV(200,seqConveyor_Anode.Step) ,XIC(HMI.From_HMI.Msgbox_Button_3) MOV(140,seqConveyor_Anode.Step) ,[XIC(HMI.From_HMI.Msgbox_Button_1) ,XIC(HMI.From_HMI.Msgbox_Button_2) ,XIC(HMI.From_HMI.Msgbox_Button_3) ] [OTU(Sig_Robot_mispickAnode) ,OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.From_HMI.Msgbox_Button_3) ,OTU(HMI.To_HMI.Show_MSG_3) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Erase RFID before releasing]]></Comment>
+      <Text><![CDATA[EQU(140,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][XIO(Debug_Disable_Anode_RFID_Erase) ONS(Machine_Oneshots[1].19) MOV(3,RFID_Node1_Anode_Conv.Command) ,XIC(RFID_Node1_Anode_Conv.AOI.sts_fault) OTL(seqConveyor_Anode.Fault) ,[XIO(RFID_Node1_Anode_Conv.AOI.sts_fault) EQU(RFID_Node1_Anode_Conv.Command,0) XIC(RFID_Node1_Anode_Conv.AOI.sts_complete) ,XIC(Debug_Disable_Anode_RFID_Erase) ] MOV(200,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[tell conveyor we need to place empty cassette onto conveyor]]></Comment>
+      <Text><![CDATA[EQU(200,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[XIO(Di_AnodeReadyforCassettetobePlaced) OTE(iReqToPlaceOnAnodeConv.0) ,XIC(Di_AnodeReadyforCassettetobePlaced) MOV(210,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Raise Lift and Locate]]></Comment>
+      <Text><![CDATA[EQU(210,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actLNLAnode.ACT.Extend_Req) ,XIC(actLNLAnode.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Extend_Complete) MOV(220,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Open Gripper]]></Comment>
+      <Text><![CDATA[EQU(220,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actAnodeLNLGripper.ACT.Retract_Req) ,XIC(actAnodeLNLGripper.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actAnodeLNLGripper.ACT.Retract_Complete) MOV(230,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Lower Lift and Locate]]></Comment>
+      <Text><![CDATA[EQU(230,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actLNLAnode.ACT.Retract_Req) ,XIC(actLNLAnode.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Retract_Complete) MOV(240,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check for Stuck cassette]]></Comment>
+      <Text><![CDATA[EQU(240,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][XIC(I_AnodeCassette_DetectedRaised) OTL(Bit_Anode_CassetteStuck) OTL(seqConveyor_Anode.Fault) ,XIO(I_AnodeCassette_DetectedRaised) MOV(300,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Signal to conveyor part placed and wait for signal that cassette was received
+When Clearing only one part.  Unlatch Clear 1 Anode Bit and jump to step 9999. TKO 10.26.2017]]></Comment>
+      <Text><![CDATA[EQU(300,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[TON(tmrAnodeConvOutOfSync,?,?) ,XIO(tmrAnodeConvOutOfSync.DN) [XIO(Di_AnodeReceivedCassette) OTE(iSigToAnodeConv_CassettePlaced.0) ,XIC(Di_AnodeReceivedCassette) MOV(0,seqConveyor_Anode.Step) ] ,XIC(tmrAnodeConvOutOfSync.DN) [OTL(Anode_Conv_OutOfSync) ,MOV(310,seqConveyor_Anode.Step) ] ,XIC(bConvPurge1orAll) [OTU(bClear1Anode) ,XIO(bClear1Anode) MOV(9999,seqConveyor_Anode.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(310,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIO(Anode_Conv_OutOfSync)[XIO(Consumed_AnConvResetAllAck.0) OTE(Produced_AnConvResetAll.0) ,XIC(Consumed_AnConvResetAllAck.0) MOV(0,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[empty cassette detected, must follow req conveyor sequencing
+tell conveyor cassette was picked and wait for cassette ready signal to turn off]]></Comment>
+      <Text><![CDATA[EQU(500,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)XIC(I_AnodeLane_Running)[XIC(I_Anode_CassetteReadyforProcessing) OTE(iSigToAnodeConv_CassettePicked.9) ,XIO(I_Anode_CassetteReadyforProcessing) MOV(0,seqConveyor_Anode.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[End of conveyor sequence
+lower lift and locate]]></Comment>
+      <Text><![CDATA[EQU(9000,seqConveyor_Anode.Step)XIC(seqConveyor_Anode.Perm)[XIC(System.Auto) ,XIC(seqConveyor_Anode.StepNext) ][OTL(actLNLAnode.ACT.Retract_Req) ,XIC(actLNLAnode.ACT.Fault) OTL(seqConveyor_Anode.Fault) ,XIC(actLNLAnode.ACT.Retract_Complete) [MOV(9999,seqConveyor_Anode.Step) ,OTU(seqConveyor_Anode.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[End of conveyor sequence
+init outputs to conveyor]]></Comment>
+      <Text><![CDATA[EQU(seqConveyor_Anode.Step,9999)[OTU(bitNeedAnodeToteTogglePlace) ,OTL(seqConveyor_Anode.Reset) ,OTU(seqConveyor_Anode.StepNext) ,OTU(seqConveyor_Anode.On) ,OTL(seqConveyor_Anode.Complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[~~~~~ anode conveyor sub routine
+this is always running when the running signal is true]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqConveyor_Anode_sub.Reset)[CLR(seqConveyor_Anode_sub.Step) ,OTU(seqConveyor_Anode_sub.On) OTU(seqConveyor_Anode_sub.Fault) OTU(seqConveyor_Anode_sub.Complete) ,OTU(seqConveyor_Anode_sub.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[XIC(I_AnodeLane_Running)XIO(I_Estop_NOT_OK)OTE(seqConveyor_Anode_sub.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[this sub is always running as long as the estop is ok and conveyor running bit is true
+make sure main cathode step is idle
+if empty cassette is present at ondeck sensor, pull it in and send it thru
+will eventually need to react to commands from downstream stacker requesting parts]]></Comment>
+      <Text><![CDATA[EQU(0,seqConveyor_Anode_sub.Step)XIC(seqConveyor_Anode_sub.Perm)[XIO(seqControl.On) EQU(0,seqConveyor_Anode.Step) ,EQU(100,seqConveyor_Anode.Step) ]XIC(tmrAnCassOnDeck_SettleDelay.DN)EQU(AnodeCassetteOnDeckPartPresent,0)MOV(500,seqConveyor_Anode_sub.Step);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[empty cassette detected, want to pass it through to improve timing when parts are needed
+tell conveyor cassette needed and wait for cassette ready signal]]></Comment>
+      <Text><![CDATA[EQU(500,seqConveyor_Anode_sub.Step)XIC(seqConveyor_Anode_sub.Perm)[XIO(I_Anode_CassetteReadyforProcessing) OTE(iSigToAnodeConv_ReadyForPart.16) ,XIC(I_Anode_CassetteReadyforProcessing) MOV(510,seqConveyor_Anode_sub.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[empty cassette detected, must follow req conveyor sequencing
+tell conveyor cassette was picked and wait for cassette ready signal to turn off]]></Comment>
+      <Text><![CDATA[EQU(510,seqConveyor_Anode_sub.Step)XIC(seqConveyor_Anode_sub.Perm)[XIC(I_Anode_CassetteReadyforProcessing) OTE(iSigToAnodeConv_CassettePicked.16) ,XIO(I_Anode_CassetteReadyforProcessing) MOV(0,seqConveyor_Anode_sub.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check each layer status and tell conveyor we need another anode if a can is present and a layer that requres a anode is idle]]></Comment>
+      <Text><![CDATA[GRT(StackData.Can_Layer.Layer_Status,0)[GRT(Machine_Run_Recipe.Number_of_Layers.Value,0) [EQU(Machine_Run_Recipe.Layer_1_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_1_Type.Value,4) ] NEQ(StackData.Layer[1].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,1) [EQU(Machine_Run_Recipe.Layer_2_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_2_Type.Value,4) ] NEQ(StackData.Layer[2].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,2) [EQU(Machine_Run_Recipe.Layer_3_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_3_Type.Value,4) ] NEQ(StackData.Layer[3].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,3) [EQU(Machine_Run_Recipe.Layer_4_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_4_Type.Value,4) ] NEQ(StackData.Layer[4].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,4) [EQU(Machine_Run_Recipe.Layer_5_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_5_Type.Value,4) ] NEQ(StackData.Layer[5].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,5) [EQU(Machine_Run_Recipe.Layer_6_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_6_Type.Value,4) ] NEQ(StackData.Layer[6].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,6) [EQU(Machine_Run_Recipe.Layer_7_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_7_Type.Value,4) ] NEQ(StackData.Layer[7].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,7) [EQU(Machine_Run_Recipe.Layer_8_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_8_Type.Value,4) ] NEQ(StackData.Layer[8].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,8) [EQU(Machine_Run_Recipe.Layer_9_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_9_Type.Value,4) ] NEQ(StackData.Layer[9].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,9) [EQU(Machine_Run_Recipe.Layer_10_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_10_Type.Value,4) ] NEQ(StackData.Layer[10].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,10) [EQU(Machine_Run_Recipe.Layer_11_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_11_Type.Value,4) ] NEQ(StackData.Layer[11].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,11) [EQU(Machine_Run_Recipe.Layer_12_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_12_Type.Value,4) ] NEQ(StackData.Layer[12].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,12) [EQU(Machine_Run_Recipe.Layer_13_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_13_Type.Value,4) ] NEQ(StackData.Layer[13].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,13) [EQU(Machine_Run_Recipe.Layer_14_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_14_Type.Value,4) ] NEQ(StackData.Layer[14].Layer_Status,2) ,GRT(Machine_Run_Recipe.Number_of_Layers.Value,14) [EQU(Machine_Run_Recipe.Layer_15_Type.Value,1) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,3) ,EQU(Machine_Run_Recipe.Layer_15_Type.Value,4) ] NEQ(StackData.Layer[15].Layer_Status,2) ]OTE(bWeWillNeedAnode);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(iSigToAnodeConv_CassettePicked,0)OTE(O_Anode_Pick);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(iReqToPlaceOnAnodeConv,0)OTE(Do_AnodeConvReadytobePlacedOn);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(iSigToAnodeConv_CassettePlaced,0)OTE(Do_AnodeCassettePlaced);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(iSigToAnodeConv_ReadyForPart,0)OTE(Do_AnodeConv_ReadyForPart);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[**** FORCE RFID READ (DEBUGGING) *****]]></Comment>
+      <Text><![CDATA[XIC(Debug_Disable_Anode_RFID_Read)XIC(test_rfid_anode)[MOV(1,RFID_Node1_Anode_Conv.Command) ,OTU(test_rfid_anode) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="sub02_Logout" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Case: PIA Initiates logoff
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[When at idle state.
+If PIA sends a logoff request, check the machine permissive to make sure the machine is at a state where logoff can occur.
+]]></Comment>
+      <Text><![CDATA[EQU(Pia.To_State,100)[XIC(Pia.Trig.Allow_Logoff) XIC(Pia.Machine.Perm_Logoff) MOV(1190,Pia.To_State) ,XIC(Pia.Trig.Allow_Logoff) XIO(Pia.Machine.Perm_Logoff) MOV(1220,Pia.To_State) ]OTU(Pia.Trig.Allow_Logoff);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Logoff Not Allowed by Machine
+]]></Comment>
+      <Text><![CDATA[EQU(Pia.From_State,1630)MOV(1225,Pia.To_State);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[After a successful logoff clear the user name and access level data fields and then reset back to idle state.
+]]></Comment>
+      <Text><![CDATA[EQU(Pia.To_State,1190)EQU(Pia.From_State,1600)[COP(k_blank_string,Pia.FROM_PIA.User_ID,1) MOV(k_blank_dint,Pia.FROM_PIA.Access_Level) ,COP(k_blank_string,Pia.TO_PIA.User_ID,1) MOV(k_blank_dint,Pia.TO_PIA.Access_Level) ,EQU(k_blank_string,Pia.FROM_PIA.User_ID) EQU(k_blank_dint,Pia.FROM_PIA.Access_Level) EQU(k_blank_string,Pia.TO_PIA.User_ID) EQU(k_blank_dint,Pia.TO_PIA.Access_Level) MOV(1230,Pia.To_State) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Case: MC Initiates logoff]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[After a successful logoff clear the user name and access level data fields and then reset back to idle state.
+]]></Comment>
+      <Text><![CDATA[EQU(Pia.To_State,1390)EQU(Pia.From_State,1700)[COP(k_blank_string,Pia.FROM_PIA.User_ID,1) MOV(k_blank_dint,Pia.FROM_PIA.Access_Level) ,COP(k_blank_string,Pia.TO_PIA.User_ID,1) MOV(k_blank_dint,Pia.TO_PIA.Access_Level) ,EQU(k_blank_string,Pia.FROM_PIA.User_ID) EQU(k_blank_dint,Pia.FROM_PIA.Access_Level) EQU(k_blank_string,Pia.TO_PIA.User_ID) EQU(k_blank_dint,Pia.TO_PIA.Access_Level) MOV(1430,Pia.To_State) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[********************************* RETURN TO IDLE *********************************]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[EQU(Pia.To_State,1225) ,EQU(Pia.To_State,1230) ,EQU(Pia.To_State,1430) ]EQU(Pia.From_State,100)[MOV(100,Pia.To_State) ,MOV(0,Pia.Command) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Scratch_Array" TagType="Base" DataType="DINT" Dimensions="15" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[0,2,2,0,0,2,2,1,1,1,1,1,1,1,1]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="DINT" Dimensions="15" Radix="Decimal">
+      <Element Index="[0]" Value="0" />
+      <Element Index="[1]" Value="2" />
+      <Element Index="[2]" Value="2" />
+      <Element Index="[3]" Value="0" />
+      <Element Index="[4]" Value="0" />
+      <Element Index="[5]" Value="2" />
+      <Element Index="[6]" Value="2" />
+      <Element Index="[7]" Value="1" />
+      <Element Index="[8]" Value="1" />
+      <Element Index="[9]" Value="1" />
+      <Element Index="[10]" Value="1" />
+      <Element Index="[11]" Value="1" />
+      <Element Index="[12]" Value="1" />
+      <Element Index="[13]" Value="1" />
+      <Element Index="[14]" Value="1" />
+    </Array>
+  </Data>
+</Tag>

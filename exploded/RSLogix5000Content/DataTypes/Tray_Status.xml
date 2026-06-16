@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Tray_Status" Family="NoFamily" Class="User">
+  <Description><![CDATA[HMI Display (0=gone, 1 = raw present, 2 = finished present]]></Description>
+  <Members>
+    <Member Name="LeftInsulator_Rear" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LeftInsulator_Front" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RightInsulator_Rear" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RightInsulator_Front" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LeftCan_Rear" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="LeftCan_Front" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RightCan_Rear" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="RightCan_Front" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_Tray_Discrete" DataType="DINT" Dimension="10" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_Tray_Can" DataType="DINT" Dimension="15" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_TAnode" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_BAnode" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="PM_Cathode" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
+  </Members>
+</DataType>

@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subSettings_Check" Type="RLL">
+  <Description><![CDATA[checks for out of range values]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Setting Checkers below
+
+]]></Comment>
+      <Text><![CDATA[SBR(setCheck)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[JSR(rtSettingsConstants,0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.CanInsert_AccelDecel.Min,setCheck.CanInsert_AccelDecel.Value,HMI.SystemSettings.CanInsert_AccelDecel.Max)OTE(Calc_Setting_OK_Bits[0].0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.RotaryTransferGripper_AccelDecel.Min,setCheck.RotaryTransferGripper_AccelDecel.Value,HMI.SystemSettings.RotaryTransferGripper_AccelDecel.Max)OTE(Calc_Setting_OK_Bits[0].1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.CanInsert_Speed_Default.Min,setCheck.CanInsert_Speed_Default.Value,HMI.SystemSettings.CanInsert_Speed_Default.Max)OTE(Calc_Setting_OK_Bits[0].2);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.RotaryTransferGripper_Speed_Full.Min,setCheck.RotaryTransferGripper_Speed_Full.Value,HMI.SystemSettings.RotaryTransferGripper_Speed_Full.Max)OTE(Calc_Setting_OK_Bits[0].3);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.RotaryTransferGripper_Speed_Empty.Min,setCheck.RotaryTransferGripper_Speed_Empty.Value,HMI.SystemSettings.RotaryTransferGripper_Speed_Empty.Max)OTE(Calc_Setting_OK_Bits[0].4);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Default_Alarm_Trigger_Count.Min,setCheck.Default_Alarm_Trigger_Count.Value,HMI.SystemSettings.Default_Alarm_Trigger_Count.Max)OTE(Calc_Setting_OK_Bits[0].5);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.LinearTransferGripper_AccelDecel.Min,setCheck.LinearTransferGripper_AccelDecel.Value,HMI.SystemSettings.LinearTransferGripper_AccelDecel.Max)OTE(Calc_Setting_OK_Bits[0].6);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.LinearTransferGripper_Speed_Full.Min,setCheck.LinearTransferGripper_Speed_Full.Value,HMI.SystemSettings.LinearTransferGripper_Speed_Full.Max)OTE(Calc_Setting_OK_Bits[0].7);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.LinearTransferGripper_Speed_Empty.Min,setCheck.LinearTransferGripper_Speed_Empty.Value,HMI.SystemSettings.LinearTransferGripper_Speed_Empty.Max)OTE(Calc_Setting_OK_Bits[0].8);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(HMI.SystemSettings.SystemName.Value,K_Str_Blank)OTE(Calc_Setting_OK_Bits[0].9);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.RobotSpeed.Min,setCheck.RobotSpeed.Value,HMI.SystemSettings.RobotSpeed.Max)OTE(Calc_Setting_OK_Bits[0].10);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Barcode_Read_Retry_Limit.Min,setCheck.Barcode_Read_Retry_Limit.Value,HMI.SystemSettings.Barcode_Read_Retry_Limit.Max)OTE(Calc_Setting_OK_Bits[0].11);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Use_PIA.Min,setCheck.Use_PIA.Value,HMI.SystemSettings.Use_PIA.Max)OTE(Calc_Setting_OK_Bits[0].12);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Hist_ByPass.Min,setCheck.Hist_ByPass.Value,HMI.SystemSettings.Hist_ByPass.Max)OTE(Calc_Setting_OK_Bits[0].13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(HMI.SystemSettings.MachineESN.Value,K_Str_Blank)OTE(Calc_Setting_OK_Bits[0].14);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(HMI.SystemSettings.Software_Change_Date.Value,K_Str_Blank)OTE(Calc_Setting_OK_Bits[0].15);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_X_Nom.Min,setCheck.Vision_Calib_X_Nom.Value,HMI.SystemSettings.Vision_Calib_X_Nom.Max)OTE(Calc_Setting_OK_Bits[0].16);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_X_Min.Min,setCheck.Vision_Calib_X_Min.Value,HMI.SystemSettings.Vision_Calib_X_Min.Max)OTE(Calc_Setting_OK_Bits[0].17);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_X_Max.Min,setCheck.Vision_Calib_X_Max.Value,HMI.SystemSettings.Vision_Calib_X_Max.Max)OTE(Calc_Setting_OK_Bits[0].18);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Y_Nom.Min,setCheck.Vision_Calib_Y_Nom.Value,HMI.SystemSettings.Vision_Calib_Y_Nom.Max)OTE(Calc_Setting_OK_Bits[0].19);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Y_Min.Min,setCheck.Vision_Calib_Y_Min.Value,HMI.SystemSettings.Vision_Calib_Y_Min.Max)OTE(Calc_Setting_OK_Bits[0].20);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Y_Max.Min,setCheck.Vision_Calib_Y_Max.Value,HMI.SystemSettings.Vision_Calib_Y_Max.Max)OTE(Calc_Setting_OK_Bits[0].21);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Pixels_Nom.Min,setCheck.Vision_Calib_Pixels_Nom.Value,HMI.SystemSettings.Vision_Calib_Pixels_Nom.Max)OTE(Calc_Setting_OK_Bits[0].22);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Pixels_Min.Min,setCheck.Vision_Calib_Pixels_Min.Value,HMI.SystemSettings.Vision_Calib_Pixels_Min.Max)OTE(Calc_Setting_OK_Bits[0].23);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Calib_Pixels_Max.Min,setCheck.Vision_Calib_Pixels_Max.Value,HMI.SystemSettings.Vision_Calib_Pixels_Max.Max)OTE(Calc_Setting_OK_Bits[0].24);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Verif_X_Min.Min,setCheck.Vision_Verif_X_Min.Value,HMI.SystemSettings.Vision_Verif_X_Min.Max)OTE(Calc_Setting_OK_Bits[0].25);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Verif_X_Max.Min,setCheck.Vision_Verif_X_Max.Value,HMI.SystemSettings.Vision_Verif_X_Max.Max)OTE(Calc_Setting_OK_Bits[0].26);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Verif_Y_Min.Min,setCheck.Vision_Verif_Y_Min.Value,HMI.SystemSettings.Vision_Verif_Y_Min.Max)OTE(Calc_Setting_OK_Bits[0].27);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Vision_Verif_Y_Max.Min,setCheck.Vision_Verif_Y_Max.Value,HMI.SystemSettings.Vision_Verif_Y_Max.Max)OTE(Calc_Setting_OK_Bits[0].28);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.EnableBatteryQueue.Min,setCheck.EnableBatteryQueue.Value,HMI.SystemSettings.EnableBatteryQueue.Max)OTE(Calc_Setting_OK_Bits[0].29);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[0].30);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[0].31);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Tray_CanLeft_Angle.Min,setCheck.Tray_CanLeft_Angle.Value,HMI.SystemSettings.Tray_CanLeft_Angle.Max)OTE(Calc_Setting_OK_Bits[1].0);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Tray_CanRight_Angle.Min,setCheck.Tray_CanRight_Angle.Value,HMI.SystemSettings.Tray_CanRight_Angle.Max)OTE(Calc_Setting_OK_Bits[1].1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Tray_InsLeft_Angle.Min,setCheck.Tray_InsLeft_Angle.Value,HMI.SystemSettings.Tray_InsLeft_Angle.Max)OTE(Calc_Setting_OK_Bits[1].2);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[LIM(HMI.SystemSettings.Tray_InsRight_Angle.Min,setCheck.Tray_InsRight_Angle.Value,HMI.SystemSettings.Tray_InsRight_Angle.Max)OTE(Calc_Setting_OK_Bits[1].3);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].4);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].5);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].6);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].7);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].8);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].9);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].10);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].11);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].12);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].13);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].14);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].15);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].16);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].17);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].18);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].19);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].20);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].21);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].22);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].23);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].24);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].25);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].26);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].27);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].28);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].29);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].30);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[OTE(Calc_Setting_OK_Bits[1].31);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(Calc_Setting_OK_Bits[0],-1)EQU(Calc_Setting_OK_Bits[1],-1)[OTE(bitSettingsCheckOK) ,COP(K_Str_Blank,strSettingFault,1) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].0)COP(HMI.SystemSettings.CanInsert_AccelDecel.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].1)COP(HMI.SystemSettings.RotaryTransferGripper_AccelDecel.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].2)COP(HMI.SystemSettings.CanInsert_Speed_Default.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].3)COP(HMI.SystemSettings.RotaryTransferGripper_Speed_Full.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].4)COP(HMI.SystemSettings.RotaryTransferGripper_Speed_Empty.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].5)COP(HMI.SystemSettings.Default_Alarm_Trigger_Count.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].6)COP(HMI.SystemSettings.LinearTransferGripper_AccelDecel.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].7)COP(HMI.SystemSettings.LinearTransferGripper_Speed_Full.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].8)COP(HMI.SystemSettings.LinearTransferGripper_Speed_Empty.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].9)COP(HMI.SystemSettings.SystemName.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].10)COP(HMI.SystemSettings.RobotSpeed.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].11)COP(HMI.SystemSettings.Barcode_Read_Retry_Limit.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].12)COP(HMI.SystemSettings.Use_PIA.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].13)COP(HMI.SystemSettings.Hist_ByPass.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].14)COP(HMI.SystemSettings.MachineESN.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].15)COP(HMI.SystemSettings.Software_Change_Date.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].16)COP(HMI.SystemSettings.Vision_Calib_X_Nom.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].17)COP(HMI.SystemSettings.Vision_Calib_X_Min.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].18)COP(HMI.SystemSettings.Vision_Calib_X_Max.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].19)COP(HMI.SystemSettings.Vision_Calib_Y_Nom.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].20)COP(HMI.SystemSettings.Vision_Calib_Y_Min.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].21)COP(HMI.SystemSettings.Vision_Calib_Y_Max.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].22)COP(HMI.SystemSettings.Vision_Calib_Pixels_Nom.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].23)COP(HMI.SystemSettings.Vision_Calib_Pixels_Min.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].24)COP(HMI.SystemSettings.Vision_Calib_Pixels_Max.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].25)COP(HMI.SystemSettings.Vision_Verif_X_Min.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].26)COP(HMI.SystemSettings.Vision_Verif_X_Max.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].27)COP(HMI.SystemSettings.Vision_Verif_Y_Min.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].28)COP(HMI.SystemSettings.Vision_Verif_Y_Max.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[0].29)COP(HMI.SystemSettings.EnableBatteryQueue.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[1].0)COP(HMI.SystemSettings.Tray_CanLeft_Angle.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[1].1)COP(HMI.SystemSettings.Tray_CanRight_Angle.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[1].2)COP(HMI.SystemSettings.Tray_InsLeft_Angle.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(Calc_Setting_OK_Bits[1].3)COP(HMI.SystemSettings.Tray_InsRight_Angle.Desc,strSettingFault,1);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

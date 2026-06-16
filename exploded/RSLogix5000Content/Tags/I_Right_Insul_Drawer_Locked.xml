@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="I_Right_Insul_Drawer_Locked" TagType="Alias" Radix="Decimal" AliasFor="Local:3:I.Data.10" ExternalAccess="Read/Write" />

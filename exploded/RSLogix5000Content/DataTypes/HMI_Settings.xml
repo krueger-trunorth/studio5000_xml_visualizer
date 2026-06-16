@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="HMI_Settings" Family="NoFamily" Class="User">
+  <Description><![CDATA[Machine Serial Number]]></Description>
+  <Members>
+    <Member Name="MachineName" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Machine Name]]></Description>
+    </Member>
+    <Member Name="SoftwareRev" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Software Revision]]></Description>
+    </Member>
+    <Member Name="ModifiedDate" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Modified Date]]></Description>
+    </Member>
+    <Member Name="CompanyName" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Company Name]]></Description>
+    </Member>
+    <Member Name="PartNumber" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Part Number]]></Description>
+    </Member>
+  </Members>
+</DataType>

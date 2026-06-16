@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="CPA_DATETIME_3_4" TagType="Base" DataType="DateTime" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[2020,3,12,7,36,11,0]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="DateTime">
+      <DataValueMember Name="Yr" DataType="DINT" Radix="Decimal" Value="2020" />
+      <DataValueMember Name="Mo" DataType="DINT" Radix="Decimal" Value="3" />
+      <DataValueMember Name="Da" DataType="DINT" Radix="Decimal" Value="12" />
+      <DataValueMember Name="Hr" DataType="DINT" Radix="Decimal" Value="7" />
+      <DataValueMember Name="Min" DataType="DINT" Radix="Decimal" Value="36" />
+      <DataValueMember Name="Sec" DataType="DINT" Radix="Decimal" Value="11" />
+      <DataValueMember Name="uSec" DataType="DINT" Radix="Decimal" Value="0" />
+    </Structure>
+  </Data>
+</Tag>

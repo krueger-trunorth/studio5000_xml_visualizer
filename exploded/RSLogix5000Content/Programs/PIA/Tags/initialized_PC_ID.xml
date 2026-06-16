@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="initialized_PC_ID" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[7,'STP1257$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]></Data>
+  <Data Format="String" Length="7"><![CDATA['STP1257']]></Data>
+</Tag>

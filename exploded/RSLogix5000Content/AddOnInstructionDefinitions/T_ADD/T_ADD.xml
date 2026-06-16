@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AddOnInstructionDefinition Name="T_ADD" Revision="1.0" RevisionExtension="Example" Vendor="Rockwell Automation" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2008-04-08T21:16:05.802Z" CreatedBy="NA\dereed" EditedDate="2008-07-02T16:47:19.070Z" EditedBy="NA\dereed" SoftwareRevision="v16.03">
+  <Description><![CDATA[DateTime := DateTime + Time]]></Description>
+  <RevisionNote><![CDATA[Release for V17 CD as Date/Time Examples]]></RevisionNote>
+  <AdditionalHelpText><![CDATA[T_Add : Add Date/Time plus Time to get new Date/Time
+
+This instruction adds a given amount of Time to a Date/Time to arrive at a new Date/Time.  The new Date/Time is , that is, given as a valid (if possible) Gregorian Date and Time:
+
+*  0 <= Microseconds < 1,000,000
+*  0 <= Seconds < 60    (NOTE: this instruction cannot add leap seconds;  sorry!)
+*  0 <= Minutes < 60
+*  0 <= Hours < 24
+*  1 <= Day <= 31 AND Date is a Valid Gregorian Date (see below)
+*  1 <= Month <= 12
+
+NOTE:  This instruction does NOT switch to Julian dates for dates before 1582 (or 1753 or whenever your place of interest switched to the Gregorian Calendar -- see Wikipedia on  for details)!  This instruction assumes the Gregorian Calendar extends  (about 5.8 million years) either side of  CE!  It DOES handle the Gregorian 4 / 100 / 400 year rules, so Feb. 29, 2000 is a valid date, but Feb. 29, 2100 is not.  It DOES NOT handle Daylight Savings Time hour offsets when the amount of Time added carries the Date/Time across summer/winter time boundaries.
+]]></AdditionalHelpText>
+  <Parameters>
+    <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Input - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+      <Description><![CDATA[Enable Output - System Defined Parameter]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_DT" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[DT (Date/Time) to which to add Time]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_Time" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Time to be added to DT (Date/Time)]]></Description>
+    </Parameter>
+    <Parameter Name="Ref_Out" TagType="Base" DataType="DateTime" Usage="InOut" Required="true" Visible="true" Constant="false">
+      <Description><![CDATA[Date/Time = DT+Time]]></Description>
+    </Parameter>
+  </Parameters>
+  <LocalTags>
+    <LocalTag Name="Wrk_YrFromMo" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of Years to add from Months]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_DaFromHr" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of Days to add from Hours]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_HrFromMin" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of Hours to add from Minutes]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_MinFromSec" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of Minutes to add from Seconds]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_SecFrom_uSec" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Number of Seconds to add from Microseconds]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_yyy" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Intermediate for year calculation]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_y" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Calculated YEAR from Gregorian Day Number]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_mmm" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Intermediate for month calculation]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_m" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Calculated MONTH from Gregorian Day Number]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_GD" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Gregorian Day Number (calculated for given Y/M/D)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_G" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Used in calculating Gregorian Day Number (function of Year and F)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_F" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Used in calculating Gregorian Day Number (function of month)]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+    <LocalTag Name="Wrk_ddd" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+      <Description><![CDATA[Intermediate for day calculation]]></Description>
+      <DefaultData Format="L5K"><![CDATA[0]]></DefaultData>
+      <DefaultData Format="Decorated">
+        <DataValue DataType="DINT" Radix="Decimal" Value="0" />
+      </DefaultData>
+    </LocalTag>
+  </LocalTags>
+  <Routines />
+</AddOnInstructionDefinition>

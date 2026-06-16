@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqCamera_Ver" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqVer_Camera.Reset)[CLR(seqVer_Camera.Step) ,OTU(seqVer_Camera.On) ,OTU(seqVer_Camera.Fault) ,CLR(seqVer_Camera.Fault_Code) ,OTU(seqVer_Camera.Complete) ,COP(K_Str_Blank,seqVer_Camera.Status,1) ,OTU(seqVer_Camera.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence]]></Comment>
+      <Text><![CDATA[XIO(I_Estop_NOT_OK)XIC(Permissive_Interlocks_OK)XIC(Permissive_Pneumatics_OK)XIC(seqControl.On)XIO(seqVer_Camera.Fault)XIC(seqVer_Camera.On)XIC(Permissive_Alarm_OK_Robot)XIO(System.Paused)XIO(System.Pause_IP)OTE(seqVer_Camera.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(seqVer_Camera.StepMode)OTU(seqVer_Camera.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0: move to safe]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,0)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[0],K_Str_Blank,seqCal_Camera.Status)[ONS(Machine_Oneshots[8].2) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Abort_Waypoint],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqVer_Camera.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(1,seqVer_Camera.Step) ,OTU(seqVer_Camera.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 1: Init, Move robot to calibration location]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,1)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[0],K_Str_Blank,seqCal_Camera.Status)[[OTU(seqVer_Camera.Complete) ,OTU(HMI.To_HMI.ChangeMainImage) ,MOV(-1,HMI.To_HMI.MainDisplayIndex) ,OTL(actRobotVac.ACT.Extend_Req) ] ,ONS(Machine_Oneshots[8].8) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Cal],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqVer_Camera.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(5,seqVer_Camera.Step) ,OTU(seqVer_Camera.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 5: Place on cal slide]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,5)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[2],K_Str_Blank,seqCal_Camera.Status)[COP(Message_Cal_Popup[0],HMI.To_HMI.Msgbox_Prompt,1) ,OTL(bitCalSlideInMachine) ,COP(Message_Cal_Popup[1],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Cal_Popup[2],HMI.To_HMI.Msgbox_Button_2,1) ,OTL(HMI.To_HMI.Show_MSG_2) ,XIC(HMI.From_HMI.Msgbox_Button_1) [MOV(10,seqVer_Camera.Step) ,OTU(HMI.From_HMI.Msgbox_Button_1) ,OTU(HMI.To_HMI.Show_MSG_2) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.To_HMI.Show_MSG_2) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 10 Turn on light]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,10)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[3],K_Str_Blank,seqCal_Camera.Status)[OTL(O_Calibration_light_On) ,TON(Machine_Timers[37],?,?) ,XIC(Machine_Timers[37].DN) [MOV(20,seqVer_Camera.Step) ,OTU(seqVer_Camera.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 20: Inspect Verifiaction image
+need to save with bit/path 2 after vision upgrade so that an image is saved in the display folder]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,20)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[5],K_Str_Blank,seqCal_Camera.Status)[OTU(vbVisionPro.Cameras[0].Requests.bSave1) OTL(vbVisionPro.Cameras[0].Requests.bSave2) ,MOV(ivisCamera_CalDataVerify,Camera.intInspection) MOV(ivisCamera_CalDataVerify,HMI.To_HMI.CalDisplayIndex) ,ONS(Machine_Oneshots[3].28) [CONCAT(strImageFolderPath,strImageDisplay,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strBackSlash,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strImage,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,DTOS(Camera.intInspection,strTemp) CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strTemp,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,CONCAT(vbVisionPro.Cameras[0].SavePaths.strSavePath2,strDotBMP,vbVisionPro.Cameras[0].SavePaths.strSavePath2) ,OTU(Camera.bitErrorInspection) OTU(Camera.bitComplete) OTL(Camera.bitRun_Request) ] ,[XIC(Camera.bitError) ,XIC(Camera.bitErrorInspection) OTL(HMI.To_HMI.ChangeCalImage) ] OTL(seqVer_Camera.Fault) ,XIO(Camera.bitErrorInspection) XIC(Camera.bitComplete) [MOV(30,seqVer_Camera.Step) ,[MOV(vbVisionPro.Cameras[0].Results.dblResults[0],HISTORIAN.ccpCam.dblPendingVerify[0]) ,MOV(vbVisionPro.Cameras[0].Results.dblResults[1],HISTORIAN.ccpCam.dblPendingVerify[1]) ] ,OTL(HMI.To_HMI.ChangeCalImage) ,OTU(seqVer_Camera.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 30: Turn off light, Show Verification Results]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,30)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[6],K_Str_Blank,seqCal_Camera.Status)[OTU(O_Calibration_light_On) ,OTL(HISTORIAN.ccpCam.bitShowVerify) ,MOV(35,seqVer_Camera.Step) ,OTU(seqVer_Camera.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check verification results against calibration limits]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,35)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[7],K_Str_Blank,seqCal_Camera.Status)[XIC(System.Auto) ,XIC(seqVer_Camera.StepNext) ][[[LES(HISTORIAN.ccpCam.dblPendingVerify[0],HISTORIAN.ccpCam.dblCalLL[0]) ,GRT(HISTORIAN.ccpCam.dblPendingVerify[0],HISTORIAN.ccpCam.dblCalUL[0]) ] OTL(HISTORIAN.ccpCam.bitPendingFail.0) ,[LES(HISTORIAN.ccpCam.dblPendingVerify[1],HISTORIAN.ccpCam.dblCalLL[1]) ,GRT(HISTORIAN.ccpCam.dblPendingVerify[1],HISTORIAN.ccpCam.dblCalUL[1]) ] OTL(HISTORIAN.ccpCam.bitPendingFail.1) ] ,NEQ(HISTORIAN.ccpCam.bitPendingFail,0) [OTL(bitVerify_Fail) ,OTU(Bit_Camera_Cal_Perm) ] ,[MOV(40,seqVer_Camera.Step) ,OTU(seqVer_Camera.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check verification results against verification limits]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,40)XIC(seqVer_Camera.Perm)CONCAT(Message_CalVer[8],K_Str_Blank,seqCal_Camera.Status)[XIC(System.Auto) ,XIC(seqVer_Camera.StepNext) ][[[LES(HISTORIAN.ccpCam.dblPendingVerify[0],HISTORIAN.ccpCam.dblVerifyLL[0]) ,GRT(HISTORIAN.ccpCam.dblPendingVerify[0],HISTORIAN.ccpCam.dblVerifyUL[0]) ] OTL(HISTORIAN.ccpCam.bitPendingFail.0) ,[LES(HISTORIAN.ccpCam.dblPendingVerify[1],HISTORIAN.ccpCam.dblVerifyLL[1]) ,GRT(HISTORIAN.ccpCam.dblPendingVerify[1],HISTORIAN.ccpCam.dblVerifyUL[1]) ] OTL(HISTORIAN.ccpCam.bitPendingFail.1) ] ,NEQ(HISTORIAN.ccpCam.bitPendingFail,0) OTL(bitVerify_Fail) ,MOV(50,seqVer_Camera.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Remove Plate, Done]]></Comment>
+      <Text><![CDATA[EQU(seqVer_Camera.Step,50)CONCAT(Message_CalVer[12],K_Str_Blank,seqCal_Camera.Status)XIO(I_EOAT_Vac)[OTL(seqVer_Camera.Reset) ,OTU(bitCalSlideInMachine) ,OTL(actRobotVac.ACT.Abort) ,OTU(seqControl.On) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

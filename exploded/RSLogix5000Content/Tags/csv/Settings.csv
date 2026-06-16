@@ -1,0 +1,377 @@
+attr_Constant,attr_DataType,attr_ExternalAccess,attr_Format,attr_Name,attr_Radix,attr_TagType,attr_Value,path,tag,text
+FALSE,Settings,Read/Write,,Settings,,Base,,Tag,Tag,
+,,,L5K,,,,,Tag/Data,Data,"[[28,'C:\Stacker\Database\Settings$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,1,[9.81000000e+003,[18,'Can Accel (mm/s^2)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,9.81000000e+003,0],[9.00000000e+001,[19,'Rot Accel (deg/s^2)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,1.80000000e+002,0],[1.40000000e+002,[21,'Can Def. Speed (mm/s)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,1.50000000e+002,0],[5.00000000e+001,[20,'RotSpeed Full(deg/s)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,9.00000000e+001,0],[8.00000000e+001,[20,'RotSpeedEmpty(deg/s)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,9.00000000e+001,0],[3,[18,'Mult Alarm Trigger$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1,16,0],[9.81000000e+003,[18,'Lin Accel (mm/s^2)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,9.81000000e+003,0],[2.00000000e+001,[19,'LinSpeedFull (mm/s)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,1.00000000e+002,0],[2.00000000e+001,[20,'LinSpeedEmpty (mm/s)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1.00000000e-001,1.00000000e+002,0],[10,[19,'Barcode Retry Limit$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,10,0],[0,[13,'None=0, PIA=1$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,1,0],[[8,'25006370$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[11,'Machine ESN$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[100,[19,'Robot Speed (1-100)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1,100,0],[5.00000000e+000,[30,'Vision Calib. X Nom. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[5.09999990e+000,[30,'Vision Calib. X Max. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[4.90000010e+000,[30,'Vision Calib. X Min. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[5.00000000e+000,[30,'Vision Calib. Y Nom. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[5.09999990e+000,[30,'Vision Calib. Y Max. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[4.90000010e+000,[30,'Vision Calib. Y Min. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[1.37000000e+002,[34,'Vision Calib. Pixels Nom. (0-1000)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+003,0],[1.45000000e+002,[34,'Vision Calib. Pixels Max. (0-1000)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+003,0],[1.30000000e+002,[34,'Vision Calib. Pixels Min. (0-1000)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+003,0],[4.90000010e+000,[30,'Vision Verif. X Min. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[5.09999990e+000,[30,'Vision Verif. X Max. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[4.90000010e+000,[30,'Vision Verif. Y Min. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[5.09999990e+000,[30,'Vision Verif. Y Max. (0-10 mm)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,1.00000000e+001,0],[[6,'1.0.23$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[17,'Software Revision$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[15,[30,'Wait for User Delay (0-600sec)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,600,0],[15,[33,'Wait for Process Delay (0-600sec)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,600,0],[[26,'Springboard Line 2 Stacker$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[12,'Machine Name$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[[10,'12/20/2019$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[20,'Software Change Date$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[1,[22,'Historian ByPass (0-1)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,1,0],[8.40000000e+001,[33,'Theoretical Cycle Time (0-300sec)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0.00000000e+000,3.00000000e+002,0],[1,[29,'Enable In-Queue Battery (0-1)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,1,0],[[8,'sl402290$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[14,'SL Recipe Name$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[[8,'ll402294$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[14,'LL Recipe Name$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],1],[-1.80000007e-001,[34,'Left Can Tray Angle (deg, + is CW)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],-2.00000000e+000,2.00000000e+000,0],[-1.80000007e-001,[35,'Right Can Tray Angle (deg, + is CW)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],-2.00000000e+000,2.00000000e+000,0],[1.00000000e-001,[34,'Left Ins Tray Angle (deg, + is CW)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],-2.00000000e+000,2.00000000e+000,0],[-3.00000000e-001,[35,'Right Ins Tray Angle (deg, + is CW)$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],-2.00000000e+000,2.00000000e+000,0]]"
+,,,Decorated,,,,,Tag/Data,Data,
+,Settings,,,,,,,Tag/Data/Structure,Structure,
+,STRING,,,Folder,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,28,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,'C:\Stacker\Database\Settings'
+,BOOL,,,Saved,,,0,Tag/Data/Structure/DataValueMember,DataValueMember,
+,DINT,,,Pages,Decimal,,1,Tag/Data/Structure/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,CanInsert_AccelDecel,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,9810,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,18,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Can Accel (mm/s^2)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,9810,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,RotaryTransferGripper_AccelDecel,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,90,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,19,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Rot Accel (deg/s^2)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,180,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,CanInsert_Speed_Default,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,140,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,21,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Can Def. Speed (mm/s)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,150,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,RotaryTransferGripper_Speed_Full,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,50,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,20,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'RotSpeed Full(deg/s)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,90,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,RotaryTransferGripper_Speed_Empty,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,80,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,20,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'RotSpeedEmpty(deg/s)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,90,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,Default_Alarm_Trigger_Count,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,3,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,18,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Mult Alarm Trigger'
+,DINT,,,Min,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,16,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,LinearTransferGripper_AccelDecel,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,9810,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,18,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Lin Accel (mm/s^2)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,9810,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,LinearTransferGripper_Speed_Full,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,20,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,19,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'LinSpeedFull (mm/s)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,100,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,LinearTransferGripper_Speed_Empty,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,20,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,20,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'LinSpeedEmpty (mm/s)'
+,REAL,,,Min,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,100,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,Barcode_Read_Retry_Limit,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,19,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Barcode Retry Limit'
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,Use_PIA,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,13,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,"'None=0, PIA=1'"
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,MachineESN,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,8,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'25006370'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,11,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Machine ESN'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,RobotSpeed,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,100,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,19,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Robot Speed (1-100)'
+,DINT,,,Min,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,100,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_X_Nom,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. X Nom. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_X_Max,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. X Max. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_X_Min,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,4.9,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. X Min. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Y_Nom,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Y Nom. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Y_Max,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Y Max. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Y_Min,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,4.9,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Y Min. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Pixels_Nom,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,137,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,34,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Pixels Nom. (0-1000)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,1000,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Pixels_Max,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,145,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,34,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Pixels Max. (0-1000)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,1000,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Calib_Pixels_Min,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,130,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,34,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Calib. Pixels Min. (0-1000)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,1000,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Verif_X_Min,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,4.9,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Verif. X Min. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Verif_X_Max,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Verif. X Max. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Verif_Y_Min,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,4.9,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Verif. Y Min. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Vision_Verif_Y_Max,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,5.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Vision Verif. Y Max. (0-10 mm)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,10,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,Software_Revision,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,6,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'1.0.23'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,17,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Software Revision'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,WaitForUserDelay,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,15,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,30,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Wait for User Delay (0-600sec)'
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,600,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,WaitForProcDelay,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,15,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,33,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Wait for Process Delay (0-600sec)'
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,600,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,SystemName,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,26,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Springboard Line 2 Stacker'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,12,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Machine Name'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,Software_Change_Date,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,10,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'12/20/2019'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,20,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Software Change Date'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,Hist_ByPass,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,22,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Historian ByPass (0-1)'
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Cycle_Time,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,84,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,33,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Theoretical Cycle Time (0-300sec)'
+,REAL,,,Min,Float,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,300,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_DINT,,,EnableBatteryQueue,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,DINT,,,Value,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,29,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'Enable In-Queue Battery (0-1)'
+,DINT,,,Min,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Max,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,SL_Recipe_Name,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,8,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'sl402290'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,14,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'SL Recipe Name'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_String,,,LL_Recipe_Name,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,STRING,,,Value,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,8,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'ll402294'
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,14,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,'LL Recipe Name'
+,DINT,,,Type,Decimal,,1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Tray_CanLeft_Angle,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,-0.18,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,34,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,"'Left Can Tray Angle (deg, + is CW)'"
+,REAL,,,Min,Float,,-2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Tray_CanRight_Angle,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,-0.18,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,35,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,"'Right Can Tray Angle (deg, + is CW)'"
+,REAL,,,Min,Float,,-2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Tray_InsLeft_Angle,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,0.1,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,34,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,"'Left Ins Tray Angle (deg, + is CW)'"
+,REAL,,,Min,Float,,-2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,ORT_SettingParam_Float,,,Tray_InsRight_Angle,,,,Tag/Data/Structure/StructureMember,StructureMember,
+,REAL,,,Value,Float,,-0.3,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,Desc,,,,Tag/Data/Structure/StructureMember/StructureMember,StructureMember,
+,DINT,,,LEN,Decimal,,35,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,
+,STRING,,,DATA,ASCII,,,Tag/Data/Structure/StructureMember/StructureMember/DataValueMember,DataValueMember,"'Right Ins Tray Angle (deg, + is CW)'"
+,REAL,,,Min,Float,,-2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,REAL,,,Max,Float,,2,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,
+,DINT,,,Type,Decimal,,0,Tag/Data/Structure/StructureMember/DataValueMember,DataValueMember,

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqWebDancer" Type="RLL">
+  <Description><![CDATA[Webline Dancers]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset sequence]]></Comment>
+      <Text><![CDATA[XIC(seqWebDancer.Reset)[CLR(seqWebDancer.Step) ,OTU(seqWebDancer.On) ,OTU(seqWebDancer.Fault) ,CLR(seqWebDancer.Fault_Code) ,OTU(seqWebDancer.Complete) ,OTU(seqWebDancer.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for sequence
+]]></Comment>
+      <Text><![CDATA[[XIC(System.Running) ,XIC(System.Manual) XIO(System.Auto) ]XIO(seqWebDancer.Fault)[XIC(seqWebDancer.On) XIO(System.Paused) ,XIC(seqManualHitch.On) ,XIC(seqManualPunch.On) ,XIC(seqOpHitch.On) GRT(seqOpHitch.Step,5) ]XIO(System.Pause_IP)OTE(seqWebDancer.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(seqWebDancer.StepMode)OTU(seqWebDancer.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0: Handles Faults and System Stopping]]></Comment>
+      <Text><![CDATA[EQU(seqWebDancer.Step,0)XIC(seqWebDancer.Perm)[XIC(System.Auto) ,XIC(seqWebDancer.StepNext) ,XIC(seqManualHitch.On) ][[XIC(Dancer_Payout.Fault) ,XIC(Dancer_Takeup.Fault) ] OTL(seqWebDancer.Fault) ,XIC(System.Stopping) XIC(seqRobot.Complete) XIC(seqHitchPunch.Complete) XIC(seqTransferGripper.Complete) XIC(seqCanInsert.Complete) XIC(seqConveyor_Anode.Complete) XIC(seqConveyor_Cathode.Complete) [OTU(seqWebDancer.On) ,MOV(0,seqWebDancer.Step) ,OTL(seqWebDancer.Complete) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(System.Manual) ,XIC(Bit_Payout_Slack) ][OTE(Bit_Payout_Manual) ,XIC(Bit_Payout_Slack) [TON(Machine_Timers[15],?,?) ,OTE(Bit_60_Second_Payout) ,XIC(Machine_Timers[15].DN) OTU(Bit_Payout_Slack) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(HMI.From_HMI.Jog_Payout_Slack) ,XIC(Bit_60_Second_Payout) ]OTE(Bit_Payout_Slack_Jog_Function);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Payout Dancer]]></Comment>
+      <Text><![CDATA[Dancer_Three_Sensor(Dancer_Payout,Bit_Payout_Manual,seqWebDancer.Perm,I_Payout_Tension,I_Payout_Slack,O_Payout_Tension,O_Payout_Slack,HMI.From_HMI.Jog_Payout_Tension,Bit_Payout_Slack_Jog_Function,I_Payout_Home,2000,2000,I_Estop_NOT_OK,1);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Takeup Dancer]]></Comment>
+      <Text><![CDATA[Dancer_Three_Sensor(Dancer_Takeup,System.Manual,seqWebDancer.Perm,I_Takeup_Tension,I_Takeup_Slack,O_Takeup_Tension,O_Takeup_Slack,HMI.From_HMI.Jog_Takeup_Tension,HMI.From_HMI.Jog_Takeup_Slack,I_Takeup_Home,2000,2000,I_Estop_NOT_OK,0);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

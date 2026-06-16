@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="tempOrigin_SL" TagType="Base" DataType="Adept_Coordinates" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[5.28799988e+002,1.99300000e+002,2.95500000e+002,0.00000000e+000,1.80000000e+002,9.52500000e+001
+		]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="Adept_Coordinates">
+      <DataValueMember Name="X" DataType="REAL" Radix="Float" Value="528.8" />
+      <DataValueMember Name="Y" DataType="REAL" Radix="Float" Value="199.3" />
+      <DataValueMember Name="Z" DataType="REAL" Radix="Float" Value="295.5" />
+      <DataValueMember Name="Yaw" DataType="REAL" Radix="Float" Value="0.0" />
+      <DataValueMember Name="Pitch" DataType="REAL" Radix="Float" Value="180.0" />
+      <DataValueMember Name="Roll" DataType="REAL" Radix="Float" Value="95.25" />
+    </Structure>
+  </Data>
+</Tag>

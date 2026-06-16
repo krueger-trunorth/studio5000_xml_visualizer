@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="I_MovingGrip_PreDie_Closed" TagType="Alias" Radix="Decimal" AliasFor="Local:1:I.Data.29" ExternalAccess="Read/Write" />

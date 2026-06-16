@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="test_ppc_times" TagType="Base" DataType="DINT" Dimensions="50" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[27250,30120,5381,20790,27866,2135,2802,1957,1430,17939,19033,13518,31577,8559,15534,32150,15907,26564
+		,4708,18689,26279,34170,24032,15154,12430,14475,30894,16711,17684,15749,16523,14310,14389,14572,3186
+		,15077,19073,7485,17012,21492,25003,30750,28919,23926,3996,15960,18674,14132,1957,10290]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="DINT" Dimensions="50" Radix="Decimal">
+      <Element Index="[0]" Value="27250" />
+      <Element Index="[1]" Value="30120" />
+      <Element Index="[2]" Value="5381" />
+      <Element Index="[3]" Value="20790" />
+      <Element Index="[4]" Value="27866" />
+      <Element Index="[5]" Value="2135" />
+      <Element Index="[6]" Value="2802" />
+      <Element Index="[7]" Value="1957" />
+      <Element Index="[8]" Value="1430" />
+      <Element Index="[9]" Value="17939" />
+      <Element Index="[10]" Value="19033" />
+      <Element Index="[11]" Value="13518" />
+      <Element Index="[12]" Value="31577" />
+      <Element Index="[13]" Value="8559" />
+      <Element Index="[14]" Value="15534" />
+      <Element Index="[15]" Value="32150" />
+      <Element Index="[16]" Value="15907" />
+      <Element Index="[17]" Value="26564" />
+      <Element Index="[18]" Value="4708" />
+      <Element Index="[19]" Value="18689" />
+      <Element Index="[20]" Value="26279" />
+      <Element Index="[21]" Value="34170" />
+      <Element Index="[22]" Value="24032" />
+      <Element Index="[23]" Value="15154" />
+      <Element Index="[24]" Value="12430" />
+      <Element Index="[25]" Value="14475" />
+      <Element Index="[26]" Value="30894" />
+      <Element Index="[27]" Value="16711" />
+      <Element Index="[28]" Value="17684" />
+      <Element Index="[29]" Value="15749" />
+      <Element Index="[30]" Value="16523" />
+      <Element Index="[31]" Value="14310" />
+      <Element Index="[32]" Value="14389" />
+      <Element Index="[33]" Value="14572" />
+      <Element Index="[34]" Value="3186" />
+      <Element Index="[35]" Value="15077" />
+      <Element Index="[36]" Value="19073" />
+      <Element Index="[37]" Value="7485" />
+      <Element Index="[38]" Value="17012" />
+      <Element Index="[39]" Value="21492" />
+      <Element Index="[40]" Value="25003" />
+      <Element Index="[41]" Value="30750" />
+      <Element Index="[42]" Value="28919" />
+      <Element Index="[43]" Value="23926" />
+      <Element Index="[44]" Value="3996" />
+      <Element Index="[45]" Value="15960" />
+      <Element Index="[46]" Value="18674" />
+      <Element Index="[47]" Value="14132" />
+      <Element Index="[48]" Value="1957" />
+      <Element Index="[49]" Value="10290" />
+    </Array>
+  </Data>
+</Tag>

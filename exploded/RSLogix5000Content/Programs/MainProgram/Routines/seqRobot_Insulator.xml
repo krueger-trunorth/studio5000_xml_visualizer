@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqRobot_Insulator" Type="RLL">
+  <Description><![CDATA[step 600 = insulator]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 600:
+Insulator Start/give stack to gripper (transfer)
+Change approach to transfer gripper handoff height]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,600)XIC(seqRobot.Perm)CONCAT(Message_Robot[74],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][COP(Machine_Run_Recipe.Stack_Z_Handoff_Height.Value,s800.LocationConfig[iLocTemp].Coordinate.Z,1) ,MOV(1,StackData.Insulator_Layer.Layer_Status) ,CLR(HISTORIAN.InsulatorPickPosition) ,[MOV(605,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 605:
+Move robot to transfer handoff]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,605)XIC(seqRobot.Perm)CONCAT(Message_Robot[74],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[4].9) [MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(607,seqRobot.Step) ,MOV(0,s800.Commands.Approach_Height) ,OTL(Sig_StackReadyfor_Pickup) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 607:
+Handoff Stack]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,607)XIC(seqRobot.Perm)CONCAT(Message_Robot[75],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Sig_StackReadyfor_Pickup)[OTL(actRobotVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Retract_Complete) [MOV(610,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 610:
+When transfer gripper is ready, get out of dodge
+
+Moved oneshot out of permissive to avoid multiple latching of handshake kl 022614]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,610)CONCAT(Message_Robot[76],K_Str_Blank,seqRobot.Status)[GRT(s800.World_Current_Value.Z,Location_Z_Safe) ONS(Machine_Oneshots[2].30) OTL(Sig_Robot_Departed_fromStack) ,XIC(seqRobot.Perm) [XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ] [ONS(Machine_Oneshots[4].30) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,GRT(s800.Robot.Percent_Move_Complete,Real_Check_During_Move) ONS(Machine_Oneshots[4].23) OTL(actRobotVac.ACT.Extend_Req) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) XIC(actRobotVac.ACT.Extend_Complete) [XIO(I_EOAT_Vac) [MOV(615,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ] ,XIC(I_EOAT_Vac) [[OTL(seqRobot.Fault) ,OTL(Bit_Robot_Part_Stuck_Trigger) ] ,OTL(_debug.10) ] ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 615:
+check if can read complate
+if not then move to scary barcode
+if there are anodes left on the cassette then clear anodes]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,615)XIC(seqRobot.Perm)CONCAT(Message_Robot[77],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][NEQ(2,StackData.Can_Layer.Layer_Status) [ONS(Machine_Oneshots[8].9) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Barcode],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,OTE(SigRobotAtScaryBarcode) ] ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) EQU(2,StackData.Can_Layer.Layer_Status) [[XIC(Bit_BAnode_Picked) XIC(Bit_MAnode_Picked) XIC(Bit_TAnode_Picked) ,XIO(Bit_BAnode_Picked) XIO(Bit_MAnode_Picked) XIO(Bit_TAnode_Picked) ] MOV(625,seqRobot.Step) ,[XIC(Bit_BAnode_Picked) [XIO(Bit_MAnode_Picked) ,XIO(Bit_TAnode_Picked) ] ,XIC(Bit_MAnode_Picked) [XIO(Bit_BAnode_Picked) ,XIO(Bit_TAnode_Picked) ] ,XIC(Bit_TAnode_Picked) [XIO(Bit_MAnode_Picked) ,XIO(Bit_BAnode_Picked) ] ] MOV(580,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 625: Decide if insulators ran out]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,625)XIC(seqRobot.Perm)CONCAT(Message_Robot[78],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Bit_Robot_Picked_Insulator)[[XIC(Bit_LeftRear_Insulator_Avail) ,XIC(Bit_LeftFront_Insulator_Avail) ,XIC(Bit_RightRear_Insulator_Avail) ,XIC(Bit_RightFront_Insulator_Avail) ] [MOV(626,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ,XIO(Bit_LeftFront_Insulator_Avail) XIO(Bit_LeftRear_Insulator_Avail) XIO(Bit_RightRear_Insulator_Avail) XIO(Bit_RightFront_Insulator_Avail) [MOV(9,seqRobot.Step) ,OTL(Bit_Cant_Finish_Battery_Without_Parts) ,OTL(Bit_NeedInsulator) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 626:
+travel to insulator position
+don't close stack wings]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,626)XIC(seqRobot.Perm)CONCAT(Message_Robot[79],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTU(Bit_Slow_DepartFromInsulator) ,LIM(140,RobotIndex_Insulator_Tray,145) OTL(Bit_Slow_DepartFromInsulator) ,LIM(140,RobotIndex_Insulator_Tray,169) OTL(Bit_Robot_LeftInsulator_Lockout) ,[LIM(140,RobotIndex_Insulator_Tray,154) OTL(Insul_Started_Tray_LeftRear) ,LIM(155,RobotIndex_Insulator_Tray,169) OTL(Insul_Started_Tray_LeftFront) ] ,LIM(170,RobotIndex_Insulator_Tray,199) OTL(Bit_Robot_Rightnsulator_Lockout) ,[LIM(170,RobotIndex_Insulator_Tray,184) OTL(Insul_Started_Tray_RightRear) ,LIM(185,RobotIndex_Insulator_Tray,199) OTL(Insul_Started_Tray_RightFront) ] ,ONS(Machine_Oneshots[4].31) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[RobotIndex_Insulator_Tray],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ,MOV(RobotIndex_Insulator_Tray,Just_Picked_Insulator) ] ,[XIC(s800.Robot.statFaulted) ,XIC(actStackWings.ACT.Fault) ] OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [XIC(actStackWings.ACT.Retract_Complete) ,XIC(s800.Robot.Jump_Complete) ] [MOV(630,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 630:
+Pick insulator with EOAT vacuum
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,630)XIC(seqRobot.Perm)CONCAT(Message_Robot[80],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][OTL(actRobotVac.ACT.Extend_Req) ,XIC(actRobotVac.ACT.Extend_Complete) [MOV(635,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 635:
+Move to approach Location]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,635)XIC(seqRobot.Perm)CONCAT(Message_Robot[81],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][ONS(Machine_Oneshots[5].0) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Just_Picked_Insulator],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.LocationConfig[Just_Picked_Insulator].Approach_Height,s800.Commands.Approach_Height) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIC(s800.Robot.Move_Complete) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIO(s800.Commands.Move_Req) [XIC(I_EOAT_Vac) [MOV(640,seqRobot.Step) ,RES(Machine_Counters[7]) ,OTL(Bit_Robot_Picked_Insulator) ,OTU(seqRobot.StepNext) ] ,XIO(I_EOAT_Vac) [MOV(625,seqRobot.Step) ,OTL(actRobotVac.ACT.Abort) ,OTL(Bit_Robot_Picked_Insulator) ,MOV(Settings.Default_Alarm_Trigger_Count.Value,Machine_Counters[7].PRE) ,CTU(Machine_Counters[7],?,?) ,XIC(Machine_Counters[7].DN) [OTL(Bit_Robot_Part_Missing_Trigger) ,OTL(_debug.8) ,OTL(Bit_Robot_MultMispick) ,RES(Machine_Counters[7]) ,OTL(seqRobot.Fault) ] ,OTU(seqRobot.StepNext) ] ,OTU(Bit_Robot_LeftInsulator_Lockout) ,OTU(Bit_Robot_Rightnsulator_Lockout) ,MOV(0,s800.Commands.Approach_Height) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 640:
+Move to insulator handoff approach
+Move slow if coming from first 6 insulators to avoid hard move]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,640)XIC(seqRobot.Perm)CONCAT(Message_Robot[82],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Bit_Robot_Picked_Insulator)[ONS(Machine_Oneshots[5].1) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_InsulatorJump],s800.LocationConfig[iLocTemp],1) ,MOV(0,s800.Commands.Approach_Height) ,XIC(Bit_Slow_DepartFromInsulator) MUL(s800.LocationConfig[Loc_InsulatorJump].Speed,0.75,s800.LocationConfig[iLocTemp].Speed) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(645,seqRobot.Step) ,MOV(0,s800.Commands.Approach_Height) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 645:
+Vacuum check on handoff platform
+wait for can read complete]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,645)XIC(seqRobot.Perm)CONCAT(Message_Robot[83],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]EQU(2,StackData.Can_Layer.Layer_Status)[OTL(actInsulatorVac.ACT.Extend_Req) ,XIC(Bit_Part_Type_LL) OTL(actInsulatorVacBck.ACT.Extend_Req) ,XIC(actInsulatorVac.ACT.Extend_Complete) [XIC(actInsulatorVacBck.ACT.Extend_Complete) ,XIO(Bit_Part_Type_LL) ] [[XIC(I_Insulator_Vac) ,XIC(Bit_Part_Type_LL) XIC(I_InsulatorBck_Vac) ] [OTL(Bit_Insulator_Part_Stuck_Trigger) ,OTL(seqRobot.Fault) ] ,XIO(I_Insulator_Vac) [XIO(I_InsulatorBck_Vac) ,XIO(Bit_Part_Type_LL) ] [MOV(650,seqRobot.Step) ,OTL(actInsulatorVac.ACT.Abort) ,OTL(actInsulatorVacBck.ACT.Abort) ,OTL(Sig_Robot_AtInsulator_Handoff) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 650:
+Move to handoff insulator to platform
+
+JEO - Updated to go to unique locations for SL and LL - 08/07/14]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,650)XIC(seqRobot.Perm)CONCAT(Message_Robot[84],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Sig_Robot_AtInsulator_Handoff)[ONS(Machine_Oneshots[5].2) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,[XIC(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_LL],s800.LocationConfig[iLocTemp],1) ,XIO(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_SL],s800.LocationConfig[iLocTemp],1) ] ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(655,seqRobot.Step) ,OTL(Sig_Robot_Ready_toPlaceInsulator) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 655:
+Stretch when ready
+
+JEO - Updated to go to unique locations for SL and LL - 08/07/14]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,655)XIC(seqRobot.Perm)CONCAT(Message_Robot[85],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Sig_Robot_Ready_toPlaceInsulator)[ONS(Machine_Oneshots[5].3) [[MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,[XIC(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_LL],s800.LocationConfig[iLocTemp],1) ,XIO(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_SL],s800.LocationConfig[iLocTemp],1) ] ,ADD(s800.LocationConfig[iLocTemp].Coordinate.X,Machine_Run_Recipe.Insulator_Stretch_Shft_X.Value,s800.LocationConfig[iLocTemp].Coordinate.X) ,ADD(s800.LocationConfig[iLocTemp].Coordinate.Y,Machine_Run_Recipe.Insulator_Stretch_Shft_Y.Value,s800.LocationConfig[iLocTemp].Coordinate.Y) ,MOV(Machine_Run_Recipe.Insulator_Stretch_Dist.Value,s800.Commands.Approach_Height) ] ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [[MOV(657,seqRobot.Step) ,OTL(Sig_Robot_Stretch_Done) ,OTU(seqRobot.StepNext) ] ,MOV(0,s800.Commands.Approach_Height) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 660:
+Final Strectch if Enabled Once Transfer Gripper is in Position
+
+JEO - Updated to go to unique locations for SL and LL - 08/07/14]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,657)XIC(seqRobot.Perm)CONCAT(Message_Robot[86],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][GRT(Machine_Run_Recipe.Insulator_Final_Stretch.Value,0) GEQ(srvTransferGripperLinearAxis.Servo.statActualPosition,Machine_Run_Recipe.Robot_Insu_DriveDown.Value) GEQ(seqTransferGripper.Step,120) [ONS(Machine_Oneshots[8].20) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,[[XIC(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_LL],s800.LocationConfig[iLocTemp],1) ,XIO(Bit_Part_Type_LL) COP(s800.LocationConfig[Loc_Insulator_SL],s800.LocationConfig[iLocTemp],1) ] ,MOV(Machine_Run_Recipe.Insulator_Final_Stretch.Value,s800.Commands.Approach_Height) ] ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(660,seqRobot.Step) ,MOV(0,s800.Commands.Approach_Height) ] ] ,LEQ(Machine_Run_Recipe.Insulator_Final_Stretch.Value,0) [MOV(660,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 660:
+When transfer gripper extends, turn off vacuum and depart
+until then check vacuum 
+
+JEO - Removed robot blowoff at end of step because it was causing issues and it was proven that it wasn't needed.  - 05/15/15]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,660)XIC(seqRobot.Perm)CONCAT(Message_Robot[87],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ][XIC(Sig_Robot_Stretch_Done) [XIO(I_EOAT_Vac) ,XIO(I_Insulator_Vac) ] ONS(ons4) [OTL(seqRobot.Fault) ,OTL(Bit_Insulator_Vac_Error) ] ,XIO(Sig_Robot_Stretch_Done) [OTL(actRobotVac.ACT.Abort) ,MOV(665,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 665:
+Leave the building and go home
+
+Moved oneshot out of permissive to avoid multiple latching of handshake kl 022614]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,665)[GRT(s800.World_Current_Value.Z,Location_Z_Safe) ONS(Machine_Oneshots[6].0) OTL(Sig_Robot_DepartedfromStretch) ,XIC(seqRobot.Perm) CONCAT(Message_Robot[88],K_Str_Blank,seqRobot.Status) [XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ] [ONS(Machine_Oneshots[5].4) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqRobot.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(670,seqRobot.Step) ,OTU(seqRobot.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 670:
+Mark insulator done when ready]]></Comment>
+      <Text><![CDATA[EQU(seqRobot.Step,670)XIC(seqRobot.Perm)CONCAT(Message_Robot[90],K_Str_Blank,seqRobot.Status)[XIC(System.Auto) XIO(Bit_RobotOnlyStepMode) ,XIC(seqRobot.StepNext) ]XIO(Sig_Robot_DepartedfromStretch)[[LIM(140,Just_Picked_Insulator,154) ,LIM(155,Just_Picked_Insulator,169) ] [COP(StackData.HMI_Insulator_Data_QueueL,StackData.Insulator_Layer.Placed_Layer_Trace_Data,1) ,COP(String_LeftInsulator_PN,String_Placed_InsulatorPN,1) ] ,[LIM(170,Just_Picked_Insulator,184) ,LIM(185,Just_Picked_Insulator,199) ] [COP(StackData.HMI_Insulator_Data_QueueR,StackData.Insulator_Layer.Placed_Layer_Trace_Data,1) ,COP(String_RightInsulator_PN,String_Placed_InsulatorPN,1) ] ,MOV(2,StackData.Insulator_Layer.Layer_Status) ,SUB(Just_Picked_Insulator,139,HISTORIAN.InsulatorPickPosition) ,ADD(1,StackData.Current_Stack_Layer,StackData.Current_Stack_Layer) ,MOV(9,seqRobot.Step) ,OTU(seqRobot.StepNext) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

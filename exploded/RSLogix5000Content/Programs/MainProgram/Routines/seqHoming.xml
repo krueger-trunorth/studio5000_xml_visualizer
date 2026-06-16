@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqHoming" Type="RLL">
+  <Description><![CDATA[Homing Sequence]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset the Homing sequence
+
+This routine is responsible for homing all motion axes.  All system servo axes must be present below
+
+]]></Comment>
+      <Text><![CDATA[XIC(seqHoming.Reset)[CLR(seqHoming.Step) ,OTU(seqHoming.On) ,OTU(seqHoming.Fault) ,CLR(seqHoming.Fault_Code) ,OTU(seqHoming.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for sequence
+]]></Comment>
+      <Text><![CDATA[XIC(Permissive_Motion_OK)XIC(Permissive_Interlocks_OK)XIC(Permissive_Alarm_OK_Robot)XIO(seqHoming.Fault)XIC(seqHoming.On)XIO(System.Paused)XIO(System.Pause_IP)OTE(seqHoming.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not in Step Mode Hold Step Next Off
+]]></Comment>
+      <Text><![CDATA[XIO(seqHoming.StepMode)OTU(seqHoming.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0: Clear bits, reset abort sequence and enable overtravel limits
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,0)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][[NEQ(seqAbort.Step,0) ,XIC(seqAbort.Complete) ,XIC(seqAbort.Fault) ] [OTL(seqAbort.Reset) ,OTL(srvCanInsertAxis.Command.Enable_OT) ,OTL(srvTransferGripperLinearAxis.Command.Enable_OT) ,OTL(srvTransferRotaryGripperAxis.Command.Enable_OT) ] ,EQU(seqAbort.Step,0) XIO(seqAbort.Complete) XIO(seqAbort.Fault) XIO(seqAbort.Reset) [MOV(1,seqHoming.Step) ,OTU(seqHoming.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 1: Run abort sequence, abort is responsible for homing cylinders, clearing out parts, etc
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,1)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][ONS(Machine_Oneshots[0].12) [OTL(seqAbort.On) ,OTL(Bit_Home_Was_Requested) ] ,XIC(seqAbort.Fault) OTL(seqHoming.Fault) ,XIC(seqAbort.Complete) [MOV(2,seqHoming.Step) ,OTU(seqHoming.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 2: Home Transfer Gripper Linear Axis
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,2)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][ONS(Machine_Oneshots[0].13) OTL(srvTransferGripperLinearAxis.Command.Home_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqHoming.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Home_Req) XIO(srvTransferGripperLinearAxis.Servo.statHoming) XIC(srvTransferGripperLinearAxis.Servo.statHomed) [MOV(4,seqHoming.Step) ,OTU(seqHoming.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 4: Home Transfer Gripper Rotary Axis
+Home Can Insert Axis
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,4)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][ONS(Machine_Oneshots[0].18) [OTL(srvTransferRotaryGripperAxis.Command.Home_Req) ,OTL(srvCanInsertAxis.Command.Home_Req) ] ,[XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) ,XIC(srvCanInsertAxis.Servo.statFaulted) ] OTL(seqHoming.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Home_Req) XIO(srvTransferRotaryGripperAxis.Servo.statHoming) XIC(srvTransferRotaryGripperAxis.Servo.statHomed) XIO(srvCanInsertAxis.Command.Home_Req) XIO(srvCanInsertAxis.Servo.statHoming) XIC(srvCanInsertAxis.Servo.statHomed) [MOV(5,seqHoming.Step) ,OTU(seqHoming.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Home Finger Cylinder - Needs to be after Can servo
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,5)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][OTL(actFinger.ACT.Retract_Req) ,XIC(actFinger.ACT.Fault) OTL(seqHoming.Fault) ,XIC(actFinger.ACT.Retract_Complete) [MOV(6,seqHoming.Step) ,OTU(seqHoming.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 6: Home Robot
+]]></Comment>
+      <Text><![CDATA[EQU(seqHoming.Step,6)XIC(seqHoming.Perm)[XIC(System.Auto) ,XIC(seqHoming.StepNext) ][ONS(Machine_Oneshots[4].0) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqHoming.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(0,seqHoming.Step) ,OTU(seqHoming.StepNext) ,OTL(seqHoming.Complete) ,OTU(seqHoming.On) ,OTU(Bit_Home_Was_Requested) ] ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

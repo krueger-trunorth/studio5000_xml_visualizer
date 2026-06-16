@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="Main" Type="RLL">
+  <Description><![CDATA[Main]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(vbVisionPro.Responses.bStartupComplete)OTE(permVision);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Timer for Heartbeat Failure
+]]></Comment>
+      <Text><![CDATA[XIC(permVision)[TON(timerHeartbeatAlarm,?,?) ,XIC(timerHeartbeatAlarm.DN) OTL(bVisionHeartbeatAlarm) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Alarm and Timer if Heartbeat toggles
+]]></Comment>
+      <Text><![CDATA[[XIC(vbVisionPro.Responses.bHeartbeat) ONS(bitHeartBeatONS1) ,XIO(vbVisionPro.Responses.bHeartbeat) ONS(bitHeartBeatONS2) ][RES(timerHeartbeatAlarm) ,OTU(bVisionHeartbeatAlarm) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Turn off Alarm Bit if Vision Permissive is off]]></Comment>
+      <Text><![CDATA[XIO(permVision)OTU(bVisionHeartbeatAlarm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(vbVisionPro.Requests.iEdit,0)EQU(vbVisionPro.Requests.iEdit,vbVisionPro.Responses.iEdit)CLR(vbVisionPro.Requests.iEdit);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Hide calibration displays when any sequence is started]]></Comment>
+      <Text><![CDATA[XIC(seqControl.On)ONS(Machine_Oneshots[10].0)[OTU(HISTORIAN.ccpCam.bitShowCal) ,OTU(HISTORIAN.ccpCam.bitShowVerify) ,FLL(0,HISTORIAN.ccpCam.dblPendingVerify[0],7) ,FLL(0,HISTORIAN.ccpCam.dblPendingCal[0],26) ,CLR(HISTORIAN.ccpCam.bitPendingFail) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Copy system settings to calibration displays]]></Comment>
+      <Text><![CDATA[[MOV(Settings.Vision_Calib_X_Nom.Value,HISTORIAN.ccpCam.dblStandard[0]) ,MOV(Settings.Vision_Calib_X_Min.Value,HISTORIAN.ccpCam.dblCalLL[0]) MOV(Settings.Vision_Calib_X_Max.Value,HISTORIAN.ccpCam.dblCalUL[0]) ,MOV(Settings.Vision_Calib_Y_Nom.Value,HISTORIAN.ccpCam.dblStandard[1]) ,MOV(Settings.Vision_Calib_Y_Min.Value,HISTORIAN.ccpCam.dblCalLL[1]) MOV(Settings.Vision_Calib_Y_Max.Value,HISTORIAN.ccpCam.dblCalUL[1]) ,MOV(Settings.Vision_Calib_Pixels_Nom.Value,HISTORIAN.ccpCam.dblStandard[6]) ,MOV(Settings.Vision_Calib_Pixels_Min.Value,HISTORIAN.ccpCam.dblCalLL[6]) MOV(Settings.Vision_Calib_Pixels_Max.Value,HISTORIAN.ccpCam.dblCalUL[6]) ,MOV(Settings.Vision_Verif_X_Min.Value,HISTORIAN.ccpCam.dblVerifyLL[0]) MOV(Settings.Vision_Verif_X_Max.Value,HISTORIAN.ccpCam.dblVerifyUL[0]) ,MOV(Settings.Vision_Verif_Y_Min.Value,HISTORIAN.ccpCam.dblVerifyLL[1]) MOV(Settings.Vision_Verif_Y_Max.Value,HISTORIAN.ccpCam.dblVerifyUL[1]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Add Vision AOI's Below]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(permVision)Camera(Camera,vbVisionPro.Cameras[0]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Screen Displays]]></Comment>
+      <Text><![CDATA[EQU(HMI.From_HMI.ScreenDisplayed,1)MOV(HMI.To_HMI.MainDisplayIndex,vbVisionPro.DisplayInfo[0].Inspection);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(HMI.From_HMI.ScreenDisplayed,1)CLR(vbVisionPro.DisplayInfo[0].Inspection);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(HMI.From_HMI.ScreenDisplayed,2)MOV(HMI.To_HMI.CalDisplayIndex,vbVisionPro.DisplayInfo[1].Inspection);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[NEQ(HMI.From_HMI.ScreenDisplayed,2)CLR(vbVisionPro.DisplayInfo[1].Inspection);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(vbVisionPro.Requests.bExitRequest)XIO(vbVisionPro.Responses.bStartupComplete)OTU(vbVisionPro.Requests.bExitRequest);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[GRT(vbVisionPro.Requests.iEdit,0)EQU(vbVisionPro.Requests.iEdit,vbVisionPro.Responses.iEdit)CLR(vbVisionPro.Requests.iEdit);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

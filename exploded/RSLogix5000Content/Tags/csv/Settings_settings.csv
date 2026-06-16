@@ -1,0 +1,41 @@
+Parameter,Description,Unit,Min,Max
+CanInsert_AccelDecel,Can Accel (mm/s^2),ORT_SettingParam_Float,0.1,9810.0
+RotaryTransferGripper_AccelDecel,Rot Accel (deg/s^2),ORT_SettingParam_Float,0.1,180.0
+CanInsert_Speed_Default,Can Def. Speed (mm/s),ORT_SettingParam_Float,0.1,150.0
+RotaryTransferGripper_Speed_Full,RotSpeed Full(deg/s),ORT_SettingParam_Float,0.1,90.0
+RotaryTransferGripper_Speed_Empty,RotSpeedEmpty(deg/s),ORT_SettingParam_Float,0.1,90.0
+Default_Alarm_Trigger_Count,Mult Alarm Trigger,ORT_SettingParam_DINT,1,16
+LinearTransferGripper_AccelDecel,Lin Accel (mm/s^2),ORT_SettingParam_Float,0.1,9810.0
+LinearTransferGripper_Speed_Full,LinSpeedFull (mm/s),ORT_SettingParam_Float,0.1,100.0
+LinearTransferGripper_Speed_Empty,LinSpeedEmpty (mm/s),ORT_SettingParam_Float,0.1,100.0
+Barcode_Read_Retry_Limit,Barcode Retry Limit,ORT_SettingParam_DINT,0,10
+Use_PIA,"None=0, PIA=1",ORT_SettingParam_DINT,0,1
+MachineESN,Machine ESN,ORT_SettingParam_String,n/a,n/a
+RobotSpeed,Robot Speed (1-100),ORT_SettingParam_DINT,1,100
+Vision_Calib_X_Nom,Vision Calib. X Nom. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_X_Max,Vision Calib. X Max. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_X_Min,Vision Calib. X Min. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_Y_Nom,Vision Calib. Y Nom. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_Y_Max,Vision Calib. Y Max. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_Y_Min,Vision Calib. Y Min. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Calib_Pixels_Nom,Vision Calib. Pixels Nom. (0-1000),ORT_SettingParam_Float,0.0,1000.0
+Vision_Calib_Pixels_Max,Vision Calib. Pixels Max. (0-1000),ORT_SettingParam_Float,0.0,1000.0
+Vision_Calib_Pixels_Min,Vision Calib. Pixels Min. (0-1000),ORT_SettingParam_Float,0.0,1000.0
+Vision_Verif_X_Min,Vision Verif. X Min. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Verif_X_Max,Vision Verif. X Max. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Verif_Y_Min,Vision Verif. Y Min. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Vision_Verif_Y_Max,Vision Verif. Y Max. (0-10 mm),ORT_SettingParam_Float,0.0,10.0
+Software_Revision,Software Revision,ORT_SettingParam_String,n/a,n/a
+WaitForUserDelay,Wait for User Delay (0-600sec),ORT_SettingParam_DINT,0,600
+WaitForProcDelay,Wait for Process Delay (0-600sec),ORT_SettingParam_DINT,0,600
+SystemName,Machine Name,ORT_SettingParam_String,n/a,n/a
+Software_Change_Date,Software Change Date,ORT_SettingParam_String,n/a,n/a
+Hist_ByPass,Historian ByPass (0-1),ORT_SettingParam_DINT,0,1
+Cycle_Time,Theoretical Cycle Time (0-300sec),ORT_SettingParam_Float,0.0,300.0
+EnableBatteryQueue,Enable In-Queue Battery (0-1),ORT_SettingParam_DINT,0,1
+SL_Recipe_Name,SL Recipe Name,ORT_SettingParam_String,n/a,n/a
+LL_Recipe_Name,LL Recipe Name,ORT_SettingParam_String,n/a,n/a
+Tray_CanLeft_Angle,"Left Can Tray Angle (deg, + is CW)",ORT_SettingParam_Float,-2.0,2.0
+Tray_CanRight_Angle,"Right Can Tray Angle (deg, + is CW)",ORT_SettingParam_Float,-2.0,2.0
+Tray_InsLeft_Angle,"Left Ins Tray Angle (deg, + is CW)",ORT_SettingParam_Float,-2.0,2.0
+Tray_InsRight_Angle,"Right Ins Tray Angle (deg, + is CW)",ORT_SettingParam_Float,-2.0,2.0

@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqManual_DiePunch" Type="RLL">
+  <Description><![CDATA[Manual Punching]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Manual Punch Sequence]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(seqManualPunch.Reset)[CLR(seqManualPunch.Step) ,OTU(seqManualPunch.On) ,OTU(seqManualPunch.Fault) ,CLR(seqManualPunch.Fault_Code) ,OTU(seqManualPunch.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[XIC(System.Manual)XIO(System.Auto)XIO(I_Estop_NOT_OK)XIC(I_OOB_Front)XIC(I_OOB_Rear)XIO(Dancer_Payout.Fault)XIO(Dancer_Takeup.Fault)XIO(seqManualPunch.Fault)XIC(seqManualPunch.On)XIO(seqManualHitch.On)XIC(Permissive_Alarm_OK_Robot)XIC(Permissive_Alarm_OK_TransferGripper)OTE(seqManualPunch.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(seqManualPunch.On)XIC(seqWebDancer.Fault)XIO(Dancer_Payout.Fault)XIO(Dancer_Takeup.Fault)OTU(seqWebDancer.Fault);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(I_Estop_NOT_OK) ,XIC(seqManualPunch.Fault) ,XIO(System.Manual) ]OTU(seqManualPunch.On);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0:
+Retract Die Punch
+Close Stack wings
+]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,0)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[0],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)XIC(bitLoadSettingsComplete)XIC(bitLoadRecipeComplete)[[OTL(actDiePunch.ACT.Retract_Req) ,OTL(actStackWings.ACT.Retract_Req) ] ,[XIC(actDiePunch.ACT.Fault) ,XIC(actStackWings.ACT.Fault) ] OTL(seqManualPunch.Fault) ,TON(ManPunchDwell,?,?) ,XIC(actDiePunch.ACT.Retract_Complete) XIC(actStackWings.ACT.Retract_Complete) XIC(ManPunchDwell.DN) [MOV(2,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 2:
+Close Fixed Grippers
+Turn on stack pressure
+Jump Robot to Abort Approach]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,2)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[2],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[OTL(actFixedHitchPreDie.ACT.Extend_Req) ,OTL(actFixedHitchPostDie.ACT.Extend_Req) ,OTL(actStackPressure.ACT.Extend_Req) ] ,ONS(Machine_Oneshots[3].19) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Abort_Waypoint],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,[XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actFixedHitchPostDie.ACT.Fault) ,XIC(s800.Robot.statFaulted) ,XIC(actStackPressure.ACT.Fault) ] OTL(seqManualPunch.Fault) ,XIC(actFixedHitchPreDie.ACT.Extend_Complete) XIC(actFixedHitchPostDie.ACT.Extend_Complete) XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) XIC(actStackPressure.ACT.Extend_Complete) [MOV(5,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 5:
+Open Moving Grippers
+Jump Robot to Die Approach]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,5)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[3],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[OTL(actMovingHitch.ACT.Retract_Req) ,ONS(Machine_Oneshots[3].18) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Die_Punch],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ] ,[XIC(actMovingHitch.ACT.Fault) ,XIC(s800.Robot.statFaulted) ] OTL(seqManualPunch.Fault) ,XIC(actMovingHitch.ACT.Retract_Complete) XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(10,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 10:
+Retract Indexer]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,10)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[4],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actIndexer.ACT.Retract_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actIndexer.ACT.Retract_Complete) [MOV(20,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 20:
+Close Moving Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,20)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[5],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actMovingHitch.ACT.Extend_Req) ,XIC(actMovingHitch.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actMovingHitch.ACT.Extend_Complete) [MOV(30,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 30:
+Open Fixed Hitch Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,30)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[6],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actFixedHitchPostDie.ACT.Retract_Req) ,OTL(actFixedHitchPreDie.ACT.Retract_Req) ,[XIC(actFixedHitchPostDie.ACT.Fault) ,XIC(actFixedHitchPreDie.ACT.Fault) ] OTL(seqManualPunch.Fault) ,XIC(actFixedHitchPostDie.ACT.Retract_Complete) XIC(actFixedHitchPreDie.ACT.Retract_Complete) [MOV(40,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 40:
+Wait for dancers to home]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,40)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[7],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)XIC(I_Payout_Home)XIC(I_Takeup_Home)[MOV(50,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 50:
+Extend Indexer]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,50)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[8],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actIndexer.ACT.Extend_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actIndexer.ACT.Extend_Complete) [MOV(60,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 60:
+Close Fixed Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,60)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[9],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actFixedHitchPreDie.ACT.Extend_Req) ,OTL(actFixedHitchPostDie.ACT.Extend_Req) ,[XIC(actFixedHitchPreDie.ACT.Fault) ,XIC(actFixedHitchPostDie.ACT.Fault) ] OTL(seqManualPunch.Fault) ,XIC(actFixedHitchPreDie.ACT.Extend_Complete) XIC(actFixedHitchPostDie.ACT.Extend_Complete) [MOV(80,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 80:
+Open Moving Grippers]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,80)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[11],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actMovingHitch.ACT.Retract_Req) ,XIC(actMovingHitch.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actMovingHitch.ACT.Retract_Complete) [MOV(90,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 90: Turn on Die Vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,90)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[12],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actDieVac.ACT.Extend_Req) ,XIC(actDieVac.ACT.Extend_Complete) [MOV(100,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 100: Extend Die, iterate counter]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,100)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[13],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actDiePunch.ACT.Extend_Req) ,XIC(actDiePunch.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actDiePunch.ACT.Extend_Complete) [[MOV(110,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ,CTU(Machine_Counters[10],?,?) ,SUB(HMI.To_HMI.Manual_Punch_Number,1,HMI.To_HMI.Manual_Punch_Number) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 110: Move robot to die touch location]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,110)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[14],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[5].13) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Die_Touch],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(120,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 120: Turn on robot vacuum, die vacuum off]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,120)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[15],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actRobotVac.ACT.Extend_Req) OTL(actDieVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Extend_Complete) XIC(actDieVac.ACT.Retract_Complete) [MOV(130,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ,OTL(actDieVac.ACT.Abort) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 130: Retract Die Punch]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,130)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[16],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actDiePunch.ACT.Retract_Req) ,XIC(actDiePunch.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actDiePunch.ACT.Retract_Complete) [MOV(140,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 140: Apply offsets]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,140)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[17],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[MOV(HMI.Recipe.R_Discrete_X_Offset.Value,s800_Loc0_Offset.X) ,MOV(HMI.Recipe.R_Discrete_Y_Offset.Value,s800_Loc0_Offset.Y) ,MOV(0,s800_Loc0_Offset.Z) ,MOV(HMI.Recipe.R_Discrete_R_Offset.Value,s800_Loc0_Offset.Roll) ,MOV(142,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 142: Move to Waypoint]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,142)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[18],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[6].4) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Abort_Waypoint],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(150,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 150: Jump to stack platform ]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,150)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[19],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[5].21) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,COP(s800.LocationConfig[Loc_Stack],s800.LocationConfig[iLocTemp],1) ,ADD(s800.LocationConfig[iLocTemp].Coordinate.X,s800_Loc0_Offset.X,s800.LocationConfig[iLocTemp].Coordinate.X) ,ADD(s800.LocationConfig[iLocTemp].Coordinate.Y,s800_Loc0_Offset.Y,s800.LocationConfig[iLocTemp].Coordinate.Y) ,ADD(s800.LocationConfig[iLocTemp].Coordinate.Roll,s800_Loc0_Offset.Roll,s800.LocationConfig[iLocTemp].Coordinate.Roll) ,MOV(380,s800.LocationConfig[iLocTemp].Coordinate.Z) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(160,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ,MOV(0,s800.Commands.Approach_Height) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 160: Move down to Mylar]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,160)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[21],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[2].11) [MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(327.1,s800.LocationConfig[iLocTemp].Coordinate.Z) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(170,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 170: Open Wings]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,170)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[22],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actStackWings.ACT.Extend_Req) ,XIC(actStackWings.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actStackWings.ACT.Extend_Complete) [MOV(180,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 180: Turn on stack vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,180)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[23],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actStackFixtureVac.ACT.Extend_Req) ,XIC(actStackFixtureVac.ACT.Extend_Complete) [MOV(325,s800.LocationConfig[iLocTemp].Coordinate.Z) ,[MOV(190,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 190: Travel past wings]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,190)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[24],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[5].20) [MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(200,seqManualPunch.Step) ,CTU(Machine_Counters[12],?,?) ,OTU(seqManualPunch.StepNext) ,MOV(0,s800.Commands.Approach_Height) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 200: Is there too many discretes (if false, close wings)]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,200)XIC(seqManualPunch.Perm)XIC(seqManualPunch.StepNext)[XIC(Machine_Counters[12].DN) MOV(230,seqManualPunch.Step) ,XIO(Machine_Counters[12].DN) [OTL(actStackWings.ACT.Retract_Req) ,XIC(actStackWings.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actStackWings.ACT.Retract_Complete) [MOV(210,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 210: False, release vacuum]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,210)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[26],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actRobotVac.ACT.Retract_Req) ,XIC(actRobotVac.ACT.Retract_Complete) [MOV(220,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ,OTL(actRobotVac.ACT.Abort) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 220: False Depart at slow speed so stack platform keeps up
+go back to beginning
+jca - moved count test so last discrete would be left on stack]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,220)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[27],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(15,s800.Commands.Approach_Height) ,MOV(25,s800.LocationConfig[iLocTemp].Speed) ,MOV(25,s800.LocationConfig[iLocTemp].Acceleration) ,MOV(25,s800.LocationConfig[iLocTemp].Deceleration) ] ,ONS(Machine_Oneshots[8].0) [MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [XIC(Machine_Counters[10].DN) MOV(335,seqManualPunch.Step) ,XIO(Machine_Counters[10].DN) MOV(0,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ,MOV(0,s800.Commands.Approach_Height) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 230: True, travel to handoff height (Too Many discretes)]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,230)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[28],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[4].29) [MOV(325,s800.LocationConfig[iLocTemp].Coordinate.Z) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,OTL(s800.Commands.Move_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(240,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 240: True, Move linear axis retracted]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,240)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[29],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(srvTransferGripperLinearAxis.Locations[0],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].20) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqManualPunch.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(250,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 250: True, move rotary axis to stack]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,250)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[30],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(Settings.RotaryTransferGripper_Speed_Empty.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[2],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].21) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) OTL(seqManualPunch.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) [MOV(260,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 260: True, move linear axis to stack]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,260)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[32],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(HMI.Recipe.Xfer_Linear_Stack_Platform_Extend_Loc.Value,srvTransferGripperLinearAxis.Locations[1]) ,MOV(srvTransferGripperLinearAxis.Locations[1],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].22) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqManualPunch.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(270,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 270: True, grab stack]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,270)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[33],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actGripper.ACT.Retract_Req) ,XIC(actGripper.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actGripper.ACT.Retract_Complete) [MOV(280,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 280: True, Let go of robot vacuum, and retract platform and robot]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,280)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[34],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[4].26) [OTL(actRobotVac.ACT.Retract_Req) ,OTL(actStackFixtureVac.ACT.Retract_Req) ,OTL(actStackPressure.ACT.Retract_Req) ,MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIC(actRobotVac.ACT.Retract_Complete) XIC(actStackFixtureVac.ACT.Retract_Complete) XIC(actStackPressure.ACT.Retract_Complete) XIO(s800.Commands.Jump_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Jump_Complete) [MOV(290,seqManualPunch.Step) ,OTL(actStackFixtureVac.ACT.Abort) ,OTL(actRobotVac.ACT.Abort) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 290: True, retract linear axis]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,290)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[35],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(Settings.LinearTransferGripper_Speed_Empty.Value,srvTransferGripperLinearAxis.Command.Speed) ,MOV(Settings.LinearTransferGripper_AccelDecel.Value,srvTransferGripperLinearAxis.Command.Accel) ,MOV(srvTransferGripperLinearAxis.Locations[0],srvTransferGripperLinearAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[3].23) OTL(srvTransferGripperLinearAxis.Command.Move_Abs_Req) ,XIC(srvTransferGripperLinearAxis.Servo.statFaulted) OTL(seqManualPunch.Fault) ,XIO(srvTransferGripperLinearAxis.Command.Move_Abs_Req) XIC(srvTransferGripperLinearAxis.Servo.statMoveAbsComplete) [MOV(300,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 300: True, move rotary to abort position]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,300)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[36],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[[MOV(Settings.RotaryTransferGripper_Speed_Empty.Value,srvTransferRotaryGripperAxis.Command.Speed) ,MOV(Settings.RotaryTransferGripper_AccelDecel.Value,srvTransferRotaryGripperAxis.Command.Accel) ,MOV(srvTransferRotaryGripperAxis.Locations[0],srvTransferRotaryGripperAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[1].3) OTL(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) ,XIC(srvTransferRotaryGripperAxis.Servo.statFaulted) OTL(seqManualPunch.Fault) ,XIO(srvTransferRotaryGripperAxis.Command.Move_Abs_Req) XIC(srvTransferRotaryGripperAxis.Servo.statMoveAbsComplete) [MOV(310,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 310: True, open gripper]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,310)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[37],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actGripper.ACT.Extend_Req) ,XIC(actGripper.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actGripper.ACT.Extend_Complete) [MOV(330,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ,RES(Machine_Counters[12]) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 330: Determine if done or if system was just emptying of discretes]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,330)XIC(seqManualPunch.Perm)XIC(seqManualPunch.StepNext)[XIO(Machine_Counters[10].DN) MOV(0,seqManualPunch.Step) ,XIC(Machine_Counters[10].DN) MOV(340,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 335: Move robot to home after stacking count (End of Stack Count)]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,335)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[38],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[ONS(Machine_Oneshots[5].15) [MOV(s800.Robot.MotionCounter,intMotionCounter) ,COP(s800.LocationConfig[Loc_Home],s800.LocationConfig[iLocTemp],1) ,MOV(iLocTemp,s800.Commands.MoveLocationIndex) ,OTL(s800.Commands.Jump_Req) ] ,XIC(s800.Robot.statFaulted) OTL(seqManualPunch.Fault) ,XIO(s800.Commands.Move_Req) NEQ(s800.Robot.MotionCounter,intMotionCounter) XIC(s800.Robot.Move_Complete) [MOV(340,seqManualPunch.Step) ,OTU(seqManualPunch.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 340:
+Retract Indexer
+and
+Wait for Dancers to Home
+]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,340)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[39],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTL(actIndexer.ACT.Retract_Req) ,XIC(actIndexer.ACT.Fault) OTL(seqManualPunch.Fault) ,XIC(actIndexer.ACT.Retract_Complete) XIC(I_Payout_Home) XIC(I_Takeup_Home) MOV(350,seqManualPunch.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 350:
+Set bit to signal abort on change back from maint to automatic
+
+
+]]></Comment>
+      <Text><![CDATA[EQU(seqManualPunch.Step,350)XIC(seqManualPunch.Perm)CONCAT(Message_ManPunch[44],K_Str_Blank,seqManualPunch.Status)XIC(seqManualPunch.StepNext)[OTU(seqManualPunch.On) ,MOV(0,seqManualPunch.Step) ,OTL(bitAbortAfterManSeq) ,OTL(seqManualPunch.Complete) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIO(seqManualPunch.StepMode)OTL(seqManualPunch.StepNext);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="s800_Home_Check" TagType="Base" DataType="Adept_Joints" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[1.06899996e+001,1.34000000e+002,0.00000000e+000,-1.03000000e+002,0.00000000e+000,0.00000000e+000
+		]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="Adept_Joints">
+      <DataValueMember Name="_1" DataType="REAL" Radix="Float" Value="10.69" />
+      <DataValueMember Name="_2" DataType="REAL" Radix="Float" Value="134.0" />
+      <DataValueMember Name="_3" DataType="REAL" Radix="Float" Value="0.0" />
+      <DataValueMember Name="_4" DataType="REAL" Radix="Float" Value="-103.0" />
+      <DataValueMember Name="_5" DataType="REAL" Radix="Float" Value="0.0" />
+      <DataValueMember Name="_6" DataType="REAL" Radix="Float" Value="0.0" />
+    </Structure>
+  </Data>
+</Tag>

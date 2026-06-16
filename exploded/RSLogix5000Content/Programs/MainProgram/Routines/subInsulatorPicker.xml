@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subInsulatorPicker" Type="RLL">
+  <Description><![CDATA[Picks Insulators]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from left front tray]]></Comment>
+      <Text><![CDATA[LIM(155,Just_Picked_Insulator,169)[SUB(Just_Picked_Insulator,155,Temp_Pick) ,MOV(0,Tray_Status.LeftInsulator_Front[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from left rear tray]]></Comment>
+      <Text><![CDATA[LIM(140,Just_Picked_Insulator,154)[SUB(Just_Picked_Insulator,140,Temp_Pick) ,MOV(0,Tray_Status.LeftInsulator_Rear[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from right front tray]]></Comment>
+      <Text><![CDATA[LIM(185,Just_Picked_Insulator,199)[SUB(Just_Picked_Insulator,185,Temp_Pick) ,MOV(0,Tray_Status.RightInsulator_Front[Temp_Pick]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Part was from right rear tray]]></Comment>
+      <Text><![CDATA[LIM(170,Just_Picked_Insulator,184)[SUB(Just_Picked_Insulator,170,Temp_Pick) ,MOV(0,Tray_Status.RightInsulator_Rear[Temp_Pick]) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

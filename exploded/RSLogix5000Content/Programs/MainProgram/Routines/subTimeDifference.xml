@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="subTimeDifference" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[SBR(DateTime_string)NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[MID(DateTime_string,4,1,str_Yr) ,MID(DateTime_string,2,6,str_Month) ,MID(DateTime_string,2,9,str_Day) ,MID(DateTime_string,2,12,str_Hr) ,MID(DateTime_string,2,15,str_Min) ,MID(DateTime_string,2,18,str_Sec) ,STOD(str_Yr,From_RFID_Tag.Yr) ,STOD(str_Month,From_RFID_Tag.Mo) ,STOD(str_Day,From_RFID_Tag.Da) ,STOD(str_Hr,From_RFID_Tag.Hr) ,STOD(str_Min,From_RFID_Tag.Min) ,STOD(str_Sec,From_RFID_Tag.Sec) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[T_Now(Now_AOI,Right_Now);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[T_DIFF(Time_Compare,Right_Now,From_RFID_Tag,Time_Difference);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[CPT(Total_Hours,Time_Difference.Yr*8760+(Time_Difference.Mo*730)+(Time_Difference.Da*24)+Time_Difference.Hr+(Time_Difference.Min/60)+(Time_Difference.Sec/9600));]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[RET(Total_Hours);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

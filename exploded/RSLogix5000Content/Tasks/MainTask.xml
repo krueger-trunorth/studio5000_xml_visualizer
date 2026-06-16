@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Task Name="MainTask" Type="CONTINUOUS" Priority="10" Watchdog="500" DisableUpdateOutputs="false" InhibitTask="false">
+  <Description><![CDATA[Continuously scanning task]]></Description>
+  <ScheduledPrograms>
+    <ScheduledProgram Name="MainProgram" />
+    <ScheduledProgram Name="Motion" />
+    <ScheduledProgram Name="Actuators" />
+    <ScheduledProgram Name="BarcodeScanner" />
+    <ScheduledProgram Name="Vision" />
+    <ScheduledProgram Name="TrayInterpolation" />
+    <ScheduledProgram Name="Historian" />
+    <ScheduledProgram Name="RFID" />
+    <ScheduledProgram Name="PIA" />
+  </ScheduledPrograms>
+</Task>

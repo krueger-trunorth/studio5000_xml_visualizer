@@ -1,0 +1,88 @@
+attr_Name,attr_Type,path,tag,text
+Logic,RLL,Routine,Routine,
+,,Routine/RLLContent,RLLContent,
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Manual Mode Buttons
+,,Routine/RLLContent/Rung/Text,Text,"XIC(HMI_Ext_Button)[XIC(Extend_Permissive) XIO(Fault) XIC(Manual_Mode) OTL(Extend_Req) ,OTU(HMI_Ext_Button) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(HMI_Ret_Button)[XIC(Retract_Permissive) XIO(Fault) XIC(Manual_Mode) OTL(Retract_Req) ,OTU(HMI_Ret_Button) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(HMI_Abort_PB)[XIC(Manual_Mode) OTL(Abort) ,OTU(HMI_Abort_PB) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Turn off all outputs
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Abort)[OTU(Retract_Req) ,OTU(Extend_Req) ,OTU(Retract_SV) ,OTU(Extend_SV) ,OTU(Abort) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Permissive for Fault
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Extend_Permissive) ,XIC(Retract_Permissive) ]XIO(Fault)OTE(Permissive);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIO(Permissive)XIO(Fault)XIC(Goto_Center_NoPerm)[XIC(Extend_SV) OTL(Extend_Was_On_SV) ,XIC(Retract_SV) OTL(Retract_Was_On_SV) ,OTU(Extend_SV) ,OTU(Retract_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIO(Goto_Center_NoPerm)[OTU(Extend_Was_On_SV) ,OTU(Retract_Was_On_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Permissive)XIC(Goto_Center_NoPerm)[XIC(Extend_Was_On_SV) OTL(Extend_SV) ,XIC(Retract_Was_On_SV) OTL(Retract_SV) ,OTU(Extend_Was_On_SV) ,OTU(Retract_Was_On_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Set Timeouts
+,,Routine/RLLContent/Rung/Text,Text,"MOV(RetractTimeout,Retract_Timer.PRE)MOV(ExtendTimeout,Extend_Timer.PRE)MOV(PreExtendDelay,PreExtendTimer.PRE)MOV(PreRetractDelay,PreRetractTimer.PRE)MOV(PostExtendDelay,PostExtendTimer.PRE)MOV(PostRetractDelay,PostRetractTimer.PRE);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Reset
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Reset) ,XIC(Clear_Fault) XIC(Manual_Mode) ][OTU(Extend_Req) ,OTU(Retract_Req) ,OTU(Fault) ,CLR(Fault_Code) ,OTU(Reset) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Clear Fault
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Clear_Fault)[OTU(Fault) ,CLR(Fault_Code) ,OTU(Clear_Fault) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,"If Permissive is false, turn off Req"
+,,Routine/RLLContent/Rung/Text,Text,XIO(Retract_Permissive)OTU(Retract_Req);
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,"If Permissive is false, turn off Req"
+,,Routine/RLLContent/Rung/Text,Text,XIO(Extend_Permissive)OTU(Extend_Req);
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,"If both requests are on at the same time, turn off the older one so you can change directions."
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Extend_Req)XIC(Retract_Req)[XIC(Retract_Was_On_Request) OTU(Retract_Req) ,XIO(Retract_Was_On_Request) OTU(Extend_Req) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Time Delay before extending cylinder
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Extend_Permissive)XIO(Fault)XIC(Extend_Req)XIO(Extend_Complete)TON(PreExtendTimer,?,?);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,If extend commanded set valves and start timer
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Extend_Permissive)XIO(Fault)XIC(Extend_Req)XIO(Extend_Complete)[XIC(PreExtendTimer.DN) ,LEQ(PreExtendTimer.PRE,0) ][XIC(Has_Extend_SV) OTL(Extend_SV) ,XIC(Has_Retract_SV) OTU(Retract_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Internal_Extend_Complete)ONS(onsExtendTime)MOV(Extend_Timer.ACC,ExtendTime);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Extend_Permissive)XIO(Fault)[XIC(Always_Fault) [XIC(Extend_SV) ,XIO(Has_Extend_SV) XIO(Retract_SV) [XIC(Has_Extend_PX) XIO(Extend_PX) ,XIO(Has_Extend_PX) XIC(Has_Retract_PX) XIC(Retract_PX) ] ] ,XIC(Extend_Req) [XIC(PreExtendTimer.DN) ,LEQ(PreExtendTimer.PRE,0) ] ]XIO(Extend_Complete)TON(Extend_Timer,?,?);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,"If there is a extend sensor and the timer runs out return fault, Shutdown valves"
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Has_Extend_PX) ,XIO(Has_Extend_PX) XIC(Has_Retract_PX) XIC(Retract_PX) ][XIC(Extend_Timer.DN) ,LEQ(Extend_Timer.PRE,0) ][OTL(Fault) ,MOV(Fault_Extend_Timeout,Fault_Code) ,XIC(SVoff_on_Fault) OTU(Extend_SV) ,OTU(Retract_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Time Delay before retracting cylinder
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Retract_Permissive)XIO(Fault)XIC(Retract_Req)XIO(Retract_Complete)TON(PreRetractTimer,?,?);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,If retract commanded set valves and start timer
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Retract_Permissive)XIO(Fault)XIC(Retract_Req)XIO(Retract_Complete)[XIC(PreRetractTimer.DN) ,LEQ(PreRetractTimer.PRE,0) ][XIC(Has_Retract_SV) OTL(Retract_SV) ,XIC(Has_Extend_SV) OTU(Extend_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Internal_Retract_Complete)ONS(onsRetractTime)MOV(Retract_Timer.ACC,RetractTime);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,If retract commanded set valves and start timer
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Retract_Permissive)XIO(Fault)[XIC(Always_Fault) [XIC(Retract_SV) ,XIO(Has_Retract_SV) XIO(Extend_SV) [XIC(Has_Retract_PX) XIO(Retract_PX) ,XIO(Has_Retract_PX) XIC(Has_Extend_PX) XIC(Extend_PX) ] ] ,XIC(Retract_Req) [XIC(PreRetractTimer.DN) ,LEQ(PreRetractTimer.PRE,0) ] ]XIO(Retract_Complete)TON(Retract_Timer,?,?);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,"If there is a retract sensor and the timer runs out return fault, Shutdown valves"
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Has_Retract_PX) ,XIO(Has_Retract_PX) XIC(Has_Extend_PX) XIC(Extend_PX) ][XIC(Retract_Timer.DN) ,LEQ(Retract_Timer.PRE,0) ][OTL(Fault) ,MOV(Fault_Retract_Timeout,Fault_Code) ,OTU(Extend_SV) ,XIC(SVoff_on_Fault) OTU(Retract_SV) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Set Extend Complete if everything OK
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Extend_SV) ,XIO(Has_Extend_SV) ][XIO(Retract_SV) ,XIO(Has_Retract_SV) ][XIC(Has_Extend_PX) XIC(Extend_PX) ,XIO(Has_Extend_PX) [XIC(Extend_Timer.DN) ,LEQ(Extend_Timer.PRE,0) ,XIC(Extend_Complete) ] ][XIO(Retract_PX) ,XIO(Has_Retract_PX) ]XIO(Fault)OTE(Internal_Extend_Complete);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Set Extend Complete once post delay is finished
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Internal_Extend_Complete)[TON(PostExtendTimer,?,?) ,[XIC(PostExtendTimer.DN) ,LEQ(PostExtendTimer.PRE,0) ] OTE(Extend_Complete) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Reset Extend Request
+,,Routine/RLLContent/Rung/Text,Text,XIC(Extend_Complete)OTU(Extend_Req);
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Set Retract Complete if everything OK
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Retract_SV) ,XIO(Has_Retract_SV) ][XIO(Extend_SV) ,XIO(Has_Extend_SV) ][XIC(Has_Retract_PX) XIC(Retract_PX) ,XIO(Has_Retract_PX) [XIC(Retract_Timer.DN) ,LEQ(Retract_Timer.PRE,0) ,XIC(Retract_Complete) ] ][XIO(Extend_PX) ,XIO(Has_Extend_PX) ]XIO(Fault)OTE(Internal_Retract_Complete);"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Set RetractComplete once post delay is finished
+,,Routine/RLLContent/Rung/Text,Text,"XIC(Internal_Retract_Complete)[TON(PostRetractTimer,?,?) ,[XIC(PostRetractTimer.DN) ,LEQ(PostRetractTimer.PRE,0) ] OTE(Retract_Complete) ];"
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Reset Retract Request
+,,Routine/RLLContent/Rung/Text,Text,XIC(Retract_Complete)OTU(Retract_Req);
+,N,Routine/RLLContent/Rung,Rung,
+,,Routine/RLLContent/Rung/Comment,Comment,Store the state of the requests for future reference.  Keep this at the end of the routine
+,,Routine/RLLContent/Rung/Text,Text,"[XIC(Retract_Req) OTL(Retract_Was_On_Request) ,XIC(Extend_Req) OTU(Retract_Was_On_Request) ];"

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="sub99_End" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Text><![CDATA[[NEQ(Pia.Machine.Alarm_Mc_State,0) ,NEQ(Pia.Machine.Alarm_Pia_State,0) ,NEQ(Pia.Machine.Alarm_Message_Trigger,0) ]OTE(Pia.Alarm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[[XIC(signoff_complete) OTL(Pia.Machine.Signoff_Complete) ,XIC(setup_complete) OTL(Pia.Machine.Setup_Complete) ,XIC(ppc_complete) OTL(Pia.Machine.PPC_Complete) ,XIC(sob_complete) OTL(Pia.Machine.SOB_Complete) ,XIC(matlarrived_complete) OTL(Pia.Machine.MatlArrived_Complete) ,XIC(closeassy_complete) OTL(Pia.Machine.CloseAssy_Complete) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

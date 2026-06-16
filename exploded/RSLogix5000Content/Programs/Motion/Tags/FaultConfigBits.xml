@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="FaultConfigBits" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Hard Limit Enable]]></Description>
+  <Data Format="L5K"><![CDATA[50]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="DINT" Radix="Decimal" Value="50" />
+  </Data>
+</Tag>

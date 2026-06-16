@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="HMI_From_HMI_DateTimeInt" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[Connected to HMI Derived Tag]]></Description>
+  <Data Format="L5K"><![CDATA[1586371072]]></Data>
+  <Data Format="Decorated">
+    <DataValue DataType="DINT" Radix="Decimal" Value="1586371072" />
+  </Data>
+</Tag>

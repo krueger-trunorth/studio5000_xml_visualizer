@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="O3" CatalogNumber="1769-OB16/B" Vendor="1" ProductType="7" ProductCode="71" Major="2" Minor="1" ParentModule="Local" ParentModPortId="1" Inhibited="false" MajorFault="true">
+  <EKey State="CompatibleModule" />
+  <Ports>
+    <Port Id="1" Address="7" Type="Compact" Upstream="true" />
+  </Ports>
+  <Communications CommMethod="536870913">
+    <ConfigTag ConfigSize="14" ExternalAccess="Read/Write">
+      <Data Format="L5K"><![CDATA[[18,102,1,0,0,0,0,0]]]></Data>
+      <Data Format="Decorated">
+        <Structure DataType="AB:1769_DO16:C:0">
+          <DataValueMember Name="Config" DataType="INT" Radix="Binary" Value="2#0000_0000_0000_0000" />
+          <DataValueMember Name="ProgToFaultEn" DataType="BOOL" Value="0" />
+          <DataValueMember Name="ProgMode" DataType="INT" Radix="Binary" Value="2#0000_0000_0000_0000" />
+          <DataValueMember Name="ProgValue" DataType="INT" Radix="Binary" Value="2#0000_0000_0000_0000" />
+          <DataValueMember Name="FaultMode" DataType="INT" Radix="Binary" Value="2#0000_0000_0000_0000" />
+          <DataValueMember Name="FaultValue" DataType="INT" Radix="Binary" Value="2#0000_0000_0000_0000" />
+        </Structure>
+      </Data>
+    </ConfigTag>
+    <Connections>
+      <Connection Name="Output" RPI="20000" Type="Output" EventID="0" ProgrammaticallySendEventTrigger="false" Unicast="false">
+        <InputTag ExternalAccess="Read/Write">
+          <Data Format="Decorated">
+            <Structure DataType="AB:1769_DO16:I:0">
+              <DataValueMember Name="Fault" DataType="DINT" Radix="Binary" Value="2#0000_0000_0000_0000_0000_0000_0000_0000" />
+              <DataValueMember Name="ReadBack" DataType="INT" Radix="Binary" Value="2#0000_0000_1000_0000" />
+            </Structure>
+          </Data>
+        </InputTag>
+        <OutputTag ExternalAccess="Read/Write">
+          <Comments>
+            <Comment Operand=".DATA.0"><![CDATA[Calibrate Light On]]></Comment>
+            <Comment Operand=".DATA.1"><![CDATA[To Anode Conveyor: Ready for Part]]></Comment>
+            <Comment Operand=".DATA.2"><![CDATA[To Anode Conveyor: Ready for Part to be Placed]]></Comment>
+            <Comment Operand=".DATA.3"><![CDATA[To Cathode Conveyor: Ready for Part]]></Comment>
+            <Comment Operand=".DATA.4"><![CDATA[To Cathode Conveyor: Ready for Part to be Placed]]></Comment>
+            <Comment Operand=".DATA.6"><![CDATA[Open Cathode LNL Gripper]]></Comment>
+            <Comment Operand=".DATA.7"><![CDATA[Close Cathode LNL Gripper]]></Comment>
+          </Comments>
+          <Data Format="L5K"><![CDATA[[128]]]></Data>
+          <Data Format="Decorated">
+            <Structure DataType="AB:1769_DO16:O:0">
+              <DataValueMember Name="Data" DataType="INT" Radix="Binary" Value="2#0000_0000_1000_0000" />
+            </Structure>
+          </Data>
+        </OutputTag>
+      </Connection>
+    </Connections>
+  </Communications>
+  <ExtendedProperties>
+    <public>
+      <ConfigID>150</ConfigID>
+    </public>
+  </ExtendedProperties>
+</Module>

@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="vbVisionPro" TagType="Base" DataType="ORT_Vision" Constant="false" ExternalAccess="Read/Write">
+  <Description><![CDATA[VisionPro Link]]></Description>
+  <Comments>
+    <Comment Operand=".DISPLAYINFO[0]"><![CDATA[Main]]></Comment>
+    <Comment Operand=".DISPLAYINFO[1]"><![CDATA[Cal]]></Comment>
+  </Comments>
+  <Data Format="L5K"><![CDATA[[[0,2],[0,2],[[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000]],[[[0,0,0,0,0,0,0,2,[[0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]],[0,0,0,0,0,0,0,0,0],[0,[1.42315972e+000,-2.16299844e+000,2.93415800e-002,9.99969482e-001,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[57,'C:\Software\Ingenio Stacker\Database\Images\Display\7.bmp$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[45,'C:\Stacker\Database\Images\Display\Image4.bmpisplay\Image4.bmp$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[51,'C:\Software\Ingenio Stacker\Database\Images\Archive$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,0,0,0],[0,0,0,0,0,0,0,0,0]],[[0,0,0,0,0,0,0,0,[[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]],[0,0,0,0,0,0,0,0,0],[0,[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,0,0,0],[0,0,0,0,0,0,0,0,0]],[[0,0,0,0,0,0,0,0,[[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]],[0,0,0,0,0,0,0,0,1],[0,[0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]],[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		],0,0,0,0],[0,0,0,0,0,0,0,0,0]]],[[4,620,171,464,349],[0,705,249,426,320],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]]]]></Data>
+  <Data Format="Decorated">
+    <Structure DataType="ORT_Vision">
+      <StructureMember Name="Requests" DataType="ORT_Vision_Requests">
+        <DataValueMember Name="iEdit" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="bExitRequest" DataType="BOOL" Value="0" />
+        <DataValueMember Name="bShowInTray" DataType="BOOL" Value="1" />
+      </StructureMember>
+      <StructureMember Name="Responses" DataType="ORT_Vision_Responses">
+        <DataValueMember Name="iEdit" DataType="DINT" Radix="Decimal" Value="0" />
+        <DataValueMember Name="bStartupInProgress" DataType="BOOL" Value="0" />
+        <DataValueMember Name="bStartupComplete" DataType="BOOL" Value="1" />
+        <DataValueMember Name="bHeartbeat" DataType="BOOL" Value="0" />
+      </StructureMember>
+      <StructureMember Name="CalibrationData" DataType="ORT_Vision_Calibration_Data">
+        <ArrayMember Name="dblCalibrationStoreRobotX" DataType="REAL" Dimensions="13" Radix="Float">
+          <Element Index="[0]" Value="0.0" />
+          <Element Index="[1]" Value="0.0" />
+          <Element Index="[2]" Value="0.0" />
+          <Element Index="[3]" Value="0.0" />
+          <Element Index="[4]" Value="0.0" />
+          <Element Index="[5]" Value="0.0" />
+          <Element Index="[6]" Value="0.0" />
+          <Element Index="[7]" Value="0.0" />
+          <Element Index="[8]" Value="0.0" />
+          <Element Index="[9]" Value="0.0" />
+          <Element Index="[10]" Value="0.0" />
+          <Element Index="[11]" Value="0.0" />
+          <Element Index="[12]" Value="0.0" />
+        </ArrayMember>
+        <ArrayMember Name="dblCalibrationStoreRobotY" DataType="REAL" Dimensions="13" Radix="Float">
+          <Element Index="[0]" Value="0.0" />
+          <Element Index="[1]" Value="0.0" />
+          <Element Index="[2]" Value="0.0" />
+          <Element Index="[3]" Value="0.0" />
+          <Element Index="[4]" Value="0.0" />
+          <Element Index="[5]" Value="0.0" />
+          <Element Index="[6]" Value="0.0" />
+          <Element Index="[7]" Value="0.0" />
+          <Element Index="[8]" Value="0.0" />
+          <Element Index="[9]" Value="0.0" />
+          <Element Index="[10]" Value="0.0" />
+          <Element Index="[11]" Value="0.0" />
+          <Element Index="[12]" Value="0.0" />
+        </ArrayMember>
+        <ArrayMember Name="dblCalibrationStoreCameraX" DataType="REAL" Dimensions="13" Radix="Float">
+          <Element Index="[0]" Value="0.0" />
+          <Element Index="[1]" Value="0.0" />
+          <Element Index="[2]" Value="0.0" />
+          <Element Index="[3]" Value="0.0" />
+          <Element Index="[4]" Value="0.0" />
+          <Element Index="[5]" Value="0.0" />
+          <Element Index="[6]" Value="0.0" />
+          <Element Index="[7]" Value="0.0" />
+          <Element Index="[8]" Value="0.0" />
+          <Element Index="[9]" Value="0.0" />
+          <Element Index="[10]" Value="0.0" />
+          <Element Index="[11]" Value="0.0" />
+          <Element Index="[12]" Value="0.0" />
+        </ArrayMember>
+        <ArrayMember Name="dblCalibrationStoreCameraY" DataType="REAL" Dimensions="13" Radix="Float">
+          <Element Index="[0]" Value="0.0" />
+          <Element Index="[1]" Value="0.0" />
+          <Element Index="[2]" Value="0.0" />
+          <Element Index="[3]" Value="0.0" />
+          <Element Index="[4]" Value="0.0" />
+          <Element Index="[5]" Value="0.0" />
+          <Element Index="[6]" Value="0.0" />
+          <Element Index="[7]" Value="0.0" />
+          <Element Index="[8]" Value="0.0" />
+          <Element Index="[9]" Value="0.0" />
+          <Element Index="[10]" Value="0.0" />
+          <Element Index="[11]" Value="0.0" />
+          <Element Index="[12]" Value="0.0" />
+        </ArrayMember>
+      </StructureMember>
+      <ArrayMember Name="Cameras" DataType="ORT_Vision_Camera" Dimensions="3">
+        <Element Index="[0]">
+          <Structure DataType="ORT_Vision_Camera">
+            <StructureMember Name="Requests" DataType="ORT_Vision_Camera_Requests">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iHalt" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bSave1" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2" DataType="BOOL" Value="1" />
+              <DataValueMember Name="bCompute13ngulation" DataType="BOOL" Value="0" />
+              <StructureMember Name="Inputs" DataType="ORT_Vision_Camera_Inputs">
+                <ArrayMember Name="dblInputs" DataType="REAL" Dimensions="15" Radix="Float">
+                  <Element Index="[0]" Value="0.0" />
+                  <Element Index="[1]" Value="0.0" />
+                  <Element Index="[2]" Value="0.0" />
+                  <Element Index="[3]" Value="0.0" />
+                  <Element Index="[4]" Value="0.0" />
+                  <Element Index="[5]" Value="0.0" />
+                  <Element Index="[6]" Value="0.0" />
+                  <Element Index="[7]" Value="0.0" />
+                  <Element Index="[8]" Value="0.0" />
+                  <Element Index="[9]" Value="0.0" />
+                  <Element Index="[10]" Value="0.0" />
+                  <Element Index="[11]" Value="0.0" />
+                  <Element Index="[12]" Value="0.0" />
+                  <Element Index="[13]" Value="0.0" />
+                  <Element Index="[14]" Value="0.0" />
+                </ArrayMember>
+                <ArrayMember Name="strInputs" DataType="STRING" Dimensions="1">
+                  <Element Index="[0]">
+                    <Structure DataType="STRING">
+                      <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                      <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                    </Structure>
+                  </Element>
+                </ArrayMember>
+              </StructureMember>
+            </StructureMember>
+            <StructureMember Name="Responses" DataType="ORT_Vision_Camera_Responses">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunComplete" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iImageCaptured" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bHeartbeat" DataType="BOOL" Value="0" />
+            </StructureMember>
+            <StructureMember Name="Results" DataType="ORT_Vision_Camera_Results">
+              <DataValueMember Name="iResultCode" DataType="DINT" Radix="Decimal" Value="0" />
+              <ArrayMember Name="dblResults" DataType="REAL" Dimensions="30" Radix="Float">
+                <Element Index="[0]" Value="1.4231597" />
+                <Element Index="[1]" Value="-2.1629984" />
+                <Element Index="[2]" Value="0.02934158" />
+                <Element Index="[3]" Value="0.9999695" />
+                <Element Index="[4]" Value="0.0" />
+                <Element Index="[5]" Value="0.0" />
+                <Element Index="[6]" Value="0.0" />
+                <Element Index="[7]" Value="0.0" />
+                <Element Index="[8]" Value="0.0" />
+                <Element Index="[9]" Value="0.0" />
+                <Element Index="[10]" Value="0.0" />
+                <Element Index="[11]" Value="0.0" />
+                <Element Index="[12]" Value="0.0" />
+                <Element Index="[13]" Value="0.0" />
+                <Element Index="[14]" Value="0.0" />
+                <Element Index="[15]" Value="0.0" />
+                <Element Index="[16]" Value="0.0" />
+                <Element Index="[17]" Value="0.0" />
+                <Element Index="[18]" Value="0.0" />
+                <Element Index="[19]" Value="0.0" />
+                <Element Index="[20]" Value="0.0" />
+                <Element Index="[21]" Value="0.0" />
+                <Element Index="[22]" Value="0.0" />
+                <Element Index="[23]" Value="0.0" />
+                <Element Index="[24]" Value="0.0" />
+                <Element Index="[25]" Value="0.0" />
+                <Element Index="[26]" Value="0.0" />
+                <Element Index="[27]" Value="0.0" />
+                <Element Index="[28]" Value="0.0" />
+                <Element Index="[29]" Value="0.0" />
+              </ArrayMember>
+              <ArrayMember Name="strResults" DataType="STRING" Dimensions="1">
+                <Element Index="[0]">
+                  <Structure DataType="STRING">
+                    <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                    <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                  </Structure>
+                </Element>
+              </ArrayMember>
+            </StructureMember>
+            <StructureMember Name="SavePaths" DataType="ORT_Vision_Camera_Save_Paths">
+              <StructureMember Name="strSave1Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSave2Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPrefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath1" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="57" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['C:\Software\Ingenio Stacker\Database\Images\Display\7.bmp']]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath2" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="45" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['C:\Stacker\Database\Images\Display\Image4.bmp']]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPath" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="51" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA['C:\Software\Ingenio Stacker\Database\Images\Archive']]></DataValueMember>
+              </StructureMember>
+              <DataValueMember Name="bSave1InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastInFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave1WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastWithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iMaxSave1Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSave2Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSaveLastImages" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+            <StructureMember Name="LiveSettings" DataType="ORT_Vision_Camera_Live_Settings">
+              <DataValueMember Name="bLiveHorizontalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveHorizontalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iLivePositionTop" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLivePositionLeft" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveHeight" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveWidth" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX2" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY2" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+          </Structure>
+        </Element>
+        <Element Index="[1]">
+          <Structure DataType="ORT_Vision_Camera">
+            <StructureMember Name="Requests" DataType="ORT_Vision_Camera_Requests">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iHalt" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bSave1" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bCompute13ngulation" DataType="BOOL" Value="0" />
+              <StructureMember Name="Inputs" DataType="ORT_Vision_Camera_Inputs">
+                <ArrayMember Name="dblInputs" DataType="REAL" Dimensions="15" Radix="Float">
+                  <Element Index="[0]" Value="0.0" />
+                  <Element Index="[1]" Value="0.0" />
+                  <Element Index="[2]" Value="0.0" />
+                  <Element Index="[3]" Value="0.0" />
+                  <Element Index="[4]" Value="0.0" />
+                  <Element Index="[5]" Value="0.0" />
+                  <Element Index="[6]" Value="0.0" />
+                  <Element Index="[7]" Value="0.0" />
+                  <Element Index="[8]" Value="0.0" />
+                  <Element Index="[9]" Value="0.0" />
+                  <Element Index="[10]" Value="0.0" />
+                  <Element Index="[11]" Value="0.0" />
+                  <Element Index="[12]" Value="0.0" />
+                  <Element Index="[13]" Value="0.0" />
+                  <Element Index="[14]" Value="0.0" />
+                </ArrayMember>
+                <ArrayMember Name="strInputs" DataType="STRING" Dimensions="1">
+                  <Element Index="[0]">
+                    <Structure DataType="STRING">
+                      <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                      <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                    </Structure>
+                  </Element>
+                </ArrayMember>
+              </StructureMember>
+            </StructureMember>
+            <StructureMember Name="Responses" DataType="ORT_Vision_Camera_Responses">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunComplete" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iImageCaptured" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bHeartbeat" DataType="BOOL" Value="0" />
+            </StructureMember>
+            <StructureMember Name="Results" DataType="ORT_Vision_Camera_Results">
+              <DataValueMember Name="iResultCode" DataType="DINT" Radix="Decimal" Value="0" />
+              <ArrayMember Name="dblResults" DataType="REAL" Dimensions="30" Radix="Float">
+                <Element Index="[0]" Value="0.0" />
+                <Element Index="[1]" Value="0.0" />
+                <Element Index="[2]" Value="0.0" />
+                <Element Index="[3]" Value="0.0" />
+                <Element Index="[4]" Value="0.0" />
+                <Element Index="[5]" Value="0.0" />
+                <Element Index="[6]" Value="0.0" />
+                <Element Index="[7]" Value="0.0" />
+                <Element Index="[8]" Value="0.0" />
+                <Element Index="[9]" Value="0.0" />
+                <Element Index="[10]" Value="0.0" />
+                <Element Index="[11]" Value="0.0" />
+                <Element Index="[12]" Value="0.0" />
+                <Element Index="[13]" Value="0.0" />
+                <Element Index="[14]" Value="0.0" />
+                <Element Index="[15]" Value="0.0" />
+                <Element Index="[16]" Value="0.0" />
+                <Element Index="[17]" Value="0.0" />
+                <Element Index="[18]" Value="0.0" />
+                <Element Index="[19]" Value="0.0" />
+                <Element Index="[20]" Value="0.0" />
+                <Element Index="[21]" Value="0.0" />
+                <Element Index="[22]" Value="0.0" />
+                <Element Index="[23]" Value="0.0" />
+                <Element Index="[24]" Value="0.0" />
+                <Element Index="[25]" Value="0.0" />
+                <Element Index="[26]" Value="0.0" />
+                <Element Index="[27]" Value="0.0" />
+                <Element Index="[28]" Value="0.0" />
+                <Element Index="[29]" Value="0.0" />
+              </ArrayMember>
+              <ArrayMember Name="strResults" DataType="STRING" Dimensions="1">
+                <Element Index="[0]">
+                  <Structure DataType="STRING">
+                    <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                    <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                  </Structure>
+                </Element>
+              </ArrayMember>
+            </StructureMember>
+            <StructureMember Name="SavePaths" DataType="ORT_Vision_Camera_Save_Paths">
+              <StructureMember Name="strSave1Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSave2Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPrefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath1" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath2" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPath" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <DataValueMember Name="bSave1InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastInFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave1WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastWithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iMaxSave1Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSave2Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSaveLastImages" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+            <StructureMember Name="LiveSettings" DataType="ORT_Vision_Camera_Live_Settings">
+              <DataValueMember Name="bLiveHorizontalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveHorizontalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iLivePositionTop" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLivePositionLeft" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveHeight" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveWidth" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX2" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY2" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+          </Structure>
+        </Element>
+        <Element Index="[2]">
+          <Structure DataType="ORT_Vision_Camera">
+            <StructureMember Name="Requests" DataType="ORT_Vision_Camera_Requests">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iHalt" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bSave1" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bCompute13ngulation" DataType="BOOL" Value="0" />
+              <StructureMember Name="Inputs" DataType="ORT_Vision_Camera_Inputs">
+                <ArrayMember Name="dblInputs" DataType="REAL" Dimensions="15" Radix="Float">
+                  <Element Index="[0]" Value="0.0" />
+                  <Element Index="[1]" Value="0.0" />
+                  <Element Index="[2]" Value="0.0" />
+                  <Element Index="[3]" Value="0.0" />
+                  <Element Index="[4]" Value="0.0" />
+                  <Element Index="[5]" Value="0.0" />
+                  <Element Index="[6]" Value="0.0" />
+                  <Element Index="[7]" Value="0.0" />
+                  <Element Index="[8]" Value="0.0" />
+                  <Element Index="[9]" Value="0.0" />
+                  <Element Index="[10]" Value="0.0" />
+                  <Element Index="[11]" Value="0.0" />
+                  <Element Index="[12]" Value="0.0" />
+                  <Element Index="[13]" Value="0.0" />
+                  <Element Index="[14]" Value="0.0" />
+                </ArrayMember>
+                <ArrayMember Name="strInputs" DataType="STRING" Dimensions="1">
+                  <Element Index="[0]">
+                    <Structure DataType="STRING">
+                      <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                      <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                    </Structure>
+                  </Element>
+                </ArrayMember>
+              </StructureMember>
+            </StructureMember>
+            <StructureMember Name="Responses" DataType="ORT_Vision_Camera_Responses">
+              <DataValueMember Name="iCalibrate" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iUpdateCalibration" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRun" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunComplete" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iRunContinuous" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iImageCaptured" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iSaveLast" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLive" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="bHeartbeat" DataType="BOOL" Value="1" />
+            </StructureMember>
+            <StructureMember Name="Results" DataType="ORT_Vision_Camera_Results">
+              <DataValueMember Name="iResultCode" DataType="DINT" Radix="Decimal" Value="0" />
+              <ArrayMember Name="dblResults" DataType="REAL" Dimensions="30" Radix="Float">
+                <Element Index="[0]" Value="0.0" />
+                <Element Index="[1]" Value="0.0" />
+                <Element Index="[2]" Value="0.0" />
+                <Element Index="[3]" Value="0.0" />
+                <Element Index="[4]" Value="0.0" />
+                <Element Index="[5]" Value="0.0" />
+                <Element Index="[6]" Value="0.0" />
+                <Element Index="[7]" Value="0.0" />
+                <Element Index="[8]" Value="0.0" />
+                <Element Index="[9]" Value="0.0" />
+                <Element Index="[10]" Value="0.0" />
+                <Element Index="[11]" Value="0.0" />
+                <Element Index="[12]" Value="0.0" />
+                <Element Index="[13]" Value="0.0" />
+                <Element Index="[14]" Value="0.0" />
+                <Element Index="[15]" Value="0.0" />
+                <Element Index="[16]" Value="0.0" />
+                <Element Index="[17]" Value="0.0" />
+                <Element Index="[18]" Value="0.0" />
+                <Element Index="[19]" Value="0.0" />
+                <Element Index="[20]" Value="0.0" />
+                <Element Index="[21]" Value="0.0" />
+                <Element Index="[22]" Value="0.0" />
+                <Element Index="[23]" Value="0.0" />
+                <Element Index="[24]" Value="0.0" />
+                <Element Index="[25]" Value="0.0" />
+                <Element Index="[26]" Value="0.0" />
+                <Element Index="[27]" Value="0.0" />
+                <Element Index="[28]" Value="0.0" />
+                <Element Index="[29]" Value="0.0" />
+              </ArrayMember>
+              <ArrayMember Name="strResults" DataType="STRING" Dimensions="1">
+                <Element Index="[0]">
+                  <Structure DataType="STRING">
+                    <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                    <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+                  </Structure>
+                </Element>
+              </ArrayMember>
+            </StructureMember>
+            <StructureMember Name="SavePaths" DataType="ORT_Vision_Camera_Save_Paths">
+              <StructureMember Name="strSave1Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSave2Prefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPrefix" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath1" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSavePath2" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <StructureMember Name="strSaveLastPath" DataType="STRING">
+                <DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0" />
+                <DataValueMember Name="DATA" DataType="STRING" Radix="ASCII"><![CDATA[]]></DataValueMember>
+              </StructureMember>
+              <DataValueMember Name="bSave1InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2InFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastInFolders" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave1WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSave2WithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bSaveLastWithTools" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iMaxSave1Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSave2Images" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iMaxSaveLastImages" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+            <StructureMember Name="LiveSettings" DataType="ORT_Vision_Camera_Live_Settings">
+              <DataValueMember Name="bLiveHorizontalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveHorizontalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="bLiveVerticalCrosshair2" DataType="BOOL" Value="0" />
+              <DataValueMember Name="iLivePositionTop" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLivePositionLeft" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveHeight" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveWidth" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionX2" DataType="DINT" Radix="Decimal" Value="0" />
+              <DataValueMember Name="iLiveCrosshairPositionY2" DataType="DINT" Radix="Decimal" Value="0" />
+            </StructureMember>
+          </Structure>
+        </Element>
+      </ArrayMember>
+      <ArrayMember Name="DisplayInfo" DataType="ORT_Vision_Display_Info" Dimensions="10">
+        <Element Index="[0]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="4" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="620" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="171" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="464" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="349" />
+          </Structure>
+        </Element>
+        <Element Index="[1]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="705" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="249" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="426" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="320" />
+          </Structure>
+        </Element>
+        <Element Index="[2]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[3]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[4]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[5]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[6]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[7]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[8]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+        <Element Index="[9]">
+          <Structure DataType="ORT_Vision_Display_Info">
+            <DataValueMember Name="Inspection" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenXPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="ScreenYPosition" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Width" DataType="DINT" Radix="Decimal" Value="0" />
+            <DataValueMember Name="Height" DataType="DINT" Radix="Decimal" Value="0" />
+          </Structure>
+        </Element>
+      </ArrayMember>
+    </Structure>
+  </Data>
+</Tag>

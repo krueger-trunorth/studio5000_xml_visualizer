@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="seqCanInsert" Type="RLL">
+  <Description><![CDATA[Can Insert Sequence]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqCanInsert.Reset)[CLR(seqCanInsert.Step) ,OTU(seqCanInsert.On) ,OTU(seqCanInsert.Fault) ,CLR(seqCanInsert.Fault_Code) ,OTU(seqCanInsert.Complete) ,OTU(seqCanInsert.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+
+]]></Comment>
+      <Text><![CDATA[[XIC(System.Running) ,XIC(System.Manual) XIO(System.Auto) ]XIC(Permissive_Alarm_OK_CanInsert)XIC(System.Homed)XIO(seqCanInsert.Fault)XIO(System.Pause_IP)XIC(seqCanInsert.On)XIO(System.Paused)OTE(seqCanInsert.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[If Not In Step Mode, Hold Step Next Off]]></Comment>
+      <Text><![CDATA[XIO(seqCanInsert.StepMode)OTU(seqCanInsert.StepNext);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 0:
+Move Can Insert Axis to Robot Handoff location]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,0)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIC(bitLoadSettingsComplete)XIC(bitLoadRecipeComplete)[[MOV(Settings.CanInsert_Speed_Default.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(srvCanInsertAxis.Locations[1],srvCanInsertAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[2].0) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(5,seqCanInsert.Step) ,OTU(bitScaryBarcodeInPosition) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 5:
+Vacuum Check]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,5)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][OTL(actCanInsertVac.ACT.Extend_Req) ,XIC(actCanInsertVac.ACT.Extend_Complete) [XIO(I_Can_Vac) [MOV(20,seqCanInsert.Step) ,OTL(Sig_CanInsertatHandoff) ,OTL(actCanInsertVac.ACT.Abort) ,OTU(seqCanInsert.StepNext) ] ,XIC(I_Can_Vac) [OTL(seqCanInsert.Fault) ,OTL(actCanInsertVac.ACT.Abort) ,OTL(Bit_CanInsert_Part_Stuck_Trigger) ,OTU(seqCanInsert.StepNext) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 20:
+Decision Maker Step, wait for stop or robot place]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,20)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][XIC(System.Stopping) XIO(Bit_WIP_InMachine) XIO(seqRobot.On) [MOV(0,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ,OTU(seqCanInsert.On) ,OTL(seqCanInsert.Complete) ] ,XIC(Sig_Robot_Ready_with_Can) XIO(Sig_CanInsertatHandoff) [MOV(30,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 30:
+Handoff Can from Robot to Can Station, also squeeze can open
+turn off vacuum onmce squeezed
+
+JEO - Added check of vacuum sensor for can insert vacuum.  05/17/17]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,30)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][[OTL(actCanInsertVac.ACT.Extend_Req) ,XIC(actCanInsertVac.ACT.Extend_Complete) OTL(actCanSqueeze.ACT.Retract_Req) ] ,[XIC(actCanSqueeze.ACT.Fault) ,XIC(actCanInsertVac.ACT.Extend_Complete) XIO(I_Can_Vac) ] [OTL(seqCanInsert.Fault) ,OTL(Bit_CanInsert_Part_Missing_Trigger) ] ,XIC(actCanInsertVac.ACT.Extend_Complete) XIC(I_Can_Vac) XIC(actCanSqueeze.ACT.Retract_Complete) [MOV(40,seqCanInsert.Step) ,OTU(Sig_Robot_Ready_with_Can) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 40:
+Wait for Robot Departed, check for can presence
+if not present, reinitialize
+notification lockout
+Turn off can vacuum to help other vac zones]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,40)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIC(Sig_Robot_DepartedfromCan)[OTL(actCanInsertVac.ACT.Abort) ,XIC(Sig_RobotCanPlaceOK) MOV(50,seqCanInsert.Step) ,XIO(Sig_RobotCanPlaceOK) [MOV(0,seqCanInsert.Step) ,OTL(Bit_CanInsert_Part_Missing_Trigger) ,OTL(seqCanInsert.Fault) ] ,OTU(bit_RetryBarcodeWithLight) ,OTU(seqCanInsert.StepNext) ,OTU(Sig_Robot_DepartedfromCan) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 50:
+Move to Barcode Read Position]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,50)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][[MOV(Settings.CanInsert_Speed_Default.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(srvCanInsertAxis.Locations[2],srvCanInsertAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[9].6) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(60,seqCanInsert.Step) ,RES(Machine_Counters[11]) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 63:
+Just retry - don't move]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,59)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][TON(tmrBarcodeDelay,?,?) ,XIC(tmrBarcodeDelay.DN) MOV(60,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 60:
+Read Barcode
+notification lockout]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,60)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][ONS(Machine_Oneshots[2].2) OTL(Barcode.Initialize) ,MOV(Settings.Barcode_Read_Retry_Limit.Value,Machine_Counters[11].PRE) ,XIC(Barcode.Faulted) [EQU(Machine_Counters[11].PRE,0) MOV(64,seqCanInsert.Step) ,NEQ(Machine_Counters[11].PRE,0) [CTU(Machine_Counters[11],?,?) ,XIC(Machine_Counters[11].DN) [XIC(bit_RetryBarcodeWithLight) MOV(64,seqCanInsert.Step) ,XIO(bit_RetryBarcodeWithLight) [RES(Machine_Counters[11]) ,OTL(bit_RetryBarcodeWithLight) ,OTL(O_Overhead_Light) ] ] ,XIO(Machine_Counters[11].DN) [MOV(59,seqCanInsert.Step) ,OTL(Barcode.Reset_Faults) ,OTU(Barcode.Read_Trigger) ,OTU(seqCanInsert.StepNext) ] ] ] ,XIO(Barcode.Initialize) XIC(Barcode.Complete) [COP(Barcode.Returned_String,StackData.Can_Layer.Placed_Layer_Trace_Data,1) ,OTU(O_Overhead_Light) ,MOV(70,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 62:
+Move and retry]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,62)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][[MOV(Settings.CanInsert_Speed_Default.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(-0.5,srvCanInsertAxis.Command.Move_Rel_Position) ] ,ONS(Machine_Oneshots[9].3) OTL(srvCanInsertAxis.Command.Move_Rel_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Rel_Req) XIC(srvCanInsertAxis.Servo.statMoveRelComplete) [MOV(60,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 64:
+Check if Scary Barcode Was in Position When Started]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,64)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][XIC(bitScaryBarcodeInPosition) [MOV(65,seqCanInsert.Step) ,OTU(O_Overhead_Light) ,OTL(Bit_Barcode_Read_Error) ,OTL(seqCanInsert.Fault) ,OTL(Barcode.Reset_Faults) ,COP(K_Str_Blank,StackData.HMI_Can_Manual_Entry_Data,1) ,OTU(seqCanInsert.StepNext) ] ,XIO(bitScaryBarcodeInPosition) [MOV(50,seqCanInsert.Step) ,RES(Machine_Counters[11]) ,XIC(SigRobotAtScaryBarcode) OTL(bitScaryBarcodeInPosition) ] ,OTU(seqCanInsert.StepNext) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 65:
+Manually enter barcode]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,65)[XIC(seqCanInsert.Perm) ,XIC(System.Paused) ][XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][[COP(Message_Can_Insert_Popup[0],HMI.To_HMI.Msgbox_Prompt,1) ,COP(Message_Can_Insert_Popup[1],HMI.To_HMI.Msgbox_Button_1,1) ,COP(Message_Can_Insert_Popup[2],HMI.To_HMI.Msgbox_Button_2,1) ,OTL(HMI.To_HMI.Show_MSG_2) ,XIC(HMI.From_HMI.Msgbox_Button_1) [NEQ(StackData.HMI_Can_Manual_Entry_Data,K_Str_Blank) [MOV(70,seqCanInsert.Step) ,COP(StackData.HMI_Can_Manual_Entry_Data,StackData.Can_Layer.Placed_Layer_Trace_Data,1) ,OTU(HMI.To_HMI.Show_MSG_2) ] ,OTU(HMI.From_HMI.Msgbox_Button_1) ] ,XIC(HMI.From_HMI.Msgbox_Button_2) [MOV(50,seqCanInsert.Step) ,OTU(HMI.From_HMI.Msgbox_Button_2) ,OTU(HMI.To_HMI.Show_MSG_2) ] ] ,OTE(HMI.To_HMI.Allow_Manual_Can_Entry) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 70:
+Open Can with Squeeze Cylinder (redundant, but ok)]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,70)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][OTL(actCanSqueeze.ACT.Retract_Req) ,MOV(2,StackData.Can_Layer.Layer_Status) ,XIC(actCanSqueeze.ACT.Fault) OTL(seqCanInsert.Fault) ,XIC(actCanSqueeze.ACT.Retract_Complete) [MOV(80,seqCanInsert.Step) ,OTL(Sig_Can_Readyfor_Stack) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 80:
+Move to Transfer Gripper Handoff Approach Location]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,80)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIO(Sig_Can_Readyfor_Stack)[[MOV(Machine_Run_Recipe.Can_Insert_Speed.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Can_InsertTo_Transfer.Value,srvCanInsertAxis.Locations[3]) ,MOV(srvCanInsertAxis.Locations[3],srvCanInsertAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[2].3) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(85,seqCanInsert.Step) ,OTL(Sig_Can_Insert_Done) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 85:
+Move Back for Finger Clearance]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,85)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIO(Sig_Can_Insert_Done)[[MOV(Machine_Run_Recipe.Can_Insert_Speed.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(srvCanInsertAxis.Locations[5],srvCanInsertAxis.Command.Move_Abs_Position) ] ,ONS(Machine_Oneshots[9].5) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(90,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 90:
+extend finger cylinder]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,90)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][OTL(actFinger.ACT.Extend_Req) ,XIC(actFinger.ACT.Fault) OTL(seqCanInsert.Fault) ,XIC(actFinger.ACT.Extend_Complete) [MOV(110,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 110:
+Move forward at recipe speed
+
+JEO - Updated logic to look at load cell high force rather than target force to trigger stop of servo since we move to position and not to force now. - 08/05/14]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,110)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][[MOV(Machine_Run_Recipe.Can_Insert_Speed.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(Machine_Run_Recipe.Can_InsertTo_Finger.Value,srvCanInsertAxis.Locations[4]) ,MOV(srvCanInsertAxis.Locations[4],srvCanInsertAxis.Command.Move_Abs_Position) ] ,TON(Machine_Timers[3],?,?) ,ONS(Machine_Oneshots[2].4) [OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,OTU(Temp_InsertTimeout) ] ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) [XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) ,XIC(Machine_Timers[3].DN) OTL(Temp_InsertTimeout) ,XIC(drvCanInsert.TorqueLimitStatus) ,GEQ(AI_LoadCell.AI.ScaledValue,Machine_Run_Recipe.Load_Cell_High.Value) ,GRT(AI_LoadCell.AI.ScaledValue,50) ] [MOV(120,seqCanInsert.Step) ,OTL(srvCanInsertAxis.Command.Stop_Req) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 120:
+Issue stop on can insert axis]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,120)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][ONS(Machine_Oneshots[2].5) OTL(srvCanInsertAxis.Command.Stop_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Stop_Req) XIC(srvCanInsertAxis.Servo.statStopComplete) [MOV(srvCanInsertAxis.Servo.statActualPosition,StackData.Position) ,MOV(srvCanInsertAxis.Servo.statActualPosition,Last_CanInsertPosition) ,MOV(AI_LoadCell.AI.ScaledValue,StackData.ForceReached) ,MOV(AI_LoadCell.AI.ScaledValue,Last_CanInsertForceReached) ,XIO(Temp_InsertTimeout) XIO(drvCanInsert.TorqueLimitStatus) OTL(StackData.Passed) ,[XIC(Temp_InsertTimeout) ,XIC(drvCanInsert.TorqueLimitStatus) ] [OTU(StackData.Passed) ,OTL(Bit_CanInsertFailed) ,OTL(seqCanInsert.Fault) ] ,MOV(150,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 150:
+Move Can Insert Axis back for Finger Clearance
+
+JEO - moved start of PIA signoff to this step - 05/13/15]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,150)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][ONS(onsBits[0].4) [MOV(Settings.CanInsert_Speed_Default.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(srvCanInsertAxis.Locations[5],srvCanInsertAxis.Command.Move_Abs_Position) ,EQU(Settings.Use_PIA.Value,1) OTL(bitPIA_Send_Signoff) ] ,ONS(Machine_Oneshots[2].10) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(160,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 160:
+Retract Finger Cylinder]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,160)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][OTL(actFinger.ACT.Retract_Req) ,XIC(actFinger.ACT.Fault) OTL(seqCanInsert.Fault) ,XIC(actFinger.ACT.Retract_Complete) [MOV(165,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 165:
+Move Can Insert Axis to Can Handoff]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,165)XIC(seqCanInsert.Perm)[[MOV(Settings.CanInsert_Speed_Default.Value,srvCanInsertAxis.Command.Speed) ,MOV(Settings.CanInsert_AccelDecel.Value,srvCanInsertAxis.Command.Accel) ,MOV(srvCanInsertAxis.Locations[1],srvCanInsertAxis.Command.Move_Abs_Position) ,OTL(actCanInsertVac.ACT.Extend_Req) ] ,ONS(Machine_Oneshots[2].6) OTL(srvCanInsertAxis.Command.Move_Abs_Req) ,XIC(srvCanInsertAxis.Servo.statFaulted) OTL(seqCanInsert.Fault) ,XIO(srvCanInsertAxis.Command.Move_Abs_Req) XIC(srvCanInsertAxis.Servo.statMoveAbsComplete) [MOV(167,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 167:
+Open Squeeze Cylinder]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,167)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ][XIC(Bit_CanSafeToPlace) [OTL(actCanSqueeze.ACT.Extend_Req) ,XIC(actCanSqueeze.ACT.Fault) OTL(seqCanInsert.Fault) ,XIC(actCanSqueeze.ACT.Extend_Complete) [MOV(170,seqCanInsert.Step) ,OTL(actCanInsertVac.ACT.Abort) ,OTU(seqCanInsert.StepNext) ,OTL(Sig_CanInsert_Ready_with_Can) ] ] ,XIO(Bit_CanSafeToPlace) [OTL(Bit_Robot_Part_CannotPlace) ,OTL(seqCanInsert.Fault) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 170:
+Wait for robot to pick can, when ready, transfer to robot]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,170)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIO(Sig_CanInsert_Ready_with_Can)[OTL(actCanInsertVac.ACT.Retract_Req) ,XIC(actCanInsertVac.ACT.Retract_Complete) [MOV(180,seqCanInsert.Step) ,OTU(Sig_CanHandoffStart) ,OTL(actCanInsertVac.ACT.Abort) ,OTU(seqCanInsert.StepNext) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Step 180:
+Wait for robot Depart]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,180)XIC(seqCanInsert.Perm)[XIC(System.Auto) ,XIC(seqCanInsert.StepNext) ]XIC(Sig_Robot_DepartedfromCan2)[MOV(0,seqCanInsert.Step) ,OTU(seqCanInsert.StepNext) ,OTU(Sig_Robot_DepartedfromCan2) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="rtLoadLocations" Type="RLL">
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[
+NOTE:  Robot locations 7 to 141 (can and Ins trays) are calculated when a recipe is loaded - so they are not loaded in load locations
+]]></Comment>
+      <Text><![CDATA[XIC(S:FS)[OTU(bitAllLocationsLoaded) ,CLR(Servo_Loc_LoadUp) ,CLR(intLocLoading) ,MOV(5000,tmrLocLoading[1].PRE) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[compute total locations and start loading them]]></Comment>
+      <Text><![CDATA[[CPT(total_locations,intNumLocServo[1]+intNumLocServo[2]+intNumLocServo[3]) ,GEQ(Servo_Loc_LoadUp,total_locations) [MOV(10000,tmrLocLoading[1].PRE) ,OTL(bitAllLocationsLoaded) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Save Location Delay
+]]></Comment>
+      <Text><![CDATA[[MOV(750,intLocSaveDelay) ,MOV(intLocSaveDelay,tmrLocLoading[2].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[3].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[4].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[5].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[6].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[7].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[9].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[12].PRE) ,MOV(intLocSaveDelay,tmrLocLoading[13].PRE) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Load Location Delay
+
+JEO - Changed timer 10 time to 750 to allow enough time for the HMI to see the state change of bit and for the PLC to receive all new data from the HMI.  Just being extra precatious here.  Scan rate of HMI is 250ms.  - 05/15/15]]></Comment>
+      <Text><![CDATA[[MOV(100,intLocLoadDelay) ,MOV(intLocLoadDelay,tmrLocLoading[8].PRE) ,MOV(750,tmrLocLoading[10].PRE) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(8,intNumLocServo[1]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(8,intNumLocServo[2]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(8,intNumLocServo[3]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[4]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[5]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[6]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[7]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[8]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[9]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[10]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[11]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[12]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[13]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[14]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[15]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[MOV(0,intNumLocServo[16]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[1],10,intLocServoLimits[1]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[2],20,intLocServoLimits[2]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[3],30,intLocServoLimits[3]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[4],40,intLocServoLimits[4]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[5],50,intLocServoLimits[5]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[6],60,intLocServoLimits[6]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[7],70,intLocServoLimits[7]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[8],80,intLocServoLimits[8]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[9],90,intLocServoLimits[9]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[10],100,intLocServoLimits[10]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[11],110,intLocServoLimits[11]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[12],120,intLocServoLimits[12]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[13],130,intLocServoLimits[13]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[14],140,intLocServoLimits[14]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[15],150,intLocServoLimits[15]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[ADD(intNumLocServo[16],160,intLocServoLimits[16]);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(srvCanInsertAxis.Servo.bitSaveLocation)ONS(intLocLoadONS.0)[MOV(srvCanInsertAxis.Servo.intTeachIndex,intLocLoadTempIndex[0]) ,MOV(srvCanInsertAxis.Locations[srvCanInsertAxis.Servo.intTeachIndex],dblLocLoadTempData[0]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(srvTransferGripperLinearAxis.Servo.bitSaveLocation)ONS(intLocLoadONS.1)[MOV(srvTransferGripperLinearAxis.Servo.intTeachIndex,intLocLoadTempIndex[1]) ,MOV(srvTransferGripperLinearAxis.Locations[srvTransferGripperLinearAxis.Servo.intTeachIndex],dblLocLoadTempData[1]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[XIC(srvTransferRotaryGripperAxis.Servo.bitSaveLocation)ONS(intLocLoadONS.2)[MOV(srvTransferRotaryGripperAxis.Servo.intTeachIndex,intLocLoadTempIndex[2]) ,MOV(srvTransferRotaryGripperAxis.Locations[srvTransferRotaryGripperAxis.Servo.intTeachIndex],dblLocLoadTempData[2]) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Reset Sequence]]></Comment>
+      <Text><![CDATA[XIC(seqLoadLoc.Reset)[CLR(seqLoadLoc.Step) ,CLR(intLocLoading) ,OTU(HMI.To_HMI.LoadServoLoc) ,OTU(HMI.To_HMI.SaveServoLoc) ,RES(tmrLocLoading[0]) ,OTU(seqLoadLoc.Reset) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[TON(tmrLocLoading[0],?,?);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Permissive for Sequence
+Not Faulted, No HMI Alarm
+
+
+]]></Comment>
+      <Text><![CDATA[XIC(tmrLocLoading[0].DN)XIO(Alarms[4].5)OTE(seqLoadLoc.Perm);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Check for Saving
+Default: Not saving jump to loading
+
+JEO - Added bypass of the 10 seconds timer if all locations are not already loaded so we can load them quicker.  - 05/15/15]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,0)XIC(seqLoadLoc.Perm)[XIO(System.Manual) TON(tmrLocLoading[1],?,?) ,[XIC(tmrLocLoading[1].DN) ,XIO(bitAllLocationsLoaded) ] MOV(10000,seqLoadLoc.Step) ,XIC(srvCanInsertAxis.Servo.bitSaveLocation) MOV(100,seqLoadLoc.Step) ,XIC(srvTransferGripperLinearAxis.Servo.bitSaveLocation) MOV(200,seqLoadLoc.Step) ,XIC(srvTransferRotaryGripperAxis.Servo.bitSaveLocation) MOV(300,seqLoadLoc.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send data to save
+]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,100)XIC(seqLoadLoc.Perm)[MOV(1,HMI.To_HMI.ServoNumber) ,MOV(intLocLoadTempIndex[0],HMI.To_HMI.ServoLocNumber) ,MOV(dblLocLoadTempData[0],HMI.To_HMI.SaveServoData) ,TON(tmrLocLoading[2],?,?) ,XIC(tmrLocLoading[2].DN) [OTL(HMI.To_HMI.SaveServoLoc) ,MOV(110,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[When data saved unlatch save bit and return]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,110)XIC(seqLoadLoc.Perm)XIC(HMI.From_HMI.ServoLocSaved)XIO(HMI.To_HMI.SaveServoLoc)[MOV(0,seqLoadLoc.Step) ,OTU(srvCanInsertAxis.Servo.bitSaveLocation) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send data to save]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,200)XIC(seqLoadLoc.Perm)[MOV(2,HMI.To_HMI.ServoNumber) ,MOV(intLocLoadTempIndex[1],HMI.To_HMI.ServoLocNumber) ,MOV(dblLocLoadTempData[1],HMI.To_HMI.SaveServoData) ,TON(tmrLocLoading[3],?,?) ,XIC(tmrLocLoading[3].DN) [OTL(HMI.To_HMI.SaveServoLoc) ,MOV(210,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[When data saved unlatch save bit and return]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,210)XIC(seqLoadLoc.Perm)XIC(HMI.From_HMI.ServoLocSaved)XIO(HMI.To_HMI.SaveServoLoc)[MOV(0,seqLoadLoc.Step) ,OTU(srvTransferGripperLinearAxis.Servo.bitSaveLocation) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send data to save]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,300)XIC(seqLoadLoc.Perm)[MOV(3,HMI.To_HMI.ServoNumber) ,MOV(intLocLoadTempIndex[2],HMI.To_HMI.ServoLocNumber) ,MOV(dblLocLoadTempData[2],HMI.To_HMI.SaveServoData) ,TON(tmrLocLoading[4],?,?) ,XIC(tmrLocLoading[4].DN) [OTL(HMI.To_HMI.SaveServoLoc) ,MOV(310,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[When data saved unlatch save bit and return]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,310)XIC(seqLoadLoc.Perm)XIC(HMI.From_HMI.ServoLocSaved)XIO(HMI.To_HMI.SaveServoLoc)[MOV(0,seqLoadLoc.Step) ,OTU(srvTransferRotaryGripperAxis.Servo.bitSaveLocation) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Location Loading
+Start with Servo 1 Location 0 = 10
+Loop back to Servo 1 Loc 0]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,10000)[LES(intLocLoading,10) MOV(10,intLocLoading) ,LIM(intLocServoLimits[1],intLocLoading,19) MOV(20,intLocLoading) ,LIM(intLocServoLimits[2],intLocLoading,29) MOV(30,intLocLoading) ,LIM(intLocServoLimits[3],intLocLoading,39) MOV(40,intLocLoading) ,LIM(intLocServoLimits[4],intLocLoading,49) MOV(50,intLocLoading) ,LIM(intLocServoLimits[5],intLocLoading,59) MOV(60,intLocLoading) ,LIM(intLocServoLimits[6],intLocLoading,69) MOV(70,intLocLoading) ,LIM(intLocServoLimits[7],intLocLoading,79) MOV(80,intLocLoading) ,LIM(intLocServoLimits[8],intLocLoading,89) MOV(90,intLocLoading) ,LIM(intLocServoLimits[9],intLocLoading,99) MOV(100,intLocLoading) ,LIM(intLocServoLimits[10],intLocLoading,109) MOV(110,intLocLoading) ,LIM(intLocServoLimits[11],intLocLoading,119) MOV(120,intLocLoading) ,LIM(intLocServoLimits[12],intLocLoading,129) MOV(130,intLocLoading) ,LIM(intLocServoLimits[13],intLocLoading,139) MOV(140,intLocLoading) ,LIM(intLocServoLimits[14],intLocLoading,149) MOV(150,intLocLoading) ,LIM(intLocServoLimits[15],intLocLoading,159) MOV(160,intLocLoading) ,LIM(intLocServoLimits[16],intLocLoading,1000) MOV(1001,intLocLoading) ,[LES(intLocLoading,1000) [MOV(10100,seqLoadLoc.Step) ,XIO(bitAllLocationsLoaded) ADD(Servo_Loc_LoadUp,1,Servo_Loc_LoadUp) ] ,GEQ(intLocLoading,1000) [MOV(0,seqLoadLoc.Step) ,XIO(bitAllLocationsLoaded) ADD(Servo_Loc_LoadUp,1,Servo_Loc_LoadUp) ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send Load Servo Request]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,10100)XIC(seqLoadLoc.Perm)[DIV(intLocLoading,10,HMI.To_HMI.ServoNumber) ,MOD(intLocLoading,10,HMI.To_HMI.ServoLocNumber) ,MOV(10110,seqLoadLoc.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqLoadLoc.Step,10110)[TON(tmrLocLoading[7],?,?) ,XIC(tmrLocLoading[7].DN) [OTL(HMI.To_HMI.LoadServoLoc) ,MOV(10120,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqLoadLoc.Step,10120)[XIC(seqLoadLoc.Perm) XIC(HMI.From_HMI.ServoLocLoaded) XIO(HMI.To_HMI.LoadServoLoc) TON(tmrLocLoading[8],?,?) ,XIC(tmrLocLoading[8].DN) [EQU(HMI.To_HMI.ServoNumber,1) MOV(HMI.From_HMI.ServoLocData,srvCanInsertAxis.Locations[HMI.To_HMI.ServoLocNumber]) ,EQU(HMI.To_HMI.ServoNumber,2) MOV(HMI.From_HMI.ServoLocData,srvTransferGripperLinearAxis.Locations[HMI.To_HMI.ServoLocNumber]) ,EQU(HMI.To_HMI.ServoNumber,3) MOV(HMI.From_HMI.ServoLocData,srvTransferRotaryGripperAxis.Locations[HMI.To_HMI.ServoLocNumber]) ,ADD(intLocLoading,1,intLocLoading) ,MOV(0,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Save All Sequence Steps
+Can only be run by changing the step number in the PLC
+]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Location Saving
+Start with Servo 1 Location 0 = 10
+When done reset sequence step to 10]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,20000)XIC(seqLoadLoc.Perm)XIO(System.Manual)[TON(tmrLocLoading[11],?,?) ,XIC(tmrLocLoading[11].DN) [LES(intLocLoading,10) MOV(10,intLocLoading) ,LIM(intLocServoLimits[1],intLocLoading,19) MOV(20,intLocLoading) ,LIM(intLocServoLimits[2],intLocLoading,29) MOV(30,intLocLoading) ,LIM(intLocServoLimits[3],intLocLoading,39) MOV(40,intLocLoading) ,LIM(intLocServoLimits[4],intLocLoading,49) MOV(50,intLocLoading) ,LIM(intLocServoLimits[5],intLocLoading,59) MOV(60,intLocLoading) ,LIM(intLocServoLimits[6],intLocLoading,69) MOV(70,intLocLoading) ,LIM(intLocServoLimits[7],intLocLoading,79) MOV(80,intLocLoading) ,LIM(intLocServoLimits[8],intLocLoading,89) MOV(90,intLocLoading) ,LIM(intLocServoLimits[9],intLocLoading,99) MOV(100,intLocLoading) ,LIM(intLocServoLimits[10],intLocLoading,109) MOV(110,intLocLoading) ,LIM(intLocServoLimits[11],intLocLoading,119) MOV(120,intLocLoading) ,LIM(intLocServoLimits[12],intLocLoading,129) MOV(130,intLocLoading) ,LIM(intLocServoLimits[13],intLocLoading,139) MOV(140,intLocLoading) ,LIM(intLocServoLimits[14],intLocLoading,149) MOV(150,intLocLoading) ,LIM(intLocServoLimits[15],intLocLoading,159) MOV(160,intLocLoading) ,LIM(intLocServoLimits[16],intLocLoading,1000) MOV(1001,intLocLoading) ,EQU(seqLoadLoc.Step,20000) [LES(intLocLoading,1000) MOV(20100,seqLoadLoc.Step) ,GEQ(intLocLoading,1000) [CLR(seqLoadLoc.Step) ,CLR(intLocLoading) ] ] ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[Send Save Servo Request]]></Comment>
+      <Text><![CDATA[EQU(seqLoadLoc.Step,20100)XIC(seqLoadLoc.Perm)[DIV(intLocLoading,10,HMI.To_HMI.ServoNumber) ,MOD(intLocLoading,10,HMI.To_HMI.ServoLocNumber) ,EQU(HMI.To_HMI.ServoNumber,1) MOV(srvCanInsertAxis.Locations[HMI.To_HMI.ServoLocNumber],HMI.To_HMI.SaveServoData) ,EQU(HMI.To_HMI.ServoNumber,2) MOV(srvTransferGripperLinearAxis.Locations[HMI.To_HMI.ServoLocNumber],HMI.To_HMI.SaveServoData) ,EQU(HMI.To_HMI.ServoNumber,3) MOV(srvTransferRotaryGripperAxis.Locations[HMI.To_HMI.ServoLocNumber],HMI.To_HMI.SaveServoData) ,MOV(20110,seqLoadLoc.Step) ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqLoadLoc.Step,20110)XIC(seqLoadLoc.Perm)[TON(tmrLocLoading[12],?,?) ,XIC(tmrLocLoading[12].DN) [OTL(HMI.To_HMI.SaveServoLoc) ,MOV(20120,seqLoadLoc.Step) ] ];]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[EQU(seqLoadLoc.Step,20120)XIC(seqLoadLoc.Perm)XIC(HMI.From_HMI.ServoLocSaved)XIO(HMI.To_HMI.SaveServoLoc)[ADD(intLocLoading,1,intLocLoading) ,MOV(20000,seqLoadLoc.Step) ];]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

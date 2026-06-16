@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module Name="I3" CatalogNumber="1769-IQ32/A" Vendor="1" ProductType="7" ProductCode="68" Major="3" Minor="1" ParentModule="Local" ParentModPortId="1" Inhibited="false" MajorFault="true">
+  <EKey State="CompatibleModule" />
+  <Ports>
+    <Port Id="1" Address="3" Type="Compact" Upstream="true" />
+  </Ports>
+  <Communications CommMethod="536870913">
+    <ConfigData ConfigSize="4">
+      <Data Format="L5K"><![CDATA[[8,102,1]]]></Data>
+    </ConfigData>
+    <Connections>
+      <Connection Name="Input" RPI="20000" Type="Input" EventID="0" ProgrammaticallySendEventTrigger="false" Unicast="false">
+        <InputTag ExternalAccess="Read/Write">
+          <Comments>
+            <Comment Operand=".DATA.0"><![CDATA[Right Can Drawer Rear Tray Installed]]></Comment>
+            <Comment Operand=".DATA.1"><![CDATA[Left Insulator Drawer Front Tray Installed]]></Comment>
+            <Comment Operand=".DATA.2"><![CDATA[Left Insulator Drawer Rear Tray Installed]]></Comment>
+            <Comment Operand=".DATA.3"><![CDATA[Right Insulator Drawer Front Tray Installed]]></Comment>
+            <Comment Operand=".DATA.4"><![CDATA[Right Insulator Drawer Rear Tray Installed]]></Comment>
+            <Comment Operand=".DATA.5"><![CDATA[PM Left Tray Installed]]></Comment>
+            <Comment Operand=".DATA.6"><![CDATA[PM Right Tray Installed]]></Comment>
+            <Comment Operand=".DATA.7"><![CDATA[Left Can Drawer Locked]]></Comment>
+            <Comment Operand=".DATA.8"><![CDATA[Right Can Drawer Locked]]></Comment>
+            <Comment Operand=".DATA.9"><![CDATA[Left Insulator Drawer Locked]]></Comment>
+            <Comment Operand=".DATA.10"><![CDATA[Right Insulator Drawer Locked]]></Comment>
+            <Comment Operand=".DATA.11"><![CDATA[PM Drawer Locked]]></Comment>
+            <Comment Operand=".DATA.12"><![CDATA[LHS Mylar PB Pressed]]></Comment>
+            <Comment Operand=".DATA.13"><![CDATA[RHS Mylar PB Pressed]]></Comment>
+            <Comment Operand=".DATA.14"><![CDATA[Stack Platform PB Pressed]]></Comment>
+            <Comment Operand=".DATA.15"><![CDATA[Anode Lift and Locate Raised]]></Comment>
+            <Comment Operand=".DATA.16"><![CDATA[Anode Lift and Locate Lowered]]></Comment>
+            <Comment Operand=".DATA.17"><![CDATA[Cathode Lift and Locate Raised]]></Comment>
+            <Comment Operand=".DATA.18"><![CDATA[Cathode Lift and Locate Lowered]]></Comment>
+            <Comment Operand=".DATA.19"><![CDATA[Anode Detected Present]]></Comment>
+            <Comment Operand=".DATA.20"><![CDATA[Cathode Detected Present]]></Comment>
+            <Comment Operand=".DATA.21"><![CDATA[Insulator Back Vacuum]]></Comment>
+            <Comment Operand=".DATA.22"><![CDATA[spare]]></Comment>
+            <Comment Operand=".DATA.23"><![CDATA[Insulator Platform Vacuum]]></Comment>
+            <Comment Operand=".DATA.24"><![CDATA[Stack Fixture Vacuum]]></Comment>
+            <Comment Operand=".DATA.25"><![CDATA[From Anode Conveyor: Part Ready For Processing]]></Comment>
+            <Comment Operand=".DATA.26"><![CDATA[From Anode   Conveyor: Conveyor Received Part]]></Comment>
+            <Comment Operand=".DATA.27"><![CDATA[From Anode   Conveyor: Conveyor Running]]></Comment>
+            <Comment Operand=".DATA.28"><![CDATA[From Cathode Conveyor: Part Ready For Processing]]></Comment>
+            <Comment Operand=".DATA.29"><![CDATA[From Cathode Conveyor: Conveyor Received Part]]></Comment>
+            <Comment Operand=".DATA.30"><![CDATA[From Cathode Conveyor: Conveyor Running]]></Comment>
+            <Comment Operand=".DATA.31"><![CDATA[Detects Can Platform Configuration, whether its configured for SL or LL products
+1 = LL, 0 = SL]]></Comment>
+          </Comments>
+          <Data Format="Decorated">
+            <Structure DataType="AB:1769_DI32:I:0">
+              <DataValueMember Name="Fault" DataType="DINT" Radix="Binary" Value="2#0000_0000_0000_0000_0000_0000_0000_0000" />
+              <DataValueMember Name="Data" DataType="DINT" Radix="Binary" Value="2#0000_0000_0001_0101_0000_1111_1100_1000" />
+            </Structure>
+          </Data>
+        </InputTag>
+      </Connection>
+    </Connections>
+  </Communications>
+  <ExtendedProperties>
+    <public>
+      <ConfigID>400</ConfigID>
+    </public>
+  </ExtendedProperties>
+</Module>

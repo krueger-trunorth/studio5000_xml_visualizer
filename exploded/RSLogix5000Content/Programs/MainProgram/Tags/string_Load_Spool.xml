@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="string_Load_Spool" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
+  <Data Format="L5K"><![CDATA[[49,'Spool Not Detected - Press Load Spool to Continue$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
+		]]]></Data>
+  <Data Format="String" Length="49"><![CDATA['Spool Not Detected - Press Load Spool to Continue']]></Data>
+</Tag>

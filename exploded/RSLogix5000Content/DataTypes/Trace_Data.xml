@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataType Name="Trace_Data" Family="NoFamily" Class="User">
+  <Description><![CDATA[Cathode, B or T anode, or discrete]]></Description>
+  <Members>
+    <Member Name="HMI_Insulator_Data_QueueR" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Trace]]></Description>
+    </Member>
+    <Member Name="HMI_Insulator_Data_QueueL" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Trace]]></Description>
+    </Member>
+    <Member Name="HMI_Discrete_Data_Queue" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Trace]]></Description>
+    </Member>
+    <Member Name="HMI_Can_Manual_Entry_Data" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Trace]]></Description>
+    </Member>
+    <Member Name="Can_Layer" DataType="LayerData" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Can Layer]]></Description>
+    </Member>
+    <Member Name="Insulator_Layer" DataType="LayerData" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Insulator Layer]]></Description>
+    </Member>
+    <Member Name="Layer" DataType="LayerData" Dimension="16" Radix="NullType" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Cathode, B or T anode, or discrete]]></Description>
+    </Member>
+    <Member Name="Anode_Data_from_RFID" DataType="RFID_Cfg" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Cathode_Data_from_RFID" DataType="RFID_Cfg" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
+    <Member Name="Current_Stack_Layer" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[Layer Counter]]></Description>
+    </Member>
+    <Member Name="ZZZZZZZZZZTrace_Data10" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write" />
+    <Member Name="Passed" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZTrace_Data10" BitNumber="0" ExternalAccess="Read/Write">
+      <Description><![CDATA[Pass/Fail]]></Description>
+    </Member>
+    <Member Name="ForceReached" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[% reached]]></Description>
+    </Member>
+    <Member Name="Position" DataType="REAL" Dimension="0" Radix="Float" Hidden="false" ExternalAccess="Read/Write">
+      <Description><![CDATA[mm reached]]></Description>
+    </Member>
+  </Members>
+</DataType>

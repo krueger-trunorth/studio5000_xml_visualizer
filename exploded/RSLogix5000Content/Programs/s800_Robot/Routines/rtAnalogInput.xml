@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Routine Name="rtAnalogInput" Type="RLL">
+  <Description><![CDATA[Turns analog INT into real engineering value]]></Description>
+  <RLLContent>
+    <Rung Type="N">
+      <Comment><![CDATA[All below rungs call the update routines getting the engineering values of the raw analog values
+based on the calibrated min/max values
+
+All below rungs interact with the analog inputs screen for calibration of 
+min/max values]]></Comment>
+      <Text><![CDATA[NOP();]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[SUB(Local:6:I.Ch0Data,0,test2);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Text><![CDATA[AnalogInput(AI_LoadCell.AI,test2,AI_LoadCell.AI.Cal_Min_PB,AI_LoadCell.AI.Cal_Max_PB,AI_LoadCell.AI.Min_Cal_Point,AI_LoadCell.AI.Max_Cal_Point);]]></Text>
+    </Rung>
+    <Rung Type="N">
+      <Comment><![CDATA[JEO - Updated to look at the load cell high recipe paremeter instead of the target force since we don't move to force anymore.  We move to position and stop if force is exceeded. - 08/05/14
+]]></Comment>
+      <Text><![CDATA[EQU(seqCanInsert.Step,110)[CMP(AI_LoadCell.AI.ScaledValue>Machine_Run_Recipe.Load_Cell_High.Value) ,GRT(AI_LoadCell.AI.ScaledValue,50) ]OTL(srvCanInsertAxis.Command.Stop_Req);]]></Text>
+    </Rung>
+  </RLLContent>
+</Routine>

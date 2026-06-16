@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tag Name="Machine_Oneshots" TagType="Base" DataType="DINT" Dimensions="11" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+  <Comments>
+    <Comment Operand="[0].0"><![CDATA[ONS 0]]></Comment>
+    <Comment Operand="[0].1"><![CDATA[ONS 1]]></Comment>
+    <Comment Operand="[0].2"><![CDATA[ONS 2]]></Comment>
+    <Comment Operand="[0].3"><![CDATA[ONS 3]]></Comment>
+    <Comment Operand="[0].4"><![CDATA[ONS 4]]></Comment>
+    <Comment Operand="[0].5"><![CDATA[ONS 5]]></Comment>
+    <Comment Operand="[0].6"><![CDATA[ONS 6]]></Comment>
+    <Comment Operand="[0].7"><![CDATA[ONS 7]]></Comment>
+    <Comment Operand="[0].8"><![CDATA[ONS 8]]></Comment>
+    <Comment Operand="[0].9"><![CDATA[ONS 9]]></Comment>
+    <Comment Operand="[0].10"><![CDATA[ONS 10]]></Comment>
+    <Comment Operand="[0].11"><![CDATA[ONS 11]]></Comment>
+    <Comment Operand="[0].12"><![CDATA[ONS 12]]></Comment>
+    <Comment Operand="[0].13"><![CDATA[ONS 13]]></Comment>
+    <Comment Operand="[0].14"><![CDATA[ONS 14]]></Comment>
+    <Comment Operand="[0].15"><![CDATA[ONS 15]]></Comment>
+    <Comment Operand="[0].16"><![CDATA[ONS 16]]></Comment>
+    <Comment Operand="[0].17"><![CDATA[ONS 17]]></Comment>
+    <Comment Operand="[0].18"><![CDATA[ONS 18]]></Comment>
+    <Comment Operand="[0].19"><![CDATA[ONS 19]]></Comment>
+    <Comment Operand="[0].20"><![CDATA[ONS 20]]></Comment>
+    <Comment Operand="[0].21"><![CDATA[ONS 21]]></Comment>
+    <Comment Operand="[0].22"><![CDATA[ONS 22]]></Comment>
+    <Comment Operand="[0].30"><![CDATA[ONS 30]]></Comment>
+    <Comment Operand="[6].0"><![CDATA[ons 0]]></Comment>
+    <Comment Operand="[6].1"><![CDATA[ons 1]]></Comment>
+    <Comment Operand="[6].2"><![CDATA[ons 2]]></Comment>
+    <Comment Operand="[9].1"><![CDATA[ONS 2]]></Comment>
+    <Comment Operand="[9].2"><![CDATA[ONS 3]]></Comment>
+  </Comments>
+  <Data Format="L5K"><![CDATA[[575492,7936,0,49152,0,0,4,0,2,0,0]]]></Data>
+  <Data Format="Decorated">
+    <Array DataType="DINT" Dimensions="11" Radix="Decimal">
+      <Element Index="[0]" Value="575492" />
+      <Element Index="[1]" Value="7936" />
+      <Element Index="[2]" Value="0" />
+      <Element Index="[3]" Value="49152" />
+      <Element Index="[4]" Value="0" />
+      <Element Index="[5]" Value="0" />
+      <Element Index="[6]" Value="4" />
+      <Element Index="[7]" Value="0" />
+      <Element Index="[8]" Value="2" />
+      <Element Index="[9]" Value="0" />
+      <Element Index="[10]" Value="0" />
+    </Array>
+  </Data>
+</Tag>
