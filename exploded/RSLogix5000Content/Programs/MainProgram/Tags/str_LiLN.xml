@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="str_LiLN" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[[5,'1,1,11234,12341,BATB924-STP0001,BATB924-STP0001$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="5"><![CDATA['1,1,1']]></Data>
-</Tag>

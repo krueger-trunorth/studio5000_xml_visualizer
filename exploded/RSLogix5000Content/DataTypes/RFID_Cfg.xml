@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<DataType Name="RFID_Cfg" Family="NoFamily" Class="User">
-  <Members>
-    <Member Name="TagIDs" DataType="STRING" Dimension="25" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
-    <Member Name="Start" DataType="DINT" Dimension="25" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
-    <Member Name="Length" DataType="DINT" Dimension="25" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write" />
-    <Member Name="Data" DataType="STRING" Dimension="25" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
-  </Members>
-</DataType>

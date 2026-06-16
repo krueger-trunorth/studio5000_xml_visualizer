@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="err_count" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Counts The Total # Of Errors Found During Data Check Subroutines]]></Description>
-  <Data Format="L5K"><![CDATA[0]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="0" />
-  </Data>
-</Tag>

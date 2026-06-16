@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="k_pass_string" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[DO NOT CHANGE THE VALUE OF THIS TAG
-Used to hard-code the code into element zero of the machine reject array.]]></Description>
-  <Data Format="L5K"><![CDATA[[4,'Pass$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="4"><![CDATA['Pass']]></Data>
-</Tag>

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="str_Collector_LNs" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[[35,'BATB664-STP0068,BATB664-STP0068,1,1$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="35"><![CDATA['BATB664-STP0068,BATB664-STP0068,1,1']]></Data>
-</Tag>

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="String_Abort" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[[35,'Abort or Home to Initialize Machine$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="35"><![CDATA['Abort or Home to Initialize Machine']]></Data>
-</Tag>

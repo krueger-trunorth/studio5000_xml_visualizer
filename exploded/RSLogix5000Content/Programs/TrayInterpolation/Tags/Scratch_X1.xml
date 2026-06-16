@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Scratch_X1" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[4.05017914e+002]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="REAL" Radix="Float" Value="405.0179" />
-  </Data>
-</Tag>

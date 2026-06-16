@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Sig_Robot_Stretch_Done" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Handshake from robot to transfer gripper]]></Description>
-  <Data Format="L5K"><![CDATA[0]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="BOOL" Radix="Decimal" Value="0" />
-  </Data>
-</Tag>

@@ -1,2 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Di_CathodePartInCassetteSensor" TagType="Alias" Radix="Decimal" AliasFor="DigitalInput4.7" ExternalAccess="Read/Write" />

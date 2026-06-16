@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Message_Robot_Fault" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[[44,'Error -910: *E-STOP from user E-STOP button*$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="44"><![CDATA['Error -910: *E-STOP from user E-STOP button*']]></Data>
-</Tag>

@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="RobotIndex_Insulator_Tray" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[189]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="189" />
-  </Data>
-</Tag>

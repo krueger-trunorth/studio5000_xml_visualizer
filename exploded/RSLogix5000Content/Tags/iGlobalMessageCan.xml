@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="iGlobalMessageCan" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[1]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="1" />
-  </Data>
-</Tag>

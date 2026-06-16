@@ -3,3 +3,6 @@ pandas>=2.0
 dash-mantine-components>=2.7
 dash-iconify
 openpyxl
+diskcache
+multiprocess
+psutil

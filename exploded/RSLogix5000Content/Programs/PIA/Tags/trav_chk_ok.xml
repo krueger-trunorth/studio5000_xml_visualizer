@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="trav_chk_ok" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Traveler Data Check OK Status
-(On = OK)]]></Description>
-  <Data Format="L5K"><![CDATA[1]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="BOOL" Radix="Decimal" Value="1" />
-  </Data>
-</Tag>

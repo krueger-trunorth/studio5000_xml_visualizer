@@ -1,5 +1,0 @@
-attr_Constant,attr_DataType,attr_ExternalAccess,attr_Format,attr_Name,attr_Radix,attr_TagType,attr_Value,path,tag,text
-false,BOOL,Read/Write,,bitOperatorSelectRecipe,Decimal,Base,,Tag,Tag,
-,,,L5K,,,,,Tag/Data,Data,0
-,,,Decorated,,,,,Tag/Data,Data,
-,BOOL,,,,Decimal,,0,Tag/Data/DataValue,DataValue,

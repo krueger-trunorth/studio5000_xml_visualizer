@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="intTimeOffsetAllowed" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Seconds]]></Description>
-  <Data Format="L5K"><![CDATA[30]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="30" />
-  </Data>
-</Tag>

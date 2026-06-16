@@ -1,2 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="DigitalInput4" TagType="Alias" Radix="Decimal" AliasFor="Local:8:I.Data" ExternalAccess="Read/Write" />

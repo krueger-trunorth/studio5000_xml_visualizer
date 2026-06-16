@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<DataType Name="ORT_AnalogInput" Family="NoFamily" Class="User">
-  <Description><![CDATA[OakRiver Reserved Technology]]></Description>
-  <Members>
-    <Member Name="Description" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
-    <Member Name="Units" DataType="STRING" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
-    <Member Name="AI" DataType="AnalogInput" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write" />
-  </Members>
-</DataType>

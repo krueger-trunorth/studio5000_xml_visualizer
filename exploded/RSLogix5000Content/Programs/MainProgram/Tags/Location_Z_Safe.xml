@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Location_Z_Safe" TagType="Base" DataType="REAL" Radix="Float" Constant="true" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[3.80000000e+002]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="REAL" Radix="Float" Value="380.0" />
-  </Data>
-</Tag>

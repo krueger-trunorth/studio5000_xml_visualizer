@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="I_Can_Platform_Type" TagType="Alias" Radix="Decimal" AliasFor="Local:3:I.Data.31" ExternalAccess="Read/Write">
-  <Description><![CDATA[Detects Can Platform Configuration, whether its configured for SL or LL products
-1 = LL, 0 = SL]]></Description>
-</Tag>

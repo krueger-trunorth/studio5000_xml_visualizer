@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="lintCurrentTimeStamp" TagType="Base" DataType="LINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[1586371051138206]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="LINT" Radix="Decimal" Value="1586371051138206" />
-  </Data>
-</Tag>

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="k_blank_string" TagType="Base" DataType="STRING" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[DO NOT CHANGE DATA IN THIS TAG
-Blank String]]></Description>
-  <Data Format="L5K"><![CDATA[[0,'$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00$00'
-		]]]></Data>
-  <Data Format="String" Length="0"><![CDATA['']]></Data>
-</Tag>

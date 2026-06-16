@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Bit_Enable_Main_Screen_Vision" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Hides main screen vision display]]></Description>
-  <Data Format="L5K"><![CDATA[1]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="BOOL" Radix="Decimal" Value="1" />
-  </Data>
-</Tag>

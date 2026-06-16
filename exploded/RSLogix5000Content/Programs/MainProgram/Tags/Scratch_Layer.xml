@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Scratch_Layer" TagType="Base" DataType="INT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[18]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="INT" Radix="Decimal" Value="18" />
-  </Data>
-</Tag>

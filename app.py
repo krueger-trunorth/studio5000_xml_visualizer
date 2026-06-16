@@ -3,6 +3,7 @@
 Run with:  python app.py
 """
 
+import base64
 import io
 import re
 import xml.dom.minidom as minidom
@@ -11,12 +12,14 @@ from pathlib import Path
 
 import dash
 import dash_mantine_components as dmc
+import diskcache
 import pandas as pd
-from dash import Input, Output, State, dcc, html
+from dash import DiskcacheManager, Input, Output, State, dcc, html
 from dash_iconify import DashIconify
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
+from acd_pipeline import PipelineError, import_acd
 from xml_to_csv import (
     FAULT_FIELDS,
     fault_row,
@@ -25,7 +28,47 @@ from xml_to_csv import (
     tag_description,
 )
 
-ROOT = (Path(__file__).parent / "exploded").resolve()
+# Per-project cache. Each imported ACD lands in cache/{project}/ with its copy
+# of the ACD, the intermediate L5X, the built markup file, and the exploded tree
+# (exploded/RSLogix5000Content/...). The exploded tree is the browse root.
+CACHE_DIR = (Path(__file__).parent / "cache").resolve()
+
+
+def project_dir(project: str) -> Path:
+    """Absolute path to a project's cache folder."""
+    return (CACHE_DIR / project).resolve()
+
+
+def exploded_root(project: str) -> Path:
+    """Browse root (the exploded tree) for a project."""
+    return project_dir(project) / "exploded"
+
+
+def markup_path(project: str) -> Path:
+    """Path to a project's persisted content-search markup file."""
+    return project_dir(project) / f"markup_{project}.xml"
+
+
+def list_projects() -> list[str]:
+    """Project names under cache/ that contain an exploded/ tree, sorted."""
+    if not CACHE_DIR.is_dir():
+        return []
+    names = [
+        entry.name
+        for entry in CACHE_DIR.iterdir()
+        if entry.is_dir() and (entry / "exploded").is_dir()
+    ]
+    return sorted(names, key=str.lower)
+
+
+def default_project() -> str | None:
+    """Most recently modified project, or None when the cache is empty."""
+    projects = list_projects()
+    if not projects:
+        return None
+    return max(projects, key=lambda p: project_dir(p).stat().st_mtime)
+
+
 SETTINGS_REL = "RSLogix5000Content/Tags/Settings.xml"
 RECIPE_REL = "RSLogix5000Content/Tags/Machine_Run_Recipe.xml"
 MAINPROGRAM_TAGS_REL = "RSLogix5000Content/Programs/MainProgram/Tags"
@@ -40,12 +83,10 @@ MAX_SEARCH_RESULTS = 100
 MAX_RECENT_SEARCHES = 10
 
 # Content search ------------------------------------------------------------
-# A separate directory (a sibling of `exploded/`, so it never shows up in the
-# file tree) holds a single annotated "markup" file. Every exploded source
-# file is concatenated into it, each chunk prefixed by an `@@FILE` comment that
-# links the text back to the exploded file it came from. The index is built
-# once, cached in memory, and rebuilt only when the exploded tree changes.
-INDEX_DIR = (Path(__file__).parent / "search_index").resolve()
+# Each project's markup file (cache/{project}/markup_{project}.xml) concatenates
+# every exploded source file, each chunk prefixed by an `@@FILE` comment that
+# links the text back to the exploded file it came from. The index is built once
+# per project, cached in memory, and rebuilt only when the exploded tree changes.
 FILE_MARKER = "@@FILE"  # token used inside the markup comment, e.g. <!-- @@FILE rel -->
 SEARCHABLE_EXTS = {".xml", ".st", ".yaml"}  # source files; derived csv/ is skipped
 MAX_CONTENT_FILES = 100        # max files listed in the results dropdown
@@ -53,8 +94,8 @@ MAX_SNIPPETS_PER_FILE = 5      # max matching lines previewed per file
 MAX_CONTENT_MATCHES = 2000     # global cap so a broad search can't run away
 MAX_SNIPPET_LEN = 200          # truncate long matching lines for display
 
-# Cached index: {"signature": <tuple>, "files": [{"rel", "text"}, ...]}.
-_CONTENT_INDEX: dict = {"signature": None, "files": []}
+# Per-project cached index: {project: {"signature": <tuple>, "files": [...]}}.
+_CONTENT_INDEX: dict[str, dict] = {}
 
 CHEVRON_OPEN = "\u25BE"   # down-pointing triangle
 CHEVRON_CLOSED = "\u25B8" # right-pointing triangle
@@ -62,27 +103,27 @@ ICON_DIR = "\U0001F4C1"   # folder
 ICON_FILE = "\U0001F4C4"  # page
 
 
-def safe_resolve(rel_path: str) -> Path:
-    """Resolve a user-supplied relative path against ROOT.
+def safe_resolve(rel_path: str, root: Path) -> Path:
+    """Resolve a user-supplied relative path against `root`.
 
-    Raises ValueError if the resolved path escapes ROOT (path traversal guard).
+    Raises ValueError if the resolved path escapes `root` (path traversal guard).
     """
     rel_path = (rel_path or "").strip().lstrip("/\\")
-    candidate = (ROOT / rel_path).resolve()
-    if candidate != ROOT and ROOT not in candidate.parents:
+    candidate = (root / rel_path).resolve()
+    if candidate != root and root not in candidate.parents:
         raise ValueError(f"Path escapes browse root: {rel_path!r}")
     return candidate
 
 
-def list_dir(rel_path: str):
+def list_dir(rel_path: str, root: Path):
     """Return (dirs, files) for the directory at rel_path, sorted by name.
 
-    Each entry is a dict with 'name' and 'rel' (path relative to ROOT).
+    Each entry is a dict with 'name' and 'rel' (path relative to `root`).
     """
-    directory = safe_resolve(rel_path)
+    directory = safe_resolve(rel_path, root)
     dirs, files = [], []
     for entry in sorted(directory.iterdir(), key=lambda p: p.name.lower()):
-        rel = entry.relative_to(ROOT).as_posix()
+        rel = entry.relative_to(root).as_posix()
         item = {"name": entry.name, "rel": rel}
         if entry.is_dir():
             dirs.append(item)
@@ -91,14 +132,14 @@ def list_dir(rel_path: str):
     return dirs, files
 
 
-def all_dirs() -> list[str]:
-    """Every directory under ROOT (relative paths), for 'Expand all'."""
-    return [p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_dir()]
+def all_dirs(root: Path) -> list[str]:
+    """Every directory under `root` (relative paths), for 'Expand all'."""
+    return [p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_dir()]
 
 
-def all_files() -> list[str]:
-    """Every file under ROOT (relative paths), used by the search index."""
-    return sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_file())
+def all_files(root: Path) -> list[str]:
+    """Every file under `root` (relative paths), used by the search index."""
+    return sorted(p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file())
 
 
 def ancestors_of(rel: str) -> list[str]:
@@ -107,14 +148,14 @@ def ancestors_of(rel: str) -> list[str]:
     return ["/".join(parts[: i + 1]) for i in range(len(parts) - 1)]
 
 
-def build_tree_nodes(rel_path, expanded, selected, depth=0):
+def build_tree_nodes(rel_path, expanded, selected, root, depth=0):
     """Recursively build indented tree rows.
 
     Only the children of directories present in `expanded` are rendered, so the
     tree is loaded lazily as the user expands folders.
     """
     nodes = []
-    dirs, files = list_dir(rel_path)
+    dirs, files = list_dir(rel_path, root)
 
     for d in dirs:
         is_open = d["rel"] in expanded
@@ -129,7 +170,7 @@ def build_tree_nodes(rel_path, expanded, selected, depth=0):
             )
         )
         if is_open:
-            nodes.extend(build_tree_nodes(d["rel"], expanded, selected, depth + 1))
+            nodes.extend(build_tree_nodes(d["rel"], expanded, selected, root, depth + 1))
 
     for f in files:
         selected_cls = " tree-selected" if f["rel"] == selected else ""
@@ -167,27 +208,27 @@ def pretty_xml(path: Path) -> str:
     return "\n".join(lines)
 
 
-def search_files(query: str) -> list[str]:
+def search_files(query: str, root: Path) -> list[str]:
     """Return file rel-paths containing `query` (case-insensitive)."""
     query = (query or "").strip()
     if not query:
         return []
     needle = query.lower()
     matcher = lambda s: needle in s.lower()
-    return [f for f in all_files() if matcher(f)][:MAX_SEARCH_RESULTS]
+    return [f for f in all_files(root) if matcher(f)][:MAX_SEARCH_RESULTS]
 
 
 # ---------------------------------------------------------------------------
 # Content search index
 # ---------------------------------------------------------------------------
-def iter_source_files():
+def iter_source_files(root: Path):
     """Yield exploded source files worth searching, in stable order."""
-    for path in sorted(ROOT.rglob("*"), key=lambda p: p.as_posix().lower()):
+    for path in sorted(root.rglob("*"), key=lambda p: p.as_posix().lower()):
         if path.is_file() and path.suffix.lower() in SEARCHABLE_EXTS:
             yield path
 
 
-def index_signature() -> tuple:
+def index_signature(root: Path) -> tuple:
     """Cheap fingerprint of the exploded tree to detect when to rebuild.
 
     Uses (file count, newest mtime) so edits or re-explodes invalidate the
@@ -195,30 +236,24 @@ def index_signature() -> tuple:
     """
     count = 0
     newest = 0.0
-    for path in iter_source_files():
+    for path in iter_source_files(root):
         count += 1
         newest = max(newest, path.stat().st_mtime)
     return (count, newest)
 
 
-def markup_name() -> str:
-    """Name of the persisted markup file, derived from the exploded root."""
-    top = next((p.name for p in ROOT.iterdir() if p.is_dir()), "exploded")
-    return f"markup_{top}.xml"
+def build_content_index(root: Path, project: str) -> list[dict]:
+    """Read every source file once and persist the project's markup file.
 
-
-def build_content_index() -> list[dict]:
-    """Read every source file once and persist the annotated markup file.
-
-    Returns the in-memory index (a list of {"rel", "text"}). Also writes a
-    single `markup_{name}.xml` where each file's text is preceded by an
-    `<!-- @@FILE rel -->` comment, so the same content can be searched as one
+    Returns the in-memory index (a list of {"rel", "text"}). Also writes
+    `cache/{project}/markup_{project}.xml` where each file's text is preceded by
+    an `<!-- @@FILE rel -->` comment, so the same content can be searched as one
     document and every hit traced back to its exploded file by its title.
     """
     files: list[dict] = []
     markup_parts: list[str] = []
-    for path in iter_source_files():
-        rel = path.relative_to(ROOT).as_posix()
+    for path in iter_source_files(root):
+        rel = path.relative_to(root).as_posix()
         try:
             text = path.read_text(encoding="utf-8", errors="replace")
         except OSError:
@@ -228,24 +263,26 @@ def build_content_index() -> list[dict]:
         markup_parts.append(text)
 
     try:
-        INDEX_DIR.mkdir(exist_ok=True)
-        (INDEX_DIR / markup_name()).write_text("\n".join(markup_parts), encoding="utf-8")
+        out = markup_path(project)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text("\n".join(markup_parts), encoding="utf-8")
     except OSError:
         pass  # search still works from the in-memory index if the write fails
 
     return files
 
 
-def get_content_index() -> list[dict]:
-    """Return the cached index, rebuilding it if the exploded tree changed."""
-    signature = index_signature()
-    if _CONTENT_INDEX["signature"] != signature:
-        _CONTENT_INDEX["files"] = build_content_index()
-        _CONTENT_INDEX["signature"] = signature
-    return _CONTENT_INDEX["files"]
+def get_content_index(root: Path, project: str) -> list[dict]:
+    """Return a project's cached index, rebuilding if its tree changed."""
+    signature = index_signature(root)
+    entry = _CONTENT_INDEX.get(project)
+    if entry is None or entry["signature"] != signature:
+        entry = {"signature": signature, "files": build_content_index(root, project)}
+        _CONTENT_INDEX[project] = entry
+    return entry["files"]
 
 
-def search_content(query: str):
+def search_content(query: str, root: Path, project: str):
     """Search file contents for `query`.
 
     Returns (results, matched_query) where results is a list of
@@ -260,7 +297,7 @@ def search_content(query: str):
     needle = query.lower()
     results: list[dict] = []
     total = 0
-    for entry in get_content_index():
+    for entry in get_content_index(root, project):
         hits: list[tuple[int, str]] = []
         count = 0
         for lineno, line in enumerate(entry["text"].splitlines(), 1):
@@ -317,10 +354,10 @@ def add_tab(open_tabs, rel):
     return tabs
 
 
-def render_file(rel: str):
+def render_file(rel: str, root: Path):
     """Parse a file into the cache payload for preview."""
     try:
-        path = safe_resolve(rel)
+        path = safe_resolve(rel, root)
     except ValueError as exc:
         return {"xml_md": f"```\n{exc}\n```"}
 
@@ -343,7 +380,15 @@ THEME = {
 NAVBAR_WIDTH = 320
 
 
-app = dash.Dash(__name__, suppress_callback_exceptions=True)
+# Background callback manager: ACD conversion takes minutes, so it runs off the
+# request thread to keep the server responsive while importing.
+_background_manager = DiskcacheManager(diskcache.Cache(str(CACHE_DIR / ".dash_cache")))
+
+app = dash.Dash(
+    __name__,
+    suppress_callback_exceptions=True,
+    background_callback_manager=_background_manager,
+)
 app.title = "Studio5000 XML Viewer"
 
 
@@ -379,6 +424,40 @@ def navbar():
         [
             html.Div(
                 [
+                    html.Div(
+                        [
+                            html.Div("Import .ACD", className="sidebar-import-label"),
+                            dcc.Upload(
+                                id="acd-upload",
+                                accept=".acd,.ACD",
+                                max_size=-1,
+                                children=html.Div(
+                                    [
+                                        DashIconify(icon="tabler:upload", width=18),
+                                        html.Span("Drop an .ACD here or click to browse"),
+                                    ],
+                                    className="acd-dropzone-inner",
+                                ),
+                                className="acd-dropzone",
+                            ),
+                            dmc.Select(
+                                id="project-switcher",
+                                placeholder="No project",
+                                data=[],
+                                value=None,
+                                leftSection=DashIconify(icon="tabler:folder"),
+                                comboboxProps={"withinPortal": False},
+                                size="sm",
+                                allowDeselect=False,
+                                mt=8,
+                            ),
+                            dcc.Loading(
+                                html.Div(id="import-status", className="import-status"),
+                                type="dot",
+                            ),
+                        ],
+                        className="sidebar-import",
+                    ),
                     html.Div(
                         "Project Files",
                         className="sidebar-title",
@@ -594,6 +673,7 @@ app.layout = dmc.MantineProvider(
     theme=THEME,
     children=dmc.AppShell(
         [
+            dcc.Store(id="active-project", storage_type="local", data=default_project()),
             dcc.Store(id="expanded", data=["RSLogix5000Content"]),
             dcc.Store(id="open-tabs", storage_type="local", data=[]),
             dcc.Store(id="active-tab", storage_type="local", data=None),
@@ -670,6 +750,78 @@ app.layout = dmc.MantineProvider(
 
 
 # ---------------------------------------------------------------------------
+# Projects (import + switcher)
+# ---------------------------------------------------------------------------
+TREE_RESET = ["RSLogix5000Content"]
+
+
+@app.callback(
+    Output("project-switcher", "data"),
+    Output("project-switcher", "value"),
+    Input("active-project", "data"),
+)
+def sync_project_switcher(active):
+    """Keep the switcher's options and selection in step with the active project."""
+    data = [{"value": p, "label": p} for p in list_projects()]
+    return data, active
+
+
+@app.callback(
+    Output("active-project", "data", allow_duplicate=True),
+    Output("expanded", "data", allow_duplicate=True),
+    Output("open-tabs", "data", allow_duplicate=True),
+    Output("active-tab", "data", allow_duplicate=True),
+    Output("file-cache", "data", allow_duplicate=True),
+    Input("project-switcher", "value"),
+    State("active-project", "data"),
+    prevent_initial_call=True,
+)
+def switch_project(value, active):
+    """Switch projects: tabs/cache/expanded refer to the old project, so reset."""
+    if not value or value == active:
+        return (dash.no_update,) * 5
+    return value, TREE_RESET, [], None, {}
+
+
+@app.callback(
+    Output("active-project", "data", allow_duplicate=True),
+    Output("import-status", "children"),
+    Output("expanded", "data", allow_duplicate=True),
+    Output("open-tabs", "data", allow_duplicate=True),
+    Output("active-tab", "data", allow_duplicate=True),
+    Output("file-cache", "data", allow_duplicate=True),
+    Input("acd-upload", "contents"),
+    State("acd-upload", "filename"),
+    background=True,
+    running=[
+        (Output("acd-upload", "disabled"), True, False),
+        (Output("project-switcher", "disabled"), True, False),
+    ],
+    prevent_initial_call=True,
+)
+def handle_import(contents, filename):
+    """Decode the upload, run the ACD pipeline, then activate the new project."""
+    if not contents:
+        return (dash.no_update,) * 6
+
+    no_change = (dash.no_update, dash.no_update, dash.no_update, dash.no_update)
+    try:
+        _header, b64 = contents.split(",", 1)
+        acd_bytes = base64.b64decode(b64)
+    except (ValueError, base64.binascii.Error):
+        return (dash.no_update, "Could not read the uploaded file.", *no_change)
+
+    try:
+        project = import_acd(acd_bytes, filename)
+        get_content_index(exploded_root(project), project)  # prebuild markup
+    except PipelineError as exc:
+        return (dash.no_update, str(exc), *no_change)
+
+    status = f"Imported {project}."
+    return project, status, TREE_RESET, [], None, {}
+
+
+# ---------------------------------------------------------------------------
 # Search
 # ---------------------------------------------------------------------------
 @app.callback(
@@ -695,13 +847,14 @@ def clear_search(_clicks):
     Output("search-results", "children"),
     Output("search-results", "style"),
     Input("search", "value"),
+    State("active-project", "data"),
 )
-def do_search(query):
+def do_search(query, project):
     hidden = {"display": "none"}
-    if not (query or "").strip():
+    if not (query or "").strip() or not project:
         return [], hidden
 
-    matches = search_files(query)
+    matches = search_files(query, exploded_root(project))
     shown = {
         "position": "absolute",
         "left": "8px",
@@ -796,14 +949,15 @@ def clear_content_search(_clicks):
     Output("open-all-btn", "children"),
     Output("content-search-rels", "data"),
     Input("content-search", "value"),
+    State("active-project", "data"),
 )
-def do_content_search(query):
+def do_content_search(query, project):
     hidden = {"display": "none"}
     btn_hidden = {"display": "none"}
-    if not (query or "").strip():
+    if not (query or "").strip() or not project:
         return [], hidden, btn_hidden, dash.no_update, []
 
-    results, matched_query = search_content(query)
+    results, matched_query = search_content(query, exploded_root(project), project)
     if not results:
         return [html.Div("No matches", className="search-empty")], DROPDOWN_STYLE, btn_hidden, dash.no_update, []
 
@@ -923,13 +1077,14 @@ def open_all_confirmed(_clicks, rels, open_tabs):
     Input("expand-all", "n_clicks"),
     Input("collapse-all", "n_clicks"),
     State("expanded", "data"),
+    State("active-project", "data"),
     prevent_initial_call=True,
 )
-def update_expanded(_dir_clicks, _expand, _collapse, expanded):
+def update_expanded(_dir_clicks, _expand, _collapse, expanded, project):
     ctx = dash.callback_context
     tid = ctx.triggered_id
     if tid == "expand-all":
-        return all_dirs()
+        return all_dirs(exploded_root(project)) if project else dash.no_update
     if tid == "collapse-all":
         return []
     # A folder row toggle: ignore spurious re-render triggers (n_clicks reset).
@@ -964,10 +1119,16 @@ def open_from_tree(_clicks, open_tabs):
     Output("tree", "children"),
     Input("expanded", "data"),
     Input("active-tab", "data"),
+    Input("active-project", "data"),
 )
-def render_tree(expanded, active):
+def render_tree(expanded, active, project):
+    if not project:
+        return html.Div(
+            "No project loaded. Import an .ACD to get started.",
+            className="tree-empty",
+        )
     try:
-        return build_tree_nodes("", set(expanded or []), active)
+        return build_tree_nodes("", set(expanded or []), active, exploded_root(project))
     except (ValueError, OSError) as exc:
         return html.Div(f"Error: {exc}", className="status-error")
 
@@ -1119,15 +1280,16 @@ def close_tab(_clicks, open_tabs, active):
     Output("xml-path", "children"),
     Input("active-tab", "data"),
     State("file-cache", "data"),
+    State("active-project", "data"),
 )
-def render_active(rel, cache):
-    if not rel:
+def render_active(rel, cache, project):
+    if not rel or not project:
         return "", dash.no_update, ""
 
     cache = cache or {}
     hit = cache.get(rel)
     if hit is None:
-        hit = render_file(rel)
+        hit = render_file(rel, exploded_root(project))
         cache = {**cache, rel: hit}
         cache_out = cache
     else:
@@ -1148,10 +1310,10 @@ def toggle_empty(rel):
     return {"display": "none"}, {"display": "flex"}
 
 
-def _params_dataframe(rel: str, row_func, columns=PARAM_FIELDS) -> pd.DataFrame | None:
+def _params_dataframe(rel: str, row_func, root: Path, columns=PARAM_FIELDS) -> pd.DataFrame | None:
     """Parse a tag file and extract rows into a table with the given columns."""
     try:
-        path = safe_resolve(rel)
+        path = safe_resolve(rel, root)
     except ValueError:
         return None
     if not path.is_file():
@@ -1162,7 +1324,7 @@ def _params_dataframe(rel: str, row_func, columns=PARAM_FIELDS) -> pd.DataFrame 
     return pd.DataFrame(rows, columns=columns)
 
 
-def _make_desc_resolver(search_rels: list[str]):
+def _make_desc_resolver(search_rels: list[str], root: Path):
     """Return f(tag_ref)->description, caching lookups across the given dirs.
 
     A tag reference like "actCanInsertVac.Desc" is reduced to its tag name
@@ -1171,7 +1333,7 @@ def _make_desc_resolver(search_rels: list[str]):
     search_dirs = []
     for rel in search_rels:
         try:
-            directory = safe_resolve(rel)
+            directory = safe_resolve(rel, root)
         except ValueError:
             continue
         if directory.is_dir():
@@ -1216,7 +1378,7 @@ def _classify_severity(severity, ranges: dict[str, tuple[int, int]]) -> str:
     return "Faults"
 
 
-def _alarm_scopes() -> list[tuple[str, str]]:
+def _alarm_scopes(root: Path) -> list[tuple[str, str]]:
     """Return (scope_label, tags_rel) for the controller and every program scope.
 
     Controller tags map to the "Global" scope; each program's Tags folder maps
@@ -1225,7 +1387,7 @@ def _alarm_scopes() -> list[tuple[str, str]]:
     """
     scopes: list[tuple[str, str]] = [("Global", CONTROLLER_TAGS_REL)]
     try:
-        programs_dir = safe_resolve(PROGRAMS_REL)
+        programs_dir = safe_resolve(PROGRAMS_REL, root)
     except ValueError:
         return scopes
     if programs_dir.is_dir():
@@ -1235,7 +1397,7 @@ def _alarm_scopes() -> list[tuple[str, str]]:
     return scopes
 
 
-def _faults_dataframes(ranges: dict[str, tuple[int, int]]) -> dict[str, pd.DataFrame] | None:
+def _faults_dataframes(ranges: dict[str, tuple[int, int]], root: Path) -> dict[str, pd.DataFrame] | None:
     """Collate fault alarm tags grouped by severity classification.
 
     Scans the controller scope and every program scope. Within each scope, lists
@@ -1246,13 +1408,13 @@ def _faults_dataframes(ranges: dict[str, tuple[int, int]]) -> dict[str, pd.DataF
     against the tag's own scope, then MainProgram, then Global. Always returns a
     frame for every category (possibly empty); None only when no scope exists.
     """
-    scopes = _alarm_scopes()
+    scopes = _alarm_scopes(root)
     grouped: dict[str, list[dict]] = {category: [] for category in FAULT_CATEGORIES}
     found_any = False
 
     for scope_label, tags_rel in scopes:
         try:
-            tags_dir = safe_resolve(tags_rel)
+            tags_dir = safe_resolve(tags_rel, root)
         except ValueError:
             continue
         if not tags_dir.is_dir():
@@ -1260,7 +1422,7 @@ def _faults_dataframes(ranges: dict[str, tuple[int, int]]) -> dict[str, pd.DataF
         found_any = True
 
         resolve_desc = _make_desc_resolver(
-            [tags_rel, MAINPROGRAM_TAGS_REL, CONTROLLER_TAGS_REL]
+            [tags_rel, MAINPROGRAM_TAGS_REL, CONTROLLER_TAGS_REL], root
         )
         candidates = sorted(
             (p for p in tags_dir.glob("*.xml") if FAULT_NAME_RE.search(p.stem)),
@@ -1363,6 +1525,7 @@ def toggle_fault_config_modal(_open, _cancel, _generate):
     State("fault-warnings-max", "value"),
     State("fault-faults-min", "value"),
     State("fault-faults-max", "value"),
+    State("active-project", "data"),
     prevent_initial_call=True,
 )
 def export_sd_tables(
@@ -1373,6 +1536,7 @@ def export_sd_tables(
     warn_max,
     faults_min,
     faults_max,
+    project,
 ):
     """Build one SD Tables workbook with each table on its own sheet.
 
@@ -1380,18 +1544,19 @@ def export_sd_tables(
     the "Faults", "Warnings" and "Notifications" sheets according to the severity
     ranges entered in the Fault Configuration modal.
     """
-    if not real_click(dash.callback_context):
+    if not real_click(dash.callback_context) or not project:
         return dash.no_update
 
+    root = exploded_root(project)
     ranges = {
         "Notifications": (_coerce_code(notif_min, 0), _coerce_code(notif_max, 199)),
         "Warnings": (_coerce_code(warn_min, 200), _coerce_code(warn_max, 399)),
         "Faults": (_coerce_code(faults_min, 500), _coerce_code(faults_max, 99999)),
     }
 
-    settings = _params_dataframe(SETTINGS_REL, setting_rows)
-    recipes = _params_dataframe(RECIPE_REL, recipe_rows)
-    fault_frames = _faults_dataframes(ranges)
+    settings = _params_dataframe(SETTINGS_REL, setting_rows, root)
+    recipes = _params_dataframe(RECIPE_REL, recipe_rows, root)
+    fault_frames = _faults_dataframes(ranges, root)
 
     if any(x is None for x in (settings, recipes, fault_frames)):
         return dash.no_update

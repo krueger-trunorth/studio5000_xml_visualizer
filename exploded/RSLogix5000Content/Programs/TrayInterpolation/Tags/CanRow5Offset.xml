@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="CanRow5Offset" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[1.77800000e+002]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="REAL" Radix="Float" Value="177.8" />
-  </Data>
-</Tag>

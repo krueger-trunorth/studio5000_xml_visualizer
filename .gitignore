@@ -342,8 +342,9 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Generated content-search index (app.py)
-search_index/
+# Per-project import cache: imported ACDs, intermediate L5X, exploded trees,
+# markup files, and the Dash background-callback disk cache (app.py).
+cache/
 
 # Cake - Uncomment if you are using it
 # tools/**

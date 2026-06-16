@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Routine Name="subApproach" Type="RLL">
-  <RLLContent>
-    <Rung Type="N">
-      <Text><![CDATA[[MOV(75,s800.LocationConfig[Index].Approach_Height) ,MOV(90,s800.LocationConfig[Index].Speed) ,MOV(50,s800.LocationConfig[Index].Acceleration) ,MOV(50,s800.LocationConfig[Index].Deceleration) ];]]></Text>
-    </Rung>
-  </RLLContent>
-</Routine>

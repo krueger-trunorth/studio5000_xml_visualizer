@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="hb_max_reset" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Highest Time Value Recorded For Heartbeat Timer Reset]]></Description>
-  <Data Format="L5K"><![CDATA[6844]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="6844" />
-  </Data>
-</Tag>

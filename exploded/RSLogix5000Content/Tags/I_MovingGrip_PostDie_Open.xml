@@ -1,2 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="I_MovingGrip_PostDie_Open" TagType="Alias" Radix="Decimal" AliasFor="Local:2:I.Data.13" ExternalAccess="Read/Write" />

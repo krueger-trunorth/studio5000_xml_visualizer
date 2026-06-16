@@ -1,2 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="O_FixedGripPostDie_Close" TagType="Alias" Radix="Decimal" AliasFor="Local:5:O.Data.5" ExternalAccess="Read/Write" />

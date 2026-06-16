@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="trav_qty_compare" TagType="Base" DataType="DINT" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
-  <Description><![CDATA[Tag Used In Data Comparision Subroutine
-Contains Data To Be Verified]]></Description>
-  <Data Format="L5K"><![CDATA[1]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="1" />
-  </Data>
-</Tag>

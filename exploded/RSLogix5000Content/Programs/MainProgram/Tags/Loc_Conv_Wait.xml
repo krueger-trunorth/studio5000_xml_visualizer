@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Tag Name="Loc_Conv_Wait" TagType="Base" DataType="DINT" Radix="Decimal" Constant="true" ExternalAccess="Read/Write">
-  <Data Format="L5K"><![CDATA[22]]></Data>
-  <Data Format="Decorated">
-    <DataValue DataType="DINT" Radix="Decimal" Value="22" />
-  </Data>
-</Tag>
