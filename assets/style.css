@@ -3,6 +3,7 @@ body {
     margin: 0;
     height: 100%;
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    overflow: hidden;
 }
 
 #react-entry-point,
@@ -204,6 +205,44 @@ body {
     min-width: 0;
 }
 
+.file-tabs-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.file-tabs-row .mantine-Tabs-list,
+.file-tabs-row [role="tablist"] {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.file-tab-controls {
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.open-files-menu {
+    max-height: min(420px, 70vh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.of-name {
+    font-size: 13px;
+    color: #24292f;
+}
+
+.of-path {
+    max-width: 420px;
+    font-size: 11px;
+    color: #8b949e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .file-tabs .mantine-Tabs-list,
 .file-tabs [role="tablist"] {
     flex-wrap: nowrap;
@@ -244,7 +283,6 @@ body {
     overflow: hidden;
 }
 
-.preview-body,
 .xml-view {
     flex: 1 1 0;
     min-height: 0;
@@ -264,12 +302,7 @@ body {
     color: #57606a;
 }
 
-.csv-count {
-    font-weight: 400;
-    color: #8b949e;
-}
-
-/* Small mode tag (XML / CSV) preceding the file path in the section header */
+/* Small mode tag preceding the file path in the section header */
 .section-label {
     flex: 0 0 auto;
     font-size: 10px;
@@ -303,20 +336,20 @@ body {
     text-align: center;
 }
 
-.view-xml #xml-block {
+#xml-block {
     flex: 1 1 0;
 }
 
-.view-xml #csv-block {
-    display: none;
+/* Alarm Configuration modal */
+.fault-config-title {
+    font-size: 17px;
+    font-weight: 700;
 }
 
-.view-csv #csv-block {
-    flex: 1 1 0;
-}
-
-.view-csv #xml-block {
-    display: none;
+.fault-range-input .mantine-InputWrapper-label {
+    font-size: 11px;
+    font-weight: 400;
+    color: #4b5563;
 }
 
 /* XML preview (dcc.Markdown code block) */

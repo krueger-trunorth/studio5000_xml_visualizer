@@ -1,4 +1,4 @@
-"""Plotly Dash app to browse the exploded/ XML tree and convert files to CSV.
+"""Plotly Dash app to browse the exploded/ XML tree.
 
 Run with:  python app.py
 """
@@ -12,14 +12,28 @@ from pathlib import Path
 import dash
 import dash_mantine_components as dmc
 import pandas as pd
-from dash import Input, Output, State, dash_table, dcc, html
+from dash import Input, Output, State, dcc, html
 from dash_iconify import DashIconify
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.utils import get_column_letter
 
-from xml_to_csv import element_rows, recipe_rows, setting_rows
+from xml_to_csv import (
+    FAULT_FIELDS,
+    fault_row,
+    recipe_rows,
+    setting_rows,
+    tag_description,
+)
 
 ROOT = (Path(__file__).parent / "exploded").resolve()
 SETTINGS_REL = "RSLogix5000Content/Tags/Settings.xml"
 RECIPE_REL = "RSLogix5000Content/Tags/Machine_Run_Recipe.xml"
+MAINPROGRAM_TAGS_REL = "RSLogix5000Content/Programs/MainProgram/Tags"
+CONTROLLER_TAGS_REL = "RSLogix5000Content/Tags"
+PROGRAMS_REL = "RSLogix5000Content/Programs"
+# Alarm tag names: faults (fault/flt) plus alarms (alarm/alm). The name filter
+# is just a prefilter; non-alarm tags (no AlarmConfig block) are dropped later.
+FAULT_NAME_RE = re.compile(r"(fault|flt|alarm|alm)", re.IGNORECASE)
 PARAM_FIELDS = ["Parameter", "Description", "Unit", "Min", "Max"]
 PREVIEW_LINE_LIMIT = 2000
 MAX_SEARCH_RESULTS = 100
@@ -151,13 +165,6 @@ def pretty_xml(path: Path) -> str:
         lines = lines[:PREVIEW_LINE_LIMIT]
         lines.append(f"... (truncated at {PREVIEW_LINE_LIMIT} lines)")
     return "\n".join(lines)
-
-
-def xml_to_dataframe(path: Path) -> pd.DataFrame:
-    """Flatten XML to rows in memory (no file written to disk)."""
-    tree = ET.parse(path)
-    rows = list(element_rows(tree.getroot()))
-    return pd.DataFrame(rows).fillna("")
 
 
 def search_files(query: str) -> list[str]:
@@ -323,37 +330,20 @@ def add_tab(open_tabs, rel):
 
 
 def render_file(rel: str):
-    """Parse a file into the cache payload (xml markdown + csv data/columns)."""
+    """Parse a file into the cache payload for preview."""
     try:
         path = safe_resolve(rel)
     except ValueError as exc:
-        return {"xml_md": f"```\n{exc}\n```", "csv_data": [], "csv_columns": [],
-                "csv_count": "", "export": None}
+        return {"xml_md": f"```\n{exc}\n```"}
 
     if path.suffix.lower() != ".xml":
         try:
             raw = path.read_text(encoding="utf-8", errors="replace")
         except OSError as exc:
             raw = f"(could not read file: {exc})"
-        return {"xml_md": f"```\n{raw}\n```", "csv_data": [], "csv_columns": [],
-                "csv_count": "(not an XML file)", "export": None}
+        return {"xml_md": f"```\n{raw}\n```"}
 
-    preview = f"```xml\n{pretty_xml(path)}\n```"
-    try:
-        df = xml_to_dataframe(path)  # parsed in memory, nothing saved
-    except Exception as exc:  # surface parse errors to the user
-        return {"xml_md": preview, "csv_data": [], "csv_columns": [],
-                "csv_count": f"parse failed: {exc}", "export": None}
-
-    columns = [{"name": c, "id": c} for c in df.columns]
-    export = {"content": df.to_csv(index=False), "filename": f"{path.stem}.csv"}
-    return {
-        "xml_md": preview,
-        "csv_data": df.to_dict("records"),
-        "csv_columns": columns,
-        "csv_count": f"({len(df)} rows)",
-        "export": export,
-    }
+    return {"xml_md": f"```xml\n{pretty_xml(path)}\n```"}
 
 
 THEME = {
@@ -363,10 +353,9 @@ THEME = {
 }
 
 NAVBAR_WIDTH = 320
-NAVBAR_COLLAPSED_WIDTH = 48
 
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, suppress_callback_exceptions=True)
 app.title = "Studio5000 XML Viewer"
 
 
@@ -386,15 +375,21 @@ def header():
                         dmc.Title("Studio5000 XML Viewer", order=4),
                     ],
                     gap="sm",
+                    align="center",
                 ),
-                dmc.SegmentedControl(
-                    id="view-mode",
-                    value="xml",
-                    data=[
-                        {"label": "XML", "value": "xml"},
-                        {"label": "CSV", "value": "csv"},
+                dmc.Group(
+                    [
+                        dmc.Button(
+                            "SD Tables",
+                            id="export-sd-tables-btn",
+                            n_clicks=0,
+                            leftSection=DashIconify(icon="tabler:table-export"),
+                            variant="light",
+                            size="sm",
+                        ),
                     ],
-                    size="sm",
+                    gap="sm",
+                    className="top-nav-items",
                 ),
             ],
             justify="space-between",
@@ -409,23 +404,6 @@ def navbar():
     return dmc.AppShellNavbar(
         [
             html.Div(
-                dmc.Tooltip(
-                    dmc.ActionIcon(
-                        DashIconify(
-                            id="nav-toggle-icon",
-                            icon="tabler:layout-sidebar-left-collapse",
-                        ),
-                        id="nav-toggle",
-                        n_clicks=0,
-                        variant="subtle",
-                        size="md",
-                    ),
-                    label="Toggle sidebar",
-                    position="right",
-                ),
-                className="nav-toggle-row",
-            ),
-            html.Div(
                 [
                     html.Div(
                         [
@@ -433,6 +411,14 @@ def navbar():
                                 id="search",
                                 placeholder="Search files (regex)\u2026",
                                 leftSection=DashIconify(icon="tabler:search"),
+                                rightSection=dmc.ActionIcon(
+                                    DashIconify(icon="tabler:x", width=14),
+                                    id="clear-search",
+                                    n_clicks=0,
+                                    variant="subtle",
+                                    size="sm",
+                                    color="gray",
+                                ),
                                 data=[],
                                 comboboxProps={"withinPortal": False},
                                 size="sm",
@@ -447,6 +433,14 @@ def navbar():
                                 id="content-search",
                                 placeholder="Search file contents (regex)\u2026",
                                 leftSection=DashIconify(icon="tabler:file-search"),
+                                rightSection=dmc.ActionIcon(
+                                    DashIconify(icon="tabler:x", width=14),
+                                    id="clear-content-search",
+                                    n_clicks=0,
+                                    variant="subtle",
+                                    size="sm",
+                                    color="gray",
+                                ),
                                 size="sm",
                             ),
                             html.Div(
@@ -469,39 +463,32 @@ def navbar():
                         ],
                         style={"position": "relative", "padding": "0 8px 6px 8px"},
                     ),
-                    html.Div(
-                        dmc.Button(
-                            "SD Tables",
-                            id="export-sd-tables-btn",
-                            n_clicks=0,
-                            leftSection=DashIconify(icon="tabler:table-export"),
-                            variant="light",
-                            size="xs",
-                            fullWidth=True,
-                        ),
-                        style={"padding": "0 8px 6px 8px"},
-                    ),
                     dmc.Group(
                         [
-                            dmc.Tooltip(
-                                dmc.ActionIcon(
-                                    DashIconify(icon="tabler:layout-sidebar-right-collapse"),
-                                    id="expand-all",
-                                    variant="default",
-                                    size="sm",
+                            dmc.Button(
+                                "Collapse",
+                                id="collapse-all",
+                                n_clicks=0,
+                                leftSection=DashIconify(
+                                    icon="tabler:layout-sidebar-left-collapse"
                                 ),
-                                label="Expand all",
+                                variant="default",
+                                size="xs",
+                                fullWidth=True,
                             ),
-                            dmc.Tooltip(
-                                dmc.ActionIcon(
-                                    DashIconify(icon="tabler:layout-sidebar-left-collapse"),
-                                    id="collapse-all",
-                                    variant="default",
-                                    size="sm",
+                            dmc.Button(
+                                "Expand",
+                                id="expand-all",
+                                n_clicks=0,
+                                leftSection=DashIconify(
+                                    icon="tabler:layout-sidebar-right-collapse"
                                 ),
-                                label="Collapse all",
+                                variant="default",
+                                size="xs",
+                                fullWidth=True,
                             ),
                         ],
+                        grow=True,
                         gap="xs",
                         px="sm",
                         pb="xs",
@@ -538,54 +525,6 @@ def xml_block():
     )
 
 
-def csv_block():
-    return html.Div(
-        [
-            html.Div(
-                [
-                    html.Span("CSV", className="section-label"),
-                    html.Span(id="csv-path", className="file-path"),
-                    html.Span(id="csv-count", className="csv-count"),
-                    dmc.Button(
-                        "Save CSV",
-                        id="save-btn",
-                        n_clicks=0,
-                        disabled=True,
-                        leftSection=DashIconify(icon="tabler:download"),
-                        variant="default",
-                        size="xs",
-                        style={"marginLeft": "auto"},
-                    ),
-                ],
-                className="section-title",
-            ),
-            html.Div(
-                dash_table.DataTable(
-                    id="csv-table",
-                    page_action="native",
-                    page_size=100,
-                    sort_action="native",
-                    filter_action="native",
-                    fixed_rows={"headers": True},
-                    style_table={"height": "100%", "overflowY": "auto"},
-                    style_cell={
-                        "textAlign": "left",
-                        "fontSize": "12px",
-                        "padding": "2px 6px",
-                        "maxWidth": "320px",
-                        "overflow": "hidden",
-                        "textOverflow": "ellipsis",
-                    },
-                    style_header={"fontWeight": "600"},
-                ),
-                className="preview-body",
-            ),
-        ],
-        id="csv-block",
-        className="preview-block",
-    )
-
-
 def empty_state():
     return html.Div(
         dmc.Stack(
@@ -617,13 +556,43 @@ def main_panel():
                 className="file-tabs",
             ),
             html.Div(
-                [xml_block(), csv_block()],
+                xml_block(),
                 id="preview-container",
-                className="view-xml",
             ),
             empty_state(),
         ],
         className="app-main",
+    )
+
+
+def fault_range_row(label: str, key: str, min_default: int, max_default: int):
+    """A labelled Min/Max severity range row for the Fault Configuration modal."""
+    return html.Div(
+        [
+            dmc.Text(label, fw=600, size="sm"),
+            dmc.Group(
+                [
+                    dmc.NumberInput(
+                        id=f"fault-{key}-min",
+                        label="Min",
+                        value=min_default,
+                        allowDecimal=False,
+                        className="fault-range-input",
+                        style={"flex": "1 1 0"},
+                    ),
+                    dmc.NumberInput(
+                        id=f"fault-{key}-max",
+                        label="Max",
+                        value=max_default,
+                        allowDecimal=False,
+                        className="fault-range-input",
+                        style={"flex": "1 1 0"},
+                    ),
+                ],
+                grow=True,
+                gap="xs",
+            ),
+        ],
     )
 
 
@@ -638,10 +607,42 @@ app.layout = dmc.MantineProvider(
             dcc.Store(id="recent-searches", storage_type="local", data=[]),
             dcc.Store(id="content-search-rels", data=[]),
             dcc.Store(id="file-cache", storage_type="memory", data={}),
-            dcc.Store(id="csv-export", data=None),
-            dcc.Store(id="sidebar-open", storage_type="local", data=True),
-            dcc.Download(id="download-csv"),
             dcc.Download(id="download-sd-tables"),
+            dmc.Modal(
+                id="fault-config-modal",
+                title=html.Span("Alarm Configuration", className="fault-config-title"),
+                centered=True,
+                children=[
+                    dmc.Stack(
+                        [
+                            fault_range_row("Faults", "faults", 500, 99999),
+                            fault_range_row("Warnings", "warnings", 200, 399),
+                            fault_range_row("Notifications", "notifications", 0, 199),
+                            html.Div(
+                                [
+                                    dmc.Button(
+                                        "Generate Excel",
+                                        id="fault-config-generate",
+                                        n_clicks=0,
+                                        color="blue",
+                                        style={"flex": "1 1 0"},
+                                    ),
+                                    dmc.Button(
+                                        "Cancel",
+                                        id="fault-config-cancel",
+                                        n_clicks=0,
+                                        variant="default",
+                                        style={"flex": "1 1 0"},
+                                    ),
+                                ],
+                                style={"display": "flex", "gap": "8px"},
+                            ),
+                        ],
+                        gap="sm",
+                    ),
+                ],
+                opened=False,
+            ),
             dmc.Modal(
                 id="open-all-modal",
                 title="Open all matching files?",
@@ -684,6 +685,17 @@ app.layout = dmc.MantineProvider(
 )
 def sync_search_history(recent):
     return recent or []
+
+
+@app.callback(
+    Output("search", "value", allow_duplicate=True),
+    Input("clear-search", "n_clicks"),
+    prevent_initial_call=True,
+)
+def clear_search(_clicks):
+    if not real_click(dash.callback_context):
+        return dash.no_update
+    return ""
 
 
 @app.callback(
@@ -769,6 +781,17 @@ DROPDOWN_STYLE = {
     "overflowY": "auto",
     "boxShadow": "0 6px 18px rgba(0,0,0,.12)",
 }
+
+
+@app.callback(
+    Output("content-search", "value", allow_duplicate=True),
+    Input("clear-content-search", "n_clicks"),
+    prevent_initial_call=True,
+)
+def clear_content_search(_clicks):
+    if not real_click(dash.callback_context):
+        return dash.no_update
+    return ""
 
 
 @app.callback(
@@ -980,7 +1003,52 @@ def render_tabs(open_tabs, active):
         )
         for rel in open_tabs
     ]
-    return [dmc.TabsList(tabs)], active
+    open_file_items = [
+        dmc.MenuItem(
+            [
+                html.Div(rel.rsplit("/", 1)[-1], className="of-name"),
+                html.Div(rel, className="of-path"),
+            ],
+            id={"type": "open-file-menu-item", "index": rel},
+            n_clicks=0,
+        )
+        for rel in open_tabs
+    ] or [dmc.MenuItem("No open files", disabled=True)]
+    controls = dmc.Group(
+        [
+            dmc.Menu(
+                [
+                    dmc.MenuTarget(
+                        dmc.ActionIcon(
+                            DashIconify(icon="tabler:chevron-down"),
+                            id="open-files-menu-btn",
+                            variant="default",
+                            size="sm",
+                            disabled=not open_tabs,
+                        )
+                    ),
+                    dmc.MenuDropdown(open_file_items, className="open-files-menu"),
+                ],
+                position="bottom-end",
+                withinPortal=True,
+            ),
+            dmc.Tooltip(
+                dmc.ActionIcon(
+                    DashIconify(icon="tabler:trash"),
+                    id="clear-open-files",
+                    n_clicks=0,
+                    variant="default",
+                    color="red",
+                    size="sm",
+                    disabled=not open_tabs,
+                ),
+                label="Clear open files",
+            ),
+        ],
+        gap=4,
+        className="file-tab-controls",
+    )
+    return [html.Div([dmc.TabsList(tabs), controls], className="file-tabs-row")], active
 
 
 @app.callback(
@@ -993,6 +1061,31 @@ def switch_tab(value, active):
     if value == active:
         return dash.no_update
     return value
+
+
+@app.callback(
+    Output("active-tab", "data", allow_duplicate=True),
+    Input({"type": "open-file-menu-item", "index": dash.ALL}, "n_clicks"),
+    prevent_initial_call=True,
+)
+def open_from_open_files_menu(_clicks):
+    ctx = dash.callback_context
+    tid = ctx.triggered_id
+    if not isinstance(tid, dict) or tid.get("type") != "open-file-menu-item" or not real_click(ctx):
+        return dash.no_update
+    return tid["index"]
+
+
+@app.callback(
+    Output("open-tabs", "data", allow_duplicate=True),
+    Output("active-tab", "data", allow_duplicate=True),
+    Input("clear-open-files", "n_clicks"),
+    prevent_initial_call=True,
+)
+def clear_open_files(_clicks):
+    if not real_click(dash.callback_context):
+        return dash.no_update, dash.no_update
+    return [], None
 
 
 @app.callback(
@@ -1027,20 +1120,14 @@ def close_tab(_clicks, open_tabs, active):
 # ---------------------------------------------------------------------------
 @app.callback(
     Output("xml-preview", "children"),
-    Output("csv-table", "data"),
-    Output("csv-table", "columns"),
-    Output("csv-count", "children"),
-    Output("csv-export", "data"),
-    Output("save-btn", "disabled"),
     Output("file-cache", "data"),
     Output("xml-path", "children"),
-    Output("csv-path", "children"),
     Input("active-tab", "data"),
     State("file-cache", "data"),
 )
 def render_active(rel, cache):
     if not rel:
-        return "", [], [], "", None, True, dash.no_update, "", ""
+        return "", dash.no_update, ""
 
     cache = cache or {}
     hit = cache.get(rel)
@@ -1051,17 +1138,7 @@ def render_active(rel, cache):
     else:
         cache_out = dash.no_update
 
-    return (
-        hit["xml_md"],
-        hit["csv_data"],
-        hit["csv_columns"],
-        hit["csv_count"],
-        hit["export"],
-        hit["export"] is None,
-        cache_out,
-        rel,
-        rel,
-    )
+    return hit["xml_md"], cache_out, rel
 
 
 @app.callback(
@@ -1076,57 +1153,8 @@ def toggle_empty(rel):
     return {"display": "none"}, {"display": "flex"}
 
 
-# ---------------------------------------------------------------------------
-# View mode + sidebar + download
-# ---------------------------------------------------------------------------
-@app.callback(
-    Output("preview-container", "className"),
-    Input("view-mode", "value"),
-)
-def set_view(mode):
-    return f"view-{mode}"
-
-
-@app.callback(
-    Output("app-shell", "navbar"),
-    Output("nav-body", "style"),
-    Output("nav-toggle-icon", "icon"),
-    Output("sidebar-open", "data"),
-    Input("nav-toggle", "n_clicks"),
-    State("sidebar-open", "data"),
-    prevent_initial_call=True,
-)
-def toggle_sidebar(_clicks, is_open):
-    is_open = not is_open
-    width = NAVBAR_WIDTH if is_open else NAVBAR_COLLAPSED_WIDTH
-    body_style = {} if is_open else {"display": "none"}
-    icon = (
-        "tabler:layout-sidebar-left-collapse"
-        if is_open
-        else "tabler:layout-sidebar-left-expand"
-    )
-    navbar_prop = {
-        "width": width,
-        "breakpoint": "sm",
-        "collapsed": {"desktop": False, "mobile": False},
-    }
-    return navbar_prop, body_style, icon, is_open
-
-
-@app.callback(
-    Output("download-csv", "data"),
-    Input("save-btn", "n_clicks"),
-    State("csv-export", "data"),
-    prevent_initial_call=True,
-)
-def save_csv(_clicks, export):
-    if not export:
-        return dash.no_update
-    return dict(content=export["content"], filename=export["filename"], type="text/csv")
-
-
-def _params_dataframe(rel: str, row_func) -> pd.DataFrame | None:
-    """Parse a tag file and extract parameter rows into a table."""
+def _params_dataframe(rel: str, row_func, columns=PARAM_FIELDS) -> pd.DataFrame | None:
+    """Parse a tag file and extract rows into a table with the given columns."""
     try:
         path = safe_resolve(rel)
     except ValueError:
@@ -1136,27 +1164,247 @@ def _params_dataframe(rel: str, row_func) -> pd.DataFrame | None:
 
     tree = ET.parse(path)
     rows = list(row_func(tree.getroot()))
-    return pd.DataFrame(rows, columns=PARAM_FIELDS)
+    return pd.DataFrame(rows, columns=columns)
+
+
+def _make_desc_resolver(search_rels: list[str]):
+    """Return f(tag_ref)->description, caching lookups across the given dirs.
+
+    A tag reference like "actCanInsertVac.Desc" is reduced to its tag name
+    ("actCanInsertVac") and resolved to that tag file's <Description> CDATA.
+    """
+    search_dirs = []
+    for rel in search_rels:
+        try:
+            directory = safe_resolve(rel)
+        except ValueError:
+            continue
+        if directory.is_dir():
+            search_dirs.append(directory)
+
+    cache: dict[str, str] = {}
+
+    def resolve(ref: str) -> str:
+        name = (ref or "").split(".")[0].strip()
+        if not name:
+            return ""
+        if name not in cache:
+            cache[name] = tag_description(name, search_dirs)
+        return cache[name]
+
+    return resolve
+
+
+FAULT_CATEGORIES = ("Faults", "Warnings", "Notifications")
+
+
+def _coerce_code(value, default: int) -> int:
+    """Coerce a modal NumberInput value to an int severity code."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _classify_severity(severity, ranges: dict[str, tuple[int, int]]) -> str:
+    """Map a fault severity to the category whose [min, max] range contains it.
+
+    `ranges` maps each category name to an inclusive (min, max) severity range
+    (from the Alarm Configuration modal). Faults whose severity matches no range
+    (or have no severity at all) default to "Faults".
+    """
+    if severity is not None:
+        for category in ("Notifications", "Warnings", "Faults"):
+            low, high = ranges[category]
+            if low <= severity <= high:
+                return category
+    return "Faults"
+
+
+def _alarm_scopes() -> list[tuple[str, str]]:
+    """Return (scope_label, tags_rel) for the controller and every program scope.
+
+    Controller tags map to the "Global" scope; each program's Tags folder maps
+    to a scope labelled with the program name (e.g. "MainProgram"). Scopes whose
+    Tags folder is missing are skipped.
+    """
+    scopes: list[tuple[str, str]] = [("Global", CONTROLLER_TAGS_REL)]
+    try:
+        programs_dir = safe_resolve(PROGRAMS_REL)
+    except ValueError:
+        return scopes
+    if programs_dir.is_dir():
+        for program in sorted(programs_dir.iterdir(), key=lambda p: p.name.lower()):
+            if (program / "Tags").is_dir():
+                scopes.append((program.name, f"{PROGRAMS_REL}/{program.name}/Tags"))
+    return scopes
+
+
+def _faults_dataframes(ranges: dict[str, tuple[int, int]]) -> dict[str, pd.DataFrame] | None:
+    """Collate fault alarm tags grouped by severity classification.
+
+    Scans the controller scope and every program scope. Within each scope, lists
+    files whose name contains "fault"/"flt"/"alarm"/"alm", parses each, keeps only
+    true alarm tags (those with an AlarmConfig block), tags them with their scope,
+    and groups them into the "Faults", "Warnings", and "Notifications" buckets
+    based on each tag's severity range. Associated %TagN placeholders resolve
+    against the tag's own scope, then MainProgram, then Global. Always returns a
+    frame for every category (possibly empty); None only when no scope exists.
+    """
+    scopes = _alarm_scopes()
+    grouped: dict[str, list[dict]] = {category: [] for category in FAULT_CATEGORIES}
+    found_any = False
+
+    for scope_label, tags_rel in scopes:
+        try:
+            tags_dir = safe_resolve(tags_rel)
+        except ValueError:
+            continue
+        if not tags_dir.is_dir():
+            continue
+        found_any = True
+
+        resolve_desc = _make_desc_resolver(
+            [tags_rel, MAINPROGRAM_TAGS_REL, CONTROLLER_TAGS_REL]
+        )
+        candidates = sorted(
+            (p for p in tags_dir.glob("*.xml") if FAULT_NAME_RE.search(p.stem)),
+            key=lambda p: p.name.lower(),
+        )
+        for path in candidates:
+            try:
+                tree = ET.parse(path)
+            except ET.ParseError:
+                continue
+            row = fault_row(tree.getroot(), resolve_desc=resolve_desc, scope=scope_label)
+            if row is None:
+                continue
+            category = _classify_severity(row.get("Severity"), ranges)
+            grouped[category].append(row)
+
+    if not found_any:
+        return None
+
+    return {
+        category: pd.DataFrame(rows, columns=FAULT_FIELDS)
+        for category, rows in grouped.items()
+    }
+
+
+def _style_sd_sheet(worksheet) -> None:
+    """Apply shared SD Tables workbook styling to one worksheet."""
+    header_fill = PatternFill(fill_type="solid", fgColor="D9D9D9")
+    index_fill = PatternFill(fill_type="solid", fgColor="F2F2F2")
+    black_side = Side(style="thin", color="000000")
+    header_border = Border(
+        left=black_side,
+        right=black_side,
+        top=black_side,
+        bottom=black_side,
+    )
+    index_border = Border(right=black_side)
+    middle_alignment = Alignment(horizontal="center", vertical="center")
+
+    for cell in worksheet[1]:
+        cell.fill = header_fill
+        cell.border = header_border
+        cell.font = Font(bold=True)
+        cell.alignment = middle_alignment
+
+    for cell in worksheet["A"]:
+        cell.fill = index_fill
+        cell.border = index_border
+        cell.alignment = middle_alignment
+
+    for column_cells in worksheet.columns:
+        max_len = 0
+        for cell in column_cells:
+            value = "" if cell.value is None else str(cell.value)
+            max_len = max(max_len, len(value))
+        column_letter = get_column_letter(column_cells[0].column)
+        worksheet.column_dimensions[column_letter].width = max_len + 2
+
+
+def _add_index_column(df: pd.DataFrame) -> pd.DataFrame:
+    """Return a copy with a 1-based Index column first."""
+    out = df.copy()
+    out.insert(0, "Index", range(1, len(out) + 1))
+    return out
+
+
+@app.callback(
+    Output("fault-config-modal", "opened"),
+    Input("export-sd-tables-btn", "n_clicks"),
+    Input("fault-config-cancel", "n_clicks"),
+    Input("fault-config-generate", "n_clicks"),
+    prevent_initial_call=True,
+)
+def toggle_fault_config_modal(_open, _cancel, _generate):
+    """Open the Alarm Configuration modal from the toolbar, close on action."""
+    ctx = dash.callback_context
+    tid = ctx.triggered_id
+    if tid == "export-sd-tables-btn" and real_click(ctx):
+        return True
+    if tid in ("fault-config-cancel", "fault-config-generate"):
+        return False
+    return dash.no_update
 
 
 @app.callback(
     Output("download-sd-tables", "data"),
-    Input("export-sd-tables-btn", "n_clicks"),
+    Input("fault-config-generate", "n_clicks"),
+    State("fault-notifications-min", "value"),
+    State("fault-notifications-max", "value"),
+    State("fault-warnings-min", "value"),
+    State("fault-warnings-max", "value"),
+    State("fault-faults-min", "value"),
+    State("fault-faults-max", "value"),
     prevent_initial_call=True,
 )
-def export_sd_tables(_clicks):
-    """Build one SD Tables workbook with each table on its own sheet."""
-    tables = {
-        "Settings": _params_dataframe(SETTINGS_REL, setting_rows),
-        "Recipes": _params_dataframe(RECIPE_REL, recipe_rows),
-    }
-    if any(df is None for df in tables.values()):
+def export_sd_tables(
+    _clicks,
+    notif_min,
+    notif_max,
+    warn_min,
+    warn_max,
+    faults_min,
+    faults_max,
+):
+    """Build one SD Tables workbook with each table on its own sheet.
+
+    Settings and Recipes are exported unchanged. Faults are split into
+    the "Faults", "Warnings" and "Notifications" sheets according to the severity
+    ranges entered in the Fault Configuration modal.
+    """
+    if not real_click(dash.callback_context):
         return dash.no_update
+
+    ranges = {
+        "Notifications": (_coerce_code(notif_min, 0), _coerce_code(notif_max, 199)),
+        "Warnings": (_coerce_code(warn_min, 200), _coerce_code(warn_max, 399)),
+        "Faults": (_coerce_code(faults_min, 500), _coerce_code(faults_max, 99999)),
+    }
+
+    settings = _params_dataframe(SETTINGS_REL, setting_rows)
+    recipes = _params_dataframe(RECIPE_REL, recipe_rows)
+    fault_frames = _faults_dataframes(ranges)
+
+    if any(x is None for x in (settings, recipes, fault_frames)):
+        return dash.no_update
+
+    tables = {
+        "Settings": settings,
+        "Recipes": recipes,
+        "Faults": fault_frames["Faults"],
+        "Warnings": fault_frames["Warnings"],
+        "Notifications": fault_frames["Notifications"],
+    }
 
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
         for sheet_name, df in tables.items():
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
+            _add_index_column(df).to_excel(writer, sheet_name=sheet_name, index=False)
+            _style_sd_sheet(writer.sheets[sheet_name])
 
     return dcc.send_bytes(buffer.getvalue(), "sd_tables.xlsx")
 

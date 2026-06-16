@@ -1,5 +1,6 @@
 import argparse
 import csv
+import re
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -76,6 +77,163 @@ def parameter_rows(root: ET.Element, prefix: str):
             "Unit": data_type,
             "Min": min_value,
             "Max": max_value,
+        }
+
+
+FAULT_FIELDS = ["Fault", "Scope", "DataType", "Alarm Class", "Severity", "Message"]
+
+
+def _first_descendant(root: ET.Element, name: str) -> ET.Element | None:
+    """First element (any depth) whose local tag matches name."""
+    for el in root.iter():
+        if strip_namespace(el.tag) == name:
+            return el
+    return None
+
+
+# FactoryTalk alarm placeholders, e.g. "/*S:0 %Tag1*/" or
+# "/*N:5 %Tag1 NOFILL DP:0*/", where %Tag1 maps to AssocTag1.
+_TAG_PLACEHOLDER = re.compile(r"/\*[^*]*?%Tag(\d+)[^*]*?\*/")
+
+
+def _assoc_tags(root: ET.Element) -> dict[str, str]:
+    """Map AssocTagN index -> reference string.
+
+    AssocTagN attributes live on the alarm parameter element, which is
+    AlarmDigitalParameters for ALARM_DIGITAL and AlarmAnalogParameters for
+    ALARM_ANALOG, so scan every element to cover both.
+    """
+    out: dict[str, str] = {}
+    for el in root.iter():
+        for key, value in el.attrib.items():
+            match = re.fullmatch(r"AssocTag(\d+)", strip_namespace(key))
+            if match:
+                out[match.group(1)] = value
+    return out
+
+
+def tag_description(name: str, search_dirs) -> str:
+    """Return the <Description> CDATA of tag `name` from the first dir holding it."""
+    name = (name or "").strip()
+    if not name:
+        return ""
+    for directory in search_dirs:
+        path = Path(directory) / f"{name}.xml"
+        if path.is_file():
+            try:
+                root = ET.parse(path).getroot()
+            except ET.ParseError:
+                return ""
+            desc = _first_descendant(root, "Description")
+            return (desc.text or "").strip() if desc is not None else ""
+    return ""
+
+
+def _resolve_message(text: str, assoc: dict[str, str], resolve_desc) -> str:
+    """Replace FactoryTalk %TagN placeholders with their associated tag + desc.
+
+    "Vac Failure on /*S:0 %Tag1*/" -> "Vac Failure on actCanInsertVac.Desc
+    (Can Insert Vacuum)". The reference comes from AssocTagN; resolve_desc
+    supplies the tag's description. Placeholders with no association are left
+    untouched; a found reference without a description shows just the reference.
+    """
+    if not text or resolve_desc is None:
+        return text
+
+    def repl(match: re.Match) -> str:
+        num = match.group(1)
+        token = match.group(0)
+        ref = assoc.get(num)
+        if not ref:
+            return token
+        desc = resolve_desc(ref)
+        return f"{ref} ({desc})" if desc else ref
+
+    return _TAG_PLACEHOLDER.sub(repl, text)
+
+
+def fault_severity(root: ET.Element) -> int | None:
+    """Return the alarm Severity code for a fault Tag root, or None.
+
+    The Severity attribute lives on the alarm parameter element
+    (AlarmDigitalParameters for ALARM_DIGITAL). ALARM_ANALOG tags carry no
+    single Severity, but per-level severities (HHSeverity, HSeverity, ...); for
+    those the highest severity wins so the fault is classified by its most
+    serious level. Returns None when no severity attribute is present.
+    """
+    severities: list[int] = []
+    for el in root.iter():
+        if strip_namespace(el.tag) not in ("AlarmDigitalParameters", "AlarmAnalogParameters"):
+            continue
+        for key, value in el.attrib.items():
+            if strip_namespace(key).endswith("Severity"):
+                try:
+                    severities.append(int(value))
+                except (TypeError, ValueError):
+                    continue
+    return max(severities) if severities else None
+
+
+def fault_row(root: ET.Element, resolve_desc=None, scope: str = "") -> dict | None:
+    """Return a fault dict for an alarm Tag root, or None if not an alarm tag.
+
+    Pulls the tag Name + DataType from the root, AlarmClass and the first
+    Message text from the AlarmConfig block. Tags without an AlarmConfig
+    (e.g. STRING/INT helpers that merely have "fault" in their name) are
+    skipped by returning None.
+
+    The returned dict also carries a "Severity" key (the alarm severity code)
+    used to classify the fault; it is not part of FAULT_FIELDS so it is dropped
+    from the exported table columns.
+
+    When resolve_desc is given, FactoryTalk %TagN placeholders in the message
+    are expanded with the referenced tag's description for readability.
+    """
+    if strip_namespace(root.tag) != "Tag":
+        return None
+    if _first_descendant(root, "AlarmConfig") is None:
+        return None
+
+    message = ""
+    message_el = _first_descendant(root, "Message")
+    if message_el is not None:
+        text_el = _first_descendant(message_el, "Text")
+        if text_el is not None and text_el.text:
+            message = text_el.text.strip()
+
+    message = _resolve_message(message, _assoc_tags(root), resolve_desc)
+
+    alarm_class_el = _first_descendant(root, "AlarmClass")
+    alarm_class = (alarm_class_el.text or "").strip() if alarm_class_el is not None else ""
+
+    return {
+        "Fault": root.attrib.get("Name", ""),
+        "Scope": scope,
+        "DataType": root.attrib.get("DataType", ""),
+        "Alarm Class": alarm_class,
+        "Message": message,
+        "Severity": fault_severity(root),
+    }
+
+
+ALARM_FIELDS = ["Parameter", "Description"]
+
+
+def alarm_rows(root: ET.Element):
+    """Yield one row per Comment in the Alarms tag.
+
+    Operand "[n].m" becomes Parameter "Alarm[n].m"; the CDATA text is the
+    Description.
+    """
+    for comment in root.iter():
+        if strip_namespace(comment.tag) != "Comment":
+            continue
+        operand = comment.attrib.get("Operand", "").strip()
+        if not operand:
+            continue
+        yield {
+            "Parameter": f"Alarm{operand}",
+            "Description": (comment.text or "").strip(),
         }
 
 
