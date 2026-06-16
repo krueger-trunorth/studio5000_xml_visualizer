@@ -23,10 +23,10 @@ body {
     background: transparent;
     border: none;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 6px 6px;
     margin: 0;
     font-size: 13px;
-    line-height: 20px;
+    line-height: 22px;
     color: #24292f;
     cursor: pointer;
     white-space: nowrap;
@@ -185,6 +185,35 @@ body {
     flex-direction: column;
     flex: 1 1 0;
     min-height: 0;
+    overflow: visible;
+}
+
+.mantine-AppShell-navbar {
+    overflow: visible;
+}
+
+.sidebar-title {
+    padding: 14px 12px 10px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #1f2328;
+    border-bottom: 1px solid #eaeef2;
+    background: #fff;
+}
+
+.sidebar-export {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 10px 12px 12px 12px;
+    border-top: 1px solid #d8dee4;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -8px 18px rgba(31, 35, 40, 0.08);
+}
+
+.sidebar-search-block {
+    padding-top: 12px !important;
 }
 
 /* Main content fills viewport below the header so previews get real height */
@@ -196,7 +225,7 @@ body {
 
 /* Tree sits inside the Mantine navbar */
 .tree {
-    padding: 0 4px 8px 4px;
+    padding: 4px 6px 12px 6px;
 }
 
 /* IDE-style open-file tab strip: horizontal, scrolls when tabs overflow */

@@ -50,7 +50,7 @@ FILE_MARKER = "@@FILE"  # token used inside the markup comment, e.g. <!-- @@FILE
 SEARCHABLE_EXTS = {".xml", ".st", ".yaml"}  # source files; derived csv/ is skipped
 MAX_CONTENT_FILES = 100        # max files listed in the results dropdown
 MAX_SNIPPETS_PER_FILE = 5      # max matching lines previewed per file
-MAX_CONTENT_MATCHES = 2000     # global cap so a broad regex can't run away
+MAX_CONTENT_MATCHES = 2000     # global cap so a broad search can't run away
 MAX_SNIPPET_LEN = 200          # truncate long matching lines for display
 
 # Cached index: {"signature": <tuple>, "files": [{"rel", "text"}, ...]}.
@@ -168,19 +168,12 @@ def pretty_xml(path: Path) -> str:
 
 
 def search_files(query: str) -> list[str]:
-    """Return file rel-paths matching `query`.
-
-    Tries `query` as a case-insensitive regex; if it is not valid regex, falls
-    back to a plain case-insensitive substring match so partial input still works.
-    """
+    """Return file rel-paths containing `query` (case-insensitive)."""
     query = (query or "").strip()
     if not query:
         return []
-    try:
-        matcher = re.compile(query, re.IGNORECASE).search
-    except re.error:
-        needle = query.lower()
-        matcher = lambda s: needle in s.lower()
+    needle = query.lower()
+    matcher = lambda s: needle in s.lower()
     return [f for f in all_files() if matcher(f)][:MAX_SEARCH_RESULTS]
 
 
@@ -219,8 +212,8 @@ def build_content_index() -> list[dict]:
 
     Returns the in-memory index (a list of {"rel", "text"}). Also writes a
     single `markup_{name}.xml` where each file's text is preceded by an
-    `<!-- @@FILE rel -->` comment, so the same content can be regex-searched as
-    one document and every hit traced back to its exploded file by its title.
+    `<!-- @@FILE rel -->` comment, so the same content can be searched as one
+    document and every hit traced back to its exploded file by its title.
     """
     files: list[dict] = []
     markup_parts: list[str] = []
@@ -252,34 +245,26 @@ def get_content_index() -> list[dict]:
     return _CONTENT_INDEX["files"]
 
 
-def compile_query(query: str):
-    """Compile `query` as case-insensitive regex, falling back to literal text."""
-    try:
-        return re.compile(query, re.IGNORECASE)
-    except re.error:
-        return re.compile(re.escape(query), re.IGNORECASE)
-
-
 def search_content(query: str):
     """Search file contents for `query`.
 
-    Returns (results, pattern) where results is a list of
+    Returns (results, matched_query) where results is a list of
     {"rel", "count", "hits": [(lineno, line), ...]} sorted by match count.
-    The regex runs over the cached index (built once), so a search never has to
+    The search runs over the cached index (built once), so it never has to
     re-read the exploded files from disk.
     """
     query = (query or "").strip()
     if not query:
         return [], None
 
-    pattern = compile_query(query)
+    needle = query.lower()
     results: list[dict] = []
     total = 0
     for entry in get_content_index():
         hits: list[tuple[int, str]] = []
         count = 0
         for lineno, line in enumerate(entry["text"].splitlines(), 1):
-            if pattern.search(line):
+            if needle in line.lower():
                 count += 1
                 total += 1
                 if len(hits) < MAX_SNIPPETS_PER_FILE:
@@ -292,21 +277,24 @@ def search_content(query: str):
             break
 
     results.sort(key=lambda r: (-r["count"], r["rel"]))
-    return results[:MAX_CONTENT_FILES], pattern
+    return results[:MAX_CONTENT_FILES], query
 
 
-def highlight(line: str, pattern) -> list:
-    """Split `line` into text + html.Mark spans around each regex match."""
-    if pattern is None:
+def highlight(line: str, query: str) -> list:
+    """Split `line` into text + html.Mark spans around each text match."""
+    if not query:
         return [line]
     parts: list = []
     last = 0
-    for match in pattern.finditer(line):
-        if match.start() == match.end():  # zero-width match: don't loop forever
-            break
-        parts.append(line[last:match.start()])
-        parts.append(html.Mark(match.group(0)))
-        last = match.end()
+    lower_line = line.lower()
+    needle = query.lower()
+    start = lower_line.find(needle)
+    while start != -1:
+        end = start + len(query)
+        parts.append(line[last:start])
+        parts.append(html.Mark(line[start:end]))
+        last = end
+        start = lower_line.find(needle, end)
     parts.append(line[last:])
     return parts or [line]
 
@@ -377,20 +365,6 @@ def header():
                     gap="sm",
                     align="center",
                 ),
-                dmc.Group(
-                    [
-                        dmc.Button(
-                            "SD Tables",
-                            id="export-sd-tables-btn",
-                            n_clicks=0,
-                            leftSection=DashIconify(icon="tabler:table-export"),
-                            variant="light",
-                            size="sm",
-                        ),
-                    ],
-                    gap="sm",
-                    className="top-nav-items",
-                ),
             ],
             justify="space-between",
             align="center",
@@ -406,10 +380,15 @@ def navbar():
             html.Div(
                 [
                     html.Div(
+                        "Project Files",
+                        className="sidebar-title",
+                        style={"padding": "14px 12px 12px 12px", "marginBottom": "12px"},
+                    ),
+                    html.Div(
                         [
                             dmc.Autocomplete(
                                 id="search",
-                                placeholder="Search files (regex)\u2026",
+                                placeholder="Search files\u2026",
                                 leftSection=DashIconify(icon="tabler:search"),
                                 rightSection=dmc.ActionIcon(
                                     DashIconify(icon="tabler:x", width=14),
@@ -425,13 +404,14 @@ def navbar():
                             ),
                             html.Div(id="search-results", style={"display": "none"}),
                         ],
+                        className="sidebar-search-block",
                         style={"position": "relative", "padding": "0 8px 6px 8px"},
                     ),
                     html.Div(
                         [
                             dmc.TextInput(
                                 id="content-search",
-                                placeholder="Search file contents (regex)\u2026",
+                                placeholder="Search file contents\u2026",
                                 leftSection=DashIconify(icon="tabler:file-search"),
                                 rightSection=dmc.ActionIcon(
                                     DashIconify(icon="tabler:x", width=14),
@@ -466,7 +446,7 @@ def navbar():
                     dmc.Group(
                         [
                             dmc.Button(
-                                "Collapse",
+                                "Collapse Tree",
                                 id="collapse-all",
                                 n_clicks=0,
                                 leftSection=DashIconify(
@@ -477,7 +457,7 @@ def navbar():
                                 fullWidth=True,
                             ),
                             dmc.Button(
-                                "Expand",
+                                "Expand Tree",
                                 id="expand-all",
                                 n_clicks=0,
                                 leftSection=DashIconify(
@@ -497,6 +477,19 @@ def navbar():
                         html.Div(id="tree", className="tree"),
                         style={"flex": "1 1 0", "minHeight": "0"},
                         type="auto",
+                    ),
+                    html.Div(
+                        dmc.Button(
+                            "SD/DV Format",
+                            id="export-sd-tables-btn",
+                            n_clicks=0,
+                            leftSection=DashIconify(icon="tabler:download"),
+                            variant="filled",
+                            color="blue",
+                            size="sm",
+                            fullWidth=True,
+                        ),
+                        className="sidebar-export",
                     ),
                 ],
                 id="nav-body",
@@ -771,8 +764,10 @@ def pick_search_result(_clicks, open_tabs, recent, query):
 DROPDOWN_STYLE = {
     "position": "absolute",
     "left": "8px",
-    "right": "8px",
+    "right": "auto",
     "top": "100%",
+    "width": "40vw",
+    "minWidth": "360px",
     "zIndex": 50,
     "background": "#fff",
     "border": "1px solid #d0d7de",
@@ -808,7 +803,7 @@ def do_content_search(query):
     if not (query or "").strip():
         return [], hidden, btn_hidden, dash.no_update, []
 
-    results, pattern = search_content(query)
+    results, matched_query = search_content(query)
     if not results:
         return [html.Div("No matches", className="search-empty")], DROPDOWN_STYLE, btn_hidden, dash.no_update, []
 
@@ -830,7 +825,7 @@ def do_content_search(query):
             html.Div(
                 [
                     html.Span(f"{lineno}", className="cs-lineno"),
-                    html.Span(highlight(line, pattern), className="cs-line"),
+                    html.Span(highlight(line, matched_query), className="cs-line"),
                 ],
                 className="cs-snippet",
             )
@@ -1325,6 +1320,15 @@ def _style_sd_sheet(worksheet) -> None:
         worksheet.column_dimensions[column_letter].width = max_len + 2
 
 
+def _allow_sd_workbook_edits(workbook) -> None:
+    """Ensure generated workbook opens editable by default."""
+    workbook.security.lockStructure = False
+    workbook.security.lockWindows = False
+    workbook.security.lockRevision = False
+    for worksheet in workbook.worksheets:
+        worksheet.protection.disable()
+
+
 def _add_index_column(df: pd.DataFrame) -> pd.DataFrame:
     """Return a copy with a 1-based Index column first."""
     out = df.copy()
@@ -1405,6 +1409,7 @@ def export_sd_tables(
         for sheet_name, df in tables.items():
             _add_index_column(df).to_excel(writer, sheet_name=sheet_name, index=False)
             _style_sd_sheet(writer.sheets[sheet_name])
+        _allow_sd_workbook_edits(writer.book)
 
     return dcc.send_bytes(buffer.getvalue(), "sd_tables.xlsx")
 
